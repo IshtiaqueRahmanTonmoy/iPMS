@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardViewBlood"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
+
+                <TableLayout
+                    android:id="@+id/tl"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center" >
+
+                    <TableRow
+                        android:id="@+id/tableRow1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:gravity="center" >
+
+                        <Button
+                            android:id="@+id/button1"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="A+" />
+
+                        <Button
+                            android:id="@+id/button2"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="A-" />
+
+                        <Button
+                            android:id="@+id/button3"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="B+" />
+
+                        <Button
+                            android:id="@+id/button4"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="B-" />
+                    </TableRow>
+
+                    <TableRow
+                        android:id="@+id/tableRow2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center" >
+
+                        <Button
+                            android:id="@+id/button5"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="AB+" />
+
+                        <Button
+                            android:id="@+id/button6"
+                            style="@style/box_sky_blue"
+                            android:textColor="@color/colorBlood"
+                            android:layout_weight="0.1"
+                            android:text="AB-" />
+
+                        <Button
+                            android:id="@+id/button7"
+                            style="@style/box_sky_blue"
+                            android:textColor="@color/colorBlood"
+                            android:layout_weight="0.1"
+                            android:text="O+" />
+
+                        <Button
+                            android:id="@+id/button8"
+                            style="@style/box_sky_blue"
+                            android:layout_weight="0.1"
+                            android:textColor="@color/colorBlood"
+                            android:text="O-" />
+                    </TableRow>
+                </TableLayout>
+
+                <EditText
+                    android:id="@+id/et_hospital"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Search by hospital"
+                    android:drawableLeft="@drawable/search"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/maps"
+                    android:textSize="14sp"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:inputType="textPersonName"
+                    android:padding="15dp" />
+
+                <EditText
+                    android:id="@+id/et_expertise"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Searcy by speciality"
+                    android:drawableLeft="@drawable/search"
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/stethoscope"
+                    android:textSize="14sp"
+                    android:gravity="start"
+                    android:maxLines="1"
+                    android:inputType="textPersonName"
+                    android:padding="15dp" />
+
+                <Button
+                    style="@style/ButtonStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Search" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+

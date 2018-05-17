@@ -25,7 +25,7 @@
         <item name="android:background">@color/colorText</item>
         <item name="android:layout_margin">5dp</item>
         <item name="android:padding">5dp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
         <item name="android:textColor">#ffffff</item>
     </style>

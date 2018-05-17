@@ -31,7 +31,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import patient.patientmanagement.pms.adapter.CardPagerAdapter;
+import patient.patientmanagement.pms.adapter.CardPagerAdapterBlood;
+import patient.patientmanagement.pms.adapter.ShadowTransformer;
 import patient.patientmanagement.pms.adapter.ViewPagerAdapter;
+import patient.patientmanagement.pms.entity.CardItem;
 import patient.patientmanagement.pms.entity.Item;
 
 public class DashboardActivity extends AppCompatActivity
@@ -48,6 +52,11 @@ public class DashboardActivity extends AppCompatActivity
     LinearLayout sliderDotspanel;
     private int dotscount;
     private ImageView[] dots;
+    private ViewPager mViewPager;
+
+    private CardPagerAdapter mCardAdapter;
+    private CardPagerAdapterBlood mCardAdapterBlood;
+    private ShadowTransformer mCardShadowTransformer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,16 @@ public class DashboardActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mViewPager = (ViewPager) findViewById(R.id.viewpagerDashboard);
+
+        mCardAdapter = new CardPagerAdapter();
+        mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+        mViewPager.setAdapter(mCardAdapter);
+        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        mViewPager.setOffscreenPageLimit(3);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -131,11 +150,26 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position) {
                 if(position == 0){
+                    mCardAdapter = new CardPagerAdapter();
+                    mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+                    mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+
+                    mViewPager.setAdapter(mCardAdapter);
+                    mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                    mViewPager.setOffscreenPageLimit(3);
 
                 }
 
                 if(position == 1){
+                    mCardAdapterBlood = new CardPagerAdapterBlood();
+                    mCardAdapterBlood.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+                    mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapterBlood);
 
+
+                    mViewPager.setAdapter(mCardAdapterBlood);
+                    mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                    mViewPager.setOffscreenPageLimit(3);
                 }
 
             }

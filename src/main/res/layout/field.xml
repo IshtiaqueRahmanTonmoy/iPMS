@@ -24,7 +24,7 @@
                     android:paddingTop="5dp">
 
                 <EditText
-                    android:id="@+id/et_sub"
+                    android:id="@+id/et_district"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -40,7 +40,7 @@
 
 
                 <EditText
-                    android:id="@+id/et_sub2"
+                    android:id="@+id/et_hospital"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
@@ -55,7 +55,7 @@
                     android:padding="15dp" />
 
                 <EditText
-                    android:id="@+id/et_sub3"
+                    android:id="@+id/et_expertise"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"

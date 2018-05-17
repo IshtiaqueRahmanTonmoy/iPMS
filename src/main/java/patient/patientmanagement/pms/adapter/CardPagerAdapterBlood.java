@@ -6,21 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
 
-public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
+public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
 
     private List<CardView> mViews;
     private List<CardItem> mData;
     private float mBaseElevation;
 
-    public CardPagerAdapter() {
+    public CardPagerAdapterBlood() {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
     }
@@ -52,10 +52,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext())
-                .inflate(R.layout.adapter, container, false);
+                .inflate(R.layout.adapterblood, container, false);
         container.addView(view);
         bind(mData.get(position), view);
-        CardView cardView = (CardView) view.findViewById(R.id.cardView);
+        CardView cardView = (CardView) view.findViewById(R.id.cardViewBlood);
 
         if (mBaseElevation == 0) {
             mBaseElevation = cardView.getCardElevation();
@@ -73,7 +73,6 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     }
 
     private void bind(CardItem item, View view) {
-        EditText districtEditView = (EditText) view.findViewById(R.id.et_district);
         EditText hospitalEditView = (EditText) view.findViewById(R.id.et_hospital);
         EditText expertiseEditView = (EditText) view.findViewById(R.id.et_expertise);
         //titleTextView.setText(item.getTitle());
