@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/parent_constraint_layout"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".DashboardActivity"
+    tools:showIn="@layout/app_bar_dashboard">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+
+       <android.support.v7.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="120dp">
+
+           <android.support.v7.widget.RecyclerView
+               android:id="@+id/recyclerView"
+               android:layout_width="wrap_content"
+               android:layout_height="110dp"
+               android:paddingBottom="16dp"
+               android:paddingTop="16dp"
+               android:layout_gravity="center"
+               android:scrollbars="vertical"/>
+
+       </android.support.v7.widget.CardView>
+
+       <android.support.v7.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="220dp"
+           android:id="@+id/cardviewLayout"
+           android:layout_marginTop="10dp">
+
+           <android.support.v4.view.ViewPager
+               android:id="@+id/viewpagerDashboard"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_gravity="bottom"
+               android:clipToPadding="false"
+               android:overScrollMode="never"
+               android:paddingBottom="30dp"
+               android:paddingEnd="@dimen/card_padding"
+               android:paddingLeft="@dimen/card_padding"
+               android:paddingRight="@dimen/card_padding"
+               android:paddingStart="@dimen/card_padding" />
+
+
+
+       </android.support.v7.widget.CardView>
+
+       <android.support.v7.widget.CardView
+           android:layout_width="match_parent"
+           android:layout_height="180dp"
+           android:layout_marginTop="10dp">
+
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <android.support.v4.view.ViewPager
+                   android:layout_height="180dp"
+                   android:layout_marginLeft="20dp"
+                   android:layout_width="match_parent"
+                   android:layout_marginRight="20dp"
+                   android:id="@+id/viewPager">
+
+               </android.support.v4.view.ViewPager>
+
+               <LinearLayout
+                   android:id="@+id/SliderDots"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="160dp"
+                   android:gravity="center"
+                   android:orientation="horizontal">
+
+               </LinearLayout>
+
+           </RelativeLayout>
+
+
+
+       </android.support.v7.widget.CardView>
+
+
+
+   </LinearLayout>
+</android.support.constraint.ConstraintLayout>
