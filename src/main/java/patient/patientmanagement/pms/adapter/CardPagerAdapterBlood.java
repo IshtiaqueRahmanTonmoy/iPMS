@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -73,8 +74,8 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
     }
 
     private void bind(CardItem item, View view) {
-        EditText hospitalEditView = (EditText) view.findViewById(R.id.et_hospital);
-        EditText expertiseEditView = (EditText) view.findViewById(R.id.et_expertise);
+        AutoCompleteTextView hospitalEditView = (AutoCompleteTextView) view.findViewById(R.id.et_hospital);
+        AutoCompleteTextView expertiseEditView = (AutoCompleteTextView) view.findViewById(R.id.et_expertise);
         //titleTextView.setText(item.getTitle());
         //contentTextView.setText(item.getText());
     }

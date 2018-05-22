@@ -25,7 +25,12 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +52,7 @@ public class DashboardActivity extends AppCompatActivity
     private int flags[] = {R.mipmap.hospital,R.mipmap.blood,R.mipmap.healthnews,R.mipmap.healthtips};
     private HorizontalAdapter horizontalAdapter;
     private ConstraintLayout constraintLayout;
-
+    private DatabaseReference mDatabase;
     ViewPager viewPager;
     LinearLayout sliderDotspanel;
     private int dotscount;
@@ -58,6 +63,8 @@ public class DashboardActivity extends AppCompatActivity
     private CardPagerAdapterBlood mCardAdapterBlood;
     private ShadowTransformer mCardShadowTransformer;
 
+    List<CardItem> dataModels;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,17 +72,48 @@ public class DashboardActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dataModels= new ArrayList<CardItem>();
+
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mViewPager = (ViewPager) findViewById(R.id.viewpagerDashboard);
 
-        mCardAdapter = new CardPagerAdapter();
-        mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
-        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("district");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                            //String name = (String) messageSnapshot.child("name").getValue();
+                            String districtName = (String) messageSnapshot.child("districtName").getValue();
 
-        mViewPager.setAdapter(mCardAdapter);
-        mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        mViewPager.setOffscreenPageLimit(3);
+                            dataModels.add(new CardItem(districtName));
 
+                            //adapter = new CustomAdapter(dataModels);
+                            mCardAdapter = new CardPagerAdapter();
+                            mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+                            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+                            mViewPager.setAdapter(mCardAdapter);
+                            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                            mViewPager.setOffscreenPageLimit(3);
+
+                            //dataModels.add(new CardItem(districtName));
+                            //adapter = new CustomAdapter(DashboardActivity.this,dataModels);
+                            //Log.d("message",districtName);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+
+        /*
+
+        */
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -314,12 +352,10 @@ public class DashboardActivity extends AppCompatActivity
             /*
             holder.imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
-
                 public void onClick(View v) {
                     category = horizontalList.get(position).txt.toString();
                     Toast.makeText(TransactionsActivity.this, category, Toast.LENGTH_SHORT).show();
                 }
-
             });
             */
 

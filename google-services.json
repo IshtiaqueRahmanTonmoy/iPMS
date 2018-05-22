@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "622093630469",
+    "firebase_url": "https://patientmanagementsystem-c2ab6.firebaseio.com",
+    "project_id": "patientmanagementsystem-c2ab6",
+    "storage_bucket": "patientmanagementsystem-c2ab6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:622093630469:android:527b738572909409",
+        "android_client_info": {
+          "package_name": "patient.patientmanagement.pms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "622093630469-c29dqjgeludthet293ki56disj4qdtjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBZ-M4kcbxcbq1kfwgW3NjZqvrhHQ5c_o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
