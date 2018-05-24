@@ -6,8 +6,12 @@
 
     <color name="colorText">#f4f4f5</color>
     <color name="colorTextColor">#5a5a5b</color>
+    <color name="colorExpertise">#303031</color>
     <color name="colorButton">#4e879e</color>
 
     <color name="colorBlood">#447a8f</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
 
+    <color name="windowBackground">#FFFFFF</color>
 </resources>

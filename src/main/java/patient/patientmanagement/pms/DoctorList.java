@@ -20,7 +20,7 @@ public class DoctorList extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("district");
     DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     DatabaseReference myRefExpertise = database.getReference("speciality");
-
+    private String district,hospital,expertise;
     private String districtId,hospitalId,specialityId;
 
     @Override
@@ -29,7 +29,6 @@ public class DoctorList extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_list);
 
         Bundle extras = getIntent().getExtras();
-        String district,hospital,expertise;
 
         if (extras != null) {
             district = extras.getString("district");

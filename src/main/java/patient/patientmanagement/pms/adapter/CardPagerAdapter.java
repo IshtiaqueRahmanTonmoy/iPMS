@@ -32,6 +32,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import patient.patientmanagement.pms.DoctorList;
+import patient.patientmanagement.pms.HospitalSearchActivity;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
@@ -214,11 +215,19 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                   }
 
                   else{
+
+                      Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
+                      intent.putExtra("district", district);
+                      intent.putExtra("hospital", hospital);
+                      intent.putExtra("expertise", expertise);
+                      v.getContext().startActivity(intent);
+                      /*
                       Intent intent = new Intent(v.getContext(), DoctorList.class);
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
                       v.getContext().startActivity(intent);
+                      */
                   }
               }
           });
