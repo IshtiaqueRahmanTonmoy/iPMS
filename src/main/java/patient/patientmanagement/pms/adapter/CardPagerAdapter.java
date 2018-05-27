@@ -203,9 +203,6 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                   String hospital = hospitalEditView.getText().toString();
                   String expertise = expertiseEditView.getText().toString();
 
-                  if(!district.isEmpty() && !hospital.isEmpty()){
-
-                  }
                   if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()) {
                       Intent intent = new Intent(v.getContext(), DoctorList.class);
                       intent.putExtra("district", district);

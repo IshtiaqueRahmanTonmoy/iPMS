@@ -1,20 +1,29 @@
 package patient.patientmanagement.pms.entity;
 
 public class DoctorInfo {
-    String doctorId;
+    String doctorName;
     String image;
     String name;
     String education;
-    String expertise;
+    String specialityName;
     String designation;
-    String location;
+    String hospitalName;
 
-    public String getDoctorId() {
-        return doctorId;
+    public DoctorInfo(String image, String doctorName, String education, String specialityName, String designation, String hospitalName) {
+        this.image = image;
+        this.doctorName = doctorName;
+        this.education  = education;
+        this.specialityName = specialityName;
+        this.designation = designation;
+        this.hospitalName = hospitalName;
     }
 
-    public void setDoctorId(String doctorId) {
-        this.doctorId = doctorId;
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
     }
 
     public String getImage() {
@@ -41,12 +50,12 @@ public class DoctorInfo {
         this.education = education;
     }
 
-    public String getExpertise() {
-        return expertise;
+    public String getSpecialist() {
+        return specialityName;
     }
 
-    public void setExpertise(String expertise) {
-        this.expertise = expertise;
+    public void setSpecialist(String specialityName) {
+        this.specialityName = specialityName;
     }
 
     public String getDesignation() {
@@ -57,11 +66,11 @@ public class DoctorInfo {
         this.designation = designation;
     }
 
-    public String getLocation() {
-        return location;
+    public String getHospitalName() {
+        return hospitalName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setHospitalName(String hospitalName) {
+        this.hospitalName = hospitalName;
     }
 }
