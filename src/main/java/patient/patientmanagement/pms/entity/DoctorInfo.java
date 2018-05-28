@@ -2,6 +2,7 @@ package patient.patientmanagement.pms.entity;
 
 public class DoctorInfo {
     String doctorName;
+    String idval;
     String image;
     String name;
     String education;
@@ -9,13 +10,30 @@ public class DoctorInfo {
     String designation;
     String hospitalName;
 
-    public DoctorInfo(String image, String doctorName, String education, String specialityName, String designation, String hospitalName) {
+    public DoctorInfo(String idval, String image, String doctorName, String education, String specialityName, String designation, String hospitalName) {
+        this.idval = idval;
         this.image = image;
         this.doctorName = doctorName;
         this.education  = education;
         this.specialityName = specialityName;
         this.designation = designation;
         this.hospitalName = hospitalName;
+    }
+
+    public String getIdval() {
+        return idval;
+    }
+
+    public void setIdval(String idval) {
+        this.idval = idval;
+    }
+
+    public String getSpecialityName() {
+        return specialityName;
+    }
+
+    public void setSpecialityName(String specialityName) {
+        this.specialityName = specialityName;
     }
 
     public String getDoctorName() {

@@ -8,6 +8,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +26,7 @@ import patient.patientmanagement.pms.adapter.DoctorListAdapter;
 import patient.patientmanagement.pms.adapter.SpecialistAdapter;
 import patient.patientmanagement.pms.entity.DividerItemDecoration;
 import patient.patientmanagement.pms.entity.DoctorInfo;
+import patient.patientmanagement.pms.entity.RecyclerItemClickListener;
 import patient.patientmanagement.pms.entity.speciality;
 
 public class DoctorList extends AppCompatActivity {
@@ -40,7 +44,7 @@ public class DoctorList extends AppCompatActivity {
     private DoctorListAdapter mAdapter;
     private ProgressDialog progressDialog;
 
-    private String ImageDoctor,doctorName,education,specialityName,designation,location,specialistId,hospitalsId,hospitalName;
+    private String idval,ImageDoctor,doctorName,education,specialityName,designation,location,specialistId,hospitalsId,hospitalName;
     private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +165,13 @@ public class DoctorList extends AppCompatActivity {
         myRefDoctor.orderByChild("hospitalId").equalTo(hosptialid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
+                    idval = childDataSnapshot.getKey();
+                    //Toast.makeText(DoctorList.this, "snapshot"+id, Toast.LENGTH_SHORT).show();
+                    //Log.d("iddatasnap",id);
+
                     ImageDoctor = String.valueOf(childDataSnapshot.child("image").getValue());
                     doctorName = String.valueOf(childDataSnapshot.child("name").getValue());
                     education = String.valueOf(childDataSnapshot.child("education").getValue());
@@ -171,7 +181,7 @@ public class DoctorList extends AppCompatActivity {
 
                     int specialitymatch = Integer.parseInt(specialistId);
                     if(specialid == specialitymatch){
-                        getvalue(ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
+                        getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
                         Toast.makeText(DoctorList.this, "Value not found..", Toast.LENGTH_SHORT).show();
@@ -189,7 +199,7 @@ public class DoctorList extends AppCompatActivity {
         });
     }
 
-    private void getvalue(final String ImageDoctor, final String doctorName, final String education, final String specialistId, final String designation, final String hospitalsId) {
+    private void getvalue(final String idval, final String ImageDoctor, final String doctorName, final String education, final String specialistId, final String designation, final String hospitalsId) {
 
         int specialistid = Integer.parseInt(specialistId);
         Log.d("special", String.valueOf(specialistid));
@@ -203,7 +213,7 @@ public class DoctorList extends AppCompatActivity {
                     //getFinalCriteria(districtId,specialityId);
                 }
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
-                getvalues(ImageDoctor,doctorName,education,specialityName,designation,hospitalsId);
+                getvalues(idval,ImageDoctor,doctorName,education,specialityName,designation,hospitalsId);
 
             }
 
@@ -215,7 +225,7 @@ public class DoctorList extends AppCompatActivity {
 
     }
 
-    private void getvalues(final String imageDoctor, final String doctorName, final String education, final String specialityName, final String designation, String hospitalsId) {
+    private void getvalues(final String idval,final String imageDoctor, final String doctorName, final String education, final String specialityName, final String designation, String hospitalsId) {
         int hospitalid = Integer.parseInt(hospitalsId);
 
         //Toast.makeText(DoctorList.this, ""+hospitalid, Toast.LENGTH_SHORT).show();
@@ -227,7 +237,7 @@ public class DoctorList extends AppCompatActivity {
 
                     //Toast.makeText(DoctorList.this, ""+location, Toast.LENGTH_SHORT).show();
                 }
-                setValueinList(imageDoctor,doctorName,education,specialityName,designation,location);
+                setValueinList(idval,imageDoctor,doctorName,education,specialityName,designation,location);
 
             }
 
@@ -238,10 +248,10 @@ public class DoctorList extends AppCompatActivity {
         });
     }
 
-    private void setValueinList(String imageDoctor, String doctorName, String education, String specialityName, String designation, String hospitalName) {
-        Toast.makeText(DoctorList.this, ""+doctorName+education+designation+specialityName+hospitalName, Toast.LENGTH_SHORT).show();
+    private void setValueinList(String idval,String imageDoctor, String doctorName, String education, final String specialityName, String designation, String hospitalName) {
+        //Toast.makeText(DoctorList.this, ""+doctorName+education+designation+specialityName+hospitalName, Toast.LENGTH_SHORT).show();
 
-        doctorList.add(new DoctorInfo(imageDoctor,doctorName,education,specialityName,designation,hospitalName));
+        doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,hospitalName));
         mAdapter = new DoctorListAdapter(doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DoctorList.this);
         recyclerView.addItemDecoration(
@@ -250,7 +260,46 @@ public class DoctorList extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+
         progressDialog.dismiss();
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(DoctorList.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+
+                        TextView idtxtview = (TextView) view.findViewById(R.id.idvalue);
+                        TextView nametxtview = (TextView) view.findViewById(R.id.name);
+                        TextView designationtxtview = (TextView) view.findViewById(R.id.designationlocation);
+                        TextView educationtxtview = (TextView) view.findViewById(R.id.education);
+                        TextView specialitytxtview = (TextView) view.findViewById(R.id.speciality);
+
+                        //String specialityName = txtview.getText().toString();
+
+                        String idvalue = idtxtview.getText().toString();
+                        String name = nametxtview.getText().toString();
+                        String designatinlocation = designationtxtview.getText().toString();
+
+                        String education = educationtxtview.getText().toString();
+                        String specialtiy = specialitytxtview.getText().toString();
+
+                        Intent intent = new Intent(DoctorList.this, DoctorDetailsActivity.class);
+                        intent.putExtra("idvalue",idvalue);
+                        intent.putExtra("name",name);
+                        intent.putExtra("designationlocation", designatinlocation);
+
+                        intent.putExtra("education",education);
+                        intent.putExtra("speciality",specialtiy);
+
+                        startActivity(intent);
+
+                        //Toast.makeText(getContext(), ""+district+""+hospitalName, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
     }
     /* End of search criteria 1*/
 }

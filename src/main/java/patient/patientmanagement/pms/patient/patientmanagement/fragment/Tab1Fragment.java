@@ -1,5 +1,7 @@
 package patient.patientmanagement.pms.patient.patientmanagement.fragment;
 
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -181,11 +183,14 @@ public class Tab1Fragment extends Fragment {
                                               @Override public void onItemClick(View view, int position) {
                                                   TextView txtview = (TextView) view.findViewById(R.id.title);
                                                   String specialityName = txtview.getText().toString();
+
+
                                                   Intent intent = new Intent(getContext(), DoctorList.class);
                                                   intent.putExtra("district", district);
                                                   intent.putExtra("hospital", hospitalName);
                                                   intent.putExtra("expertise", specialityName);
                                                   startActivity(intent);
+
                                                   //Toast.makeText(getContext(), ""+district+""+hospitalName, Toast.LENGTH_SHORT).show();
                                               }
 

@@ -80,7 +80,6 @@
 
             </LinearLayout>
 
-
             <ImageView
                 android:layout_width="15dp"
                 android:layout_height="15dp"
@@ -113,6 +112,14 @@
                 android:textStyle="bold"
                 android:text="BOOK NOW"/>
 
+            <TextView
+                android:id="@+id/idvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:visibility="invisible"
+                android:textSize="2sp"
+                android:textColor="#2d2d2d"/>
 
             <TextView
                 android:id="@+id/price"

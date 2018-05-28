@@ -21,11 +21,12 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.My
     Context context;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
-        public TextView name,education,speciality,designationlocation;
+        public TextView id,name,education,speciality,designationlocation;
 
         public MyViewHolder(View view) {
             super(view);
             image = (ImageView) view.findViewById(R.id.image);
+            id = (TextView) view.findViewById(R.id.idvalue);
             name = (TextView) view.findViewById(R.id.name);
             education = (TextView) view.findViewById(R.id.education);
             speciality = (TextView) view.findViewById(R.id.speciality);
@@ -51,8 +52,9 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.My
     @Override
     public void onBindViewHolder(DoctorListAdapter.MyViewHolder holder, int position) {
         DoctorInfo doctor = doctorList.get(position);
-
         //holder.image.setImageDrawable(R.drawable.ic_user);
+
+        holder.id.setText(doctor.getIdval());
         holder.name.setText(doctor.getDoctorName());
         holder.education.setText(doctor.getEducation());
         holder.speciality.setText(doctor.getSpecialist());
