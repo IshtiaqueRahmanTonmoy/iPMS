@@ -102,16 +102,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
 
 
-        mCardAdapter = new ChamberAdapter();
-        mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
-        mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
-
-        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-
-
-        mViewPager.setAdapter(mCardAdapter);
-        mViewPager.setPageTransformer(false, mCardShadowTransformer);
-        mViewPager.setOffscreenPageLimit(3);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -119,10 +109,32 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     }
 
     private void getvalue(String idvalue) {
+
+        mCardAdapter = new ChamberAdapter();
         myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("datasnpahsopt", String.valueOf(dataSnapshot.getValue()));
+                Log.d("datasnpahsopt", String.valueOf(dataSnapshot.getChildrenCount()));
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String name = ds.child("chambername").getValue(String.class);
+                    //names.add(name);
+                    String number = ds.child("location").getValue(String.class);
+
+
+                    mCardAdapter.addCardItem(new Chamber(name,number,"BOOK APPOINMENT NOW"));
+                    //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
+
+                    Log.d("TAG", name + " / " + number);
+                }
+
+                mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+
+                mViewPager.setAdapter(mCardAdapter);
+                mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                mViewPager.setOffscreenPageLimit(3);
+
+
             }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
