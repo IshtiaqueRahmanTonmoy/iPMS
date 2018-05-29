@@ -93,30 +93,32 @@
                     </TableRow>
                 </TableLayout>
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/et_hospital"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Search by hospital"
+                    android:hint="Search by district"
                     android:drawableLeft="@drawable/search"
                     android:drawablePadding="10dp"
                     android:drawableRight="@drawable/maps"
                     android:textSize="14sp"
+                    android:focusable="false"
+                    android:clickable="false"
                     android:gravity="start"
                     android:maxLines="1"
                     android:inputType="textPersonName"
                     android:padding="15dp" />
 
                 <AutoCompleteTextView
-                    android:id="@+id/et_expertise"
+                    android:id="@+id/et_thana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Searcy by speciality"
+                    android:hint="Searcy by thana"
                     android:drawableLeft="@drawable/search"
                     android:drawablePadding="10dp"
-                    android:drawableRight="@drawable/stethoscope"
+                    android:drawableRight="@drawable/maps"
                     android:textSize="14sp"
                     android:gravity="start"
                     android:maxLines="1"

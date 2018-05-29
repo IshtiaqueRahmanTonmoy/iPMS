@@ -1,6 +1,12 @@
 package patient.patientmanagement.pms;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +31,7 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +65,7 @@ public class DashboardActivity extends AppCompatActivity
     private int dotscount;
     private ImageView[] dots;
     private ViewPager mViewPager;
-
+    private ProgressDialog progressDialog;
     private CardPagerAdapter mCardAdapter;
     private CardPagerAdapterBlood mCardAdapterBlood;
     private ShadowTransformer mCardShadowTransformer;
@@ -71,6 +78,8 @@ public class DashboardActivity extends AppCompatActivity
         setContentView(R.layout.activity_dashboard);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        checkConnection();
 
         dataModels= new ArrayList<CardItem>();
 
@@ -97,6 +106,7 @@ public class DashboardActivity extends AppCompatActivity
                             mViewPager.setAdapter(mCardAdapter);
                             mViewPager.setPageTransformer(false, mCardShadowTransformer);
                             mViewPager.setOffscreenPageLimit(3);
+                            progressDialog.dismiss();
 
                             //dataModels.add(new CardItem(districtName));
                             //adapter = new CustomAdapter(DashboardActivity.this,dataModels);
@@ -223,6 +233,53 @@ public class DashboardActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    private void checkConnection() {
+        if(isOnline()){
+            showProcessDialog();
+        }else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    DashboardActivity.this);
+            builder.setMessage("Internet Connection Required")
+                    .setCancelable(false)
+                    .setPositiveButton("Retry",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(
+                                        DialogInterface dialog,
+                                        int id) {
+
+                                    // Restart the activity
+                                    Intent intent = new Intent(
+                                            DashboardActivity.this,
+                                            DashboardActivity.class);
+                                    finish();
+                                    startActivity(intent);
+
+                                }
+
+                            });
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+    }
+
+    protected boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void showProcessDialog() {
+        progressDialog = new ProgressDialog(DashboardActivity.this);
+        //progressDialog.setTitle("Getting Informations");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
     }
 
     private List<Item> fill_with_data() {

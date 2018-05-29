@@ -11,7 +11,8 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import com.firebase.client.FirebaseError;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,9 @@ import patient.patientmanagement.pms.adapter.ChamberAdapter;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
 import patient.patientmanagement.pms.entity.CardItem;
 import patient.patientmanagement.pms.entity.Chamber;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.AboutFragment;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.AppoinmentFragment;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.MapFragment;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
 
@@ -40,25 +44,6 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     private DatabaseReference myRef = database.getReference("doctorInfo");
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,73 +58,39 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        nameTxt = (TextView) findViewById(R.id.name);
-        shortDescriptionTxt = (TextView) findViewById(R.id.short_description);
-        educationTxt = (TextView) findViewById(R.id.education);
-        specialityTxt = (TextView) findViewById(R.id.speciality);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)
+                findViewById(R.id.navigation);
 
-        Bundle extras = getIntent().getExtras();
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.navigation_about:
+                                selectedFragment = AboutFragment.newInstance();
+                                break;
+                            case R.id.navigation_appoinment:
+                                selectedFragment = AppoinmentFragment.newInstance();
+                                break;
+                            case R.id.navigation_map:
+                                selectedFragment = MapFragment.newInstance();
+                                break;
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_layout, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
 
-        if (extras != null) {
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_layout, AboutFragment.newInstance());
+        transaction.commit();
 
-            idvalue = extras.getString("idvalue");
-            getvalue(idvalue);
-            //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
-            name = extras.getString("name");
-            shortdescription = extras.getString("designationlocation");
+        //Used to select an item programmatically
+        //bottomNavigationView.getMenu().getItem(2).setChecked(true);
 
-            education = extras.getString("education");
-            speciality = extras.getString("speciality");
-
-            nameTxt.setText(name);
-            shortDescriptionTxt.setText(shortdescription);
-
-            educationTxt.setText(education);
-            specialityTxt.setText(speciality);
-
-        }
-
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-
-
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-    }
-
-    private void getvalue(String idvalue) {
-
-        mCardAdapter = new ChamberAdapter();
-        myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("datasnpahsopt", String.valueOf(dataSnapshot.getChildrenCount()));
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String name = ds.child("chambername").getValue(String.class);
-                    //names.add(name);
-                    String number = ds.child("location").getValue(String.class);
-
-
-                    mCardAdapter.addCardItem(new Chamber(name,number,"BOOK APPOINMENT NOW"));
-                    //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
-
-                    Log.d("TAG", name + " / " + number);
-                }
-
-                mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-
-
-                mViewPager.setAdapter(mCardAdapter);
-                mViewPager.setPageTransformer(false, mCardShadowTransformer);
-                mViewPager.setOffscreenPageLimit(3);
-
-
-            }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
     }
 }

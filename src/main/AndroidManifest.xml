@@ -23,7 +23,8 @@
             android:name=".DoctorDetailsActivity"
             android:label="@string/title_activity_doctor_details" />
         <activity android:name=".DoctorList" />
-        <activity android:name=".HospitalSearchActivity"></activity>
+        <activity android:name=".HospitalSearchActivity" />
+        <activity android:name=".HospitalActivity"></activity>
     </application>
 
 </manifest>

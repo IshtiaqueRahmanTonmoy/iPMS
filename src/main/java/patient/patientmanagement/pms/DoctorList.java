@@ -64,6 +64,12 @@ public class DoctorList extends AppCompatActivity {
             hospital = extras.getString("hospital");
             expertise = extras.getString("expertise");
 
+            if(hospital.matches("null")){
+                gethosptialwithout(district,expertise);
+                //Toast.makeText(DoctorList.this, "fdsf"+hospital, Toast.LENGTH_SHORT).show();
+            }
+            //Toast.makeText(DoctorList.this, "fdsf"+hospital, Toast.LENGTH_SHORT).show();
+
             //Log.d("valuetotget",district+"hospital"+hospital+"expertise"+expertise);
 
             if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()){
@@ -78,8 +84,91 @@ public class DoctorList extends AppCompatActivity {
         }
     }
 
+    private void gethosptialwithout(String district, final String expertise) {
+        myRef.orderByChild("districtName").equalTo(String.valueOf(district)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    districtId = String.valueOf(childDataSnapshot.child("districtId").getValue());
+                    setvalue(districtId,expertise);
+                }
 
-        private void showProcessDialog() {
+                //Toast.makeText(DoctorList.this, ""+districtId, Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private void setvalue(final String districtId, String expertise) {
+        myRefExpertise.orderByChild("specialityName").equalTo(String.valueOf(expertise)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    specialityId = String.valueOf(childDataSnapshot.child("specialityId").getValue());
+                    valuegetsetvalue(districtId,specialityId);
+                    //Log.d("valuesspecialist",districtId+specialityId);
+                }
+                //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void valuegetsetvalue(String districtId, String specialityId) {
+
+        int districtid = Integer.parseInt(districtId);
+        final int specialid = Integer.parseInt(specialityId);
+
+        myRefDoctor.orderByChild("districtId").equalTo(districtid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
+                    idval = childDataSnapshot.getKey();
+                    //Toast.makeText(DoctorList.this, "snapshot"+id, Toast.LENGTH_SHORT).show();
+                    //Log.d("iddatasnap",id);
+
+                    ImageDoctor = String.valueOf(childDataSnapshot.child("image").getValue());
+                    doctorName = String.valueOf(childDataSnapshot.child("name").getValue());
+                    education = String.valueOf(childDataSnapshot.child("education").getValue());
+                    specialistId = String.valueOf(childDataSnapshot.child("specialityId").getValue());
+                    designation = String.valueOf(childDataSnapshot.child("designation").getValue());
+                    hospitalsId = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
+
+                    int specialitymatch = Integer.parseInt(specialistId);
+                    if(specialid == specialitymatch){
+                        getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
+                    }
+                    else{
+                        Toast.makeText(DoctorList.this, "Value not found..", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                    //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    private void showProcessDialog() {
             progressDialog = new ProgressDialog(DoctorList.this);
             //progressDialog.setTitle("Getting Informations");
             progressDialog.setMessage("Please wait...");
@@ -209,7 +298,7 @@ public class DoctorList extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     specialityName = String.valueOf(childDataSnapshot.child("specialityName").getValue());
-                    Toast.makeText(DoctorList.this, "SpecialityName"+specialityName, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DoctorList.this, "SpecialityName"+specialityName, Toast.LENGTH_SHORT).show();
                     //getFinalCriteria(districtId,specialityId);
                 }
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();

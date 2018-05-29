@@ -16,77 +16,64 @@
             android:layout_width="match_parent"
             android:layout_height="150dp">
 
-            <LinearLayout
-                android:id="@+id/linearlayout"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="130dp"
+                android:padding="8dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@mipmap/hospital"
+                    android:layout_marginTop="20dp"
+                    android:padding="4dp" />
 
-                    <TextView
-                        android:id="@+id/hospital"
-                        android:layout_marginTop="8dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="0dp"
-                        android:layout_toRightOf="@+id/imagev1"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:text="BIRDEM General Hospital"
-                        android:textStyle="bold"
-                        android:textColor="#123150"
-                        android:textSize="18sp" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/hospital"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_toRightOf="@id/imageView"
+                    android:text="Apollo Hospital Dhaka"
+                    android:layout_marginRight="25dp"
+                    android:textSize="18sp"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                    android:textColor="#296a93" />
 
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="50dp"
-                        android:layout_toRightOf="@+id/imagev1"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:text="122 Kazi Nazrul Islam Avenue, Shahbagh, Dhaka 1000"
-                        android:textColor="#123150"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_below="@id/hospital"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/imageView"
+                    android:layout_marginRight="25dp"
+                    android:textSize="15sp"
+                    android:text="Block,E,Plot:81,Bashundhora R/A,Dhaka"
+                    android:textColor="#000000"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
-                    <TextView
-                        android:id="@+id/phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="50dp"
-                        android:layout_toRightOf="@+id/imagev1"
-                        android:layout_weight="1"
-                        android:padding="5dp"
-                        android:text="02-9661551"
-                        android:textColor="#123150"
-                        android:textSize="15sp" />
+                <TextView
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/address"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/imageView"
+                    android:textSize="15sp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="15dp"
+                    android:text="0171-6754378"
+                    android:textColor="#000000"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse" />
 
 
-                </LinearLayout>
-
-
-            </LinearLayout>
-
+            </RelativeLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -106,9 +93,9 @@
                 android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Specialists"
-                android:textColor="#123150"
-                android:textSize="15sp" />
+                android:text="Available Specialists"
+                android:textColor="#3875b1"
+                android:textSize="18sp" />
 
 
             <android.support.v7.widget.RecyclerView
