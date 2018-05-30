@@ -24,7 +24,8 @@
             android:label="@string/title_activity_doctor_details" />
         <activity android:name=".DoctorList" />
         <activity android:name=".HospitalSearchActivity" />
-        <activity android:name=".HospitalActivity"></activity>
+        <activity android:name=".HospitalActivity" />
+        <activity android:name=".BloodActivity"></activity>
     </application>
 
 </manifest>

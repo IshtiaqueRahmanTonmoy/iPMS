@@ -5,6 +5,7 @@
     <color name="colorAccent">#7dbbd4</color>
 
     <color name="colorText">#f4f4f5</color>
+    <color name="colorBackground">#fdfdff</color>
     <color name="colorTextColor">#5a5a5b</color>
     <color name="colorExpertise">#303031</color>
     <color name="colorButton">#4e879e</color>

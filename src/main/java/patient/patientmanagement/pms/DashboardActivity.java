@@ -210,7 +210,7 @@ public class DashboardActivity extends AppCompatActivity
                 }
 
                 if(position == 1){
-                    mCardAdapterBlood = new CardPagerAdapterBlood();
+                    mCardAdapterBlood = new CardPagerAdapterBlood(DashboardActivity.this);
                     mCardAdapterBlood.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapterBlood);
 
