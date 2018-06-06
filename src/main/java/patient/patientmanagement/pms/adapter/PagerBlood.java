@@ -2,6 +2,7 @@ package patient.patientmanagement.pms.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.ABnegativeFragment;
@@ -20,7 +21,7 @@ import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Frag
  * Created by suraj on 23/6/17.
  */
 
-public class PagerBlood extends FragmentStatePagerAdapter {
+public class PagerBlood extends FragmentPagerAdapter {
 
     int tabCount;
 

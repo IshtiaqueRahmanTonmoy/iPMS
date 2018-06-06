@@ -31,6 +31,8 @@ import patient.patientmanagement.pms.BloodActivity;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.ApositiveFragment;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.BnegativeFragment;
 
 public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
 
@@ -413,11 +415,15 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                         btn8 = ((ColorDrawable)btnBlood8.getBackground()).getColor();
 
                         if(btn1 == -13388315){
-                            Intent intent = new Intent(v.getContext(),BloodActivity.class);
+
+                            //PagerBlood pg = new PagerBlood();
+
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
                             intent.putExtra("district",district);
                             intent.putExtra("thana",thana);
                             intent.putExtra("bloodgroup","A+");
                             v.getContext().startActivity(intent);
+
                             //Toast.makeText(v.getContext(), "A+", Toast.LENGTH_SHORT).show();
                         }
                         if(btn2 == -13388315){

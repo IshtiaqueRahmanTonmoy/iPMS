@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -79,7 +80,7 @@ public class AboutFragment extends Fragment {
 
             idvalue = extras.getString("idvalue");
             getvalue(idvalue);
-            //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), ""+idvalue, Toast.LENGTH_SHORT).show();
             name = extras.getString("name");
             shortdescription = extras.getString("designationlocation");
 
@@ -111,9 +112,9 @@ public class AboutFragment extends Fragment {
         progressDialog.show();
     }
 
-    private void getvalue(String idvalue) {
+    private void getvalue(final String idvalue) {
 
-        mCardAdapter = new ChamberAdapter();
+        mCardAdapter = new ChamberAdapter(getActivity());
         myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -126,7 +127,7 @@ public class AboutFragment extends Fragment {
                     String number = ds.child("location").getValue(String.class);
 
 
-                    mCardAdapter.addCardItem(new Chamber(name,number,"BOOK APPOINMENT NOW"));
+                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW"));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 
                     Log.d("TAG", name + " / " + number);
@@ -140,6 +141,8 @@ public class AboutFragment extends Fragment {
                 mViewPager.setOffscreenPageLimit(3);
 
                 progressDialog.dismiss();
+
+
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {

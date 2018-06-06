@@ -1,5 +1,6 @@
 package patient.patientmanagement.pms.patient.patientmanagement.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -20,12 +22,14 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import patient.patientmanagement.pms.DoctorDetailsActivity;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.adapter.BloodListAdapter;
 import patient.patientmanagement.pms.adapter.DoctorListAdapter;
 import patient.patientmanagement.pms.entity.Blood;
 import patient.patientmanagement.pms.entity.DividerItemDecoration;
+import patient.patientmanagement.pms.entity.RecyclerItemClickListener;
 
 /**
  * Created by suraj on 23/6/17.
@@ -108,7 +112,7 @@ public class ApositiveFragment extends Fragment {
         final int ids = Integer.parseInt(id);
         final int idsthana = Integer.parseInt(idthana);
 
-        myRef.orderByChild("bloodgroup").equalTo(String.valueOf(bloodGroup)).addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.orderByChild("bloodgroup").equalTo(bloodGroup).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -122,13 +126,13 @@ public class ApositiveFragment extends Fragment {
                     phone = String.valueOf(childDataSnapshot.child("phone").getValue());
 
 
-                    Toast.makeText(getActivity(), ""+name+""+address, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), ""+name+""+address, Toast.LENGTH_SHORT).show();
                     int districtmatch = Integer.parseInt(districtId);
                     int thanamatch = Integer.parseInt(thanaId);
 
                     if(ids == districtmatch && idsthana == thanamatch){
                         bloodList.add(new Blood(name,address,phone));
-                        bloodAdapter = new BloodListAdapter(bloodList);
+                        bloodAdapter = new BloodListAdapter(getActivity(),bloodList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                         recyclerView.addItemDecoration(
                                 new DividerItemDecoration(getActivity(), R.drawable.divider));
@@ -136,6 +140,7 @@ public class ApositiveFragment extends Fragment {
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(bloodAdapter);
+
 
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }

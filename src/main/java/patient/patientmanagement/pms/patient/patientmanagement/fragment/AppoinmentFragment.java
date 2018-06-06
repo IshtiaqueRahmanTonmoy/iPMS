@@ -111,9 +111,9 @@ public class AppoinmentFragment extends Fragment {
         progressDialog.show();
     }
 
-    private void getvalue(String idvalue) {
+    private void getvalue(final String idvalue) {
 
-        mCardAdapter = new ChamberAdapter();
+        mCardAdapter = new ChamberAdapter(getActivity());
         myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -126,7 +126,7 @@ public class AppoinmentFragment extends Fragment {
                     String number = ds.child("location").getValue(String.class);
 
 
-                    mCardAdapter.addCardItem(new Chamber(name,number,"BOOK APPOINMENT NOW"));
+                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW"));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 
                     Log.d("TAG", name + " / " + number);

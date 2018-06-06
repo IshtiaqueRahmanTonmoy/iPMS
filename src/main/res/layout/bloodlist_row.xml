@@ -88,7 +88,7 @@
 
 
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/callnow"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="250dp"
