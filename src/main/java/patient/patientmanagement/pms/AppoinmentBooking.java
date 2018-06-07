@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Query;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
 import patient.patientmanagement.pms.adapter.ConfirmAdapter;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
@@ -33,11 +35,14 @@ public class AppoinmentBooking extends AppCompatActivity {
     ShadowTransformer fragmentCardShadowTransformer;
     TextView location,datetxt,time,name,shortdescription;
     String currentime;
-    String dates,month,year,format,id;
+    String format,id,dateTime;
+    String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime;
+    Long formatdate;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
+    private DatabaseReference myRefAppSchedule = database.getReference("appoinmentSchedule");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +54,30 @@ public class AppoinmentBooking extends AppCompatActivity {
         dates = String.valueOf(clndr.get(Calendar.DATE));
         month = String.valueOf(clndr.get(Calendar.MONTH)+1);
         year = String.valueOf(clndr.get(Calendar.YEAR));
-        format = year+"-"+month+"-"+dates;
-        Log.d("sdf", String.valueOf(clndr.get(Calendar.DATE)));
+
+        if(dates.length() == 1){
+           dayformat = "0"+dates;
+        }
+        else{
+            dayformat = dates;
+        }
+
+        if(month.length() == 1){
+            monthformat = "0"+month;
+        }
+        else{
+            monthformat = month;
+        }
+
+        Date dNow = new Date( );
+        SimpleDateFormat ft1 = new SimpleDateFormat ("dd-MMM-yyyy");
+        //System.out.println("Date 2: " + ft1.format(dNow));
+        appoinmentTime = ft1.format(dNow);
+        format = year+"-"+monthformat+"-"+dayformat;
+        //Log.d("sdf", String.valueOf(clndr.get(Calendar.DATE)));
 
 
+        Log.d("format",format);
         //formatting time to have AM/PM text using 'a' format
         String strDateFormat = "hh:mm a";
         String strfullFormat = "HH:mm:ss";
@@ -60,11 +85,6 @@ public class AppoinmentBooking extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
         currentime = sdf.format(date);
         Log.d("sdf",sdf.format(date));
-
-
-        Timestamp stamp = new Timestamp(System.currentTimeMillis());
-        Date dates = new Date(stamp.getTime());
-        //Toast.makeText(this, ""+dates, Toast.LENGTH_SHORT).show();
 
         location = (TextView) findViewById(R.id.location);
         datetxt = (TextView) findViewById(R.id.date);
@@ -87,18 +107,7 @@ public class AppoinmentBooking extends AppCompatActivity {
         }
 
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
-        pagerAdapter.addCardItem(new AvailableTIme("Jun 05,2018","03:00 PM","Approximate SLNO-3","Confirm"));
-
-        fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
-        fragmentCardShadowTransformer.enableScaling(true);
-
-
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
-        viewPager.setOffscreenPageLimit(3);
     }
 
     private void getvalue(final String id, final String location) {
@@ -121,7 +130,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
     }
 
-    private void getvalueid(String id, String hospitalid, final String location) {
+    private void getvalueid(final String id, String hospitalid, final String location) {
 
         int hospid = Integer.parseInt(hospitalid);
         myRefHospital.orderByChild("hospitalId").equalTo(hospid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -130,6 +139,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String hospitalAddress = String.valueOf(childDataSnapshot.child("hospitalName").getValue());
                     shortdescription.setText(hospitalAddress);
+                    getvalues(id,location);
                     Log.d("address",hospitalAddress);
                 }
             }
@@ -139,34 +149,61 @@ public class AppoinmentBooking extends AppCompatActivity {
 
             }
         });
+    }
 
-
-        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("doctorInfo");
-        ref.child(id).child("chamber").addValueEventListener(new ValueEventListener() {
+    private void getvalues(final String id,final String location) {
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("doctorInfo").child(id).child("chamber");
+        ref.orderByChild("chambername").equalTo(String.valueOf(location)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("datasnapshot", String.valueOf(dataSnapshot));
-                myRefDoctor.orderByChild("chambername").equalTo(location).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                            String chamberday = String.valueOf(childDataSnapshot.child("chamberday").getValue());
-                            //shortdescription.setText(hospitalAddress);
-                            Log.d("chamber",chamberday);
-                        }
-                    }
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String day = String.valueOf(childDataSnapshot.child("chamberday").getValue());
+                    String hospitalId = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
+                    Log.d("day",day);
+                    Log.d("hospitalid",hospitalId);
+                    matchcurrentDate(day,hospitalId);
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
 
+    private void matchcurrentDate(String day, String hospitalId) {
+
+        Log.d("day",day);
+
+        int hosid = Integer.parseInt(hospitalId);
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
+        ref.orderByChild("date").equalTo(format).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    //dateTime = String.valueOf(childDataSnapshot.child("datetime").getValue());
+                    hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
+                    serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
+
+                    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+                    pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
+                    pagerAdapter.addCardItem(new AvailableTIme(appoinmentTime,currentime,"Approximate SLNO - " + serialNo,"Confirm"));
+
+                    fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
+                    fragmentCardShadowTransformer.enableScaling(true);
+
+
+                    viewPager.setAdapter(pagerAdapter);
+                    viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
+                    viewPager.setOffscreenPageLimit(3);
+                    Log.d("diff", String.valueOf(serialNo));
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
