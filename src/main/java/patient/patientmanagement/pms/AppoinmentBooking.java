@@ -6,39 +6,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.firebase.client.Query;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.concurrent.TimeUnit;
 
 import patient.patientmanagement.pms.adapter.ConfirmAdapter;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
 import patient.patientmanagement.pms.entity.AvailableTIme;
-import patient.patientmanagement.pms.entity.Chamber;
 
 public class AppoinmentBooking extends AppCompatActivity {
 
     ConfirmAdapter pagerAdapter;
     ShadowTransformer fragmentCardShadowTransformer;
     TextView location,datetxt,time,name,shortdescription;
-    String currentime;
+    String currentime,newtime;
     String format,id,dateTime;
-    String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime;
+    String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime,timeappoinment;
     Long formatdate;
-
+    long appid = 0;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
@@ -56,7 +49,7 @@ public class AppoinmentBooking extends AppCompatActivity {
         year = String.valueOf(clndr.get(Calendar.YEAR));
 
         if(dates.length() == 1){
-           dayformat = "0"+dates;
+            dayformat = "0"+dates;
         }
         else{
             dayformat = dates;
@@ -102,7 +95,7 @@ public class AppoinmentBooking extends AppCompatActivity {
             location.setText(namevalue);
             time.setText(currentime);
             datetxt.setText(format);
-            getvalue(id,namevalue);
+            getvalue(id,namevalue,format);
             //Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
         }
 
@@ -110,7 +103,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
     }
 
-    private void getvalue(final String id, final String location) {
+    private void getvalue(final String id, final String location, final String format) {
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("doctorInfo");
         ref.child(id).addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,7 +111,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                 String namevalue = String.valueOf(dataSnapshot.child("name").getValue());
                 String hospitalid = String.valueOf(dataSnapshot.child("hospitalId").getValue());
                 name.setText(namevalue);
-                getvalueid(id,hospitalid,location);
+                getvalueid(id,hospitalid,location,format);
                 //Log.d("names",description);
             }
 
@@ -130,7 +123,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
     }
 
-    private void getvalueid(final String id, String hospitalid, final String location) {
+    private void getvalueid(final String id, String hospitalid, final String location, final String format) {
 
         int hospid = Integer.parseInt(hospitalid);
         myRefHospital.orderByChild("hospitalId").equalTo(hospid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -139,7 +132,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String hospitalAddress = String.valueOf(childDataSnapshot.child("hospitalName").getValue());
                     shortdescription.setText(hospitalAddress);
-                    getvalues(id,location);
+                    getvalues(id,location,format);
                     Log.d("address",hospitalAddress);
                 }
             }
@@ -151,7 +144,7 @@ public class AppoinmentBooking extends AppCompatActivity {
         });
     }
 
-    private void getvalues(final String id,final String location) {
+    private void getvalues(final String id,final String location,final String format) {
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("doctorInfo").child(id).child("chamber");
         ref.orderByChild("chambername").equalTo(String.valueOf(location)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -162,7 +155,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
                     Log.d("day",day);
                     Log.d("hospitalid",hospitalId);
-                    matchcurrentDate(day,hospitalId);
+                    matchcurrentDate(id,day,hospitalId,format);
                 }
             }
 
@@ -172,24 +165,45 @@ public class AppoinmentBooking extends AppCompatActivity {
         });
     }
 
-    private void matchcurrentDate(String day, String hospitalId) {
+    private void matchcurrentDate(final String id, String day, final String hospitalId, final String format) {
 
-        Log.d("day",day);
+        Log.d("day",format);
 
         int hosid = Integer.parseInt(hospitalId);
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
         ref.orderByChild("date").equalTo(format).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     //dateTime = String.valueOf(childDataSnapshot.child("datetime").getValue());
                     hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
                     serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
+                    timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
 
+                    appid = (long) childDataSnapshot.child("id").getValue();
+
+
+                    SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+                    Date d = null;
+                    try {
+                        d = df.parse(timeappoinment);
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(d);
+                        cal.add(Calendar.MINUTE, 30);
+                        newtime = df.format(cal.getTime());
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    int slno = Integer.parseInt(serialNo);
+                    int serialno = slno + 1;
+                    long aid = appid + 1;
                     ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
                     pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
-                    pagerAdapter.addCardItem(new AvailableTIme(appoinmentTime,currentime,"Approximate SLNO - " + serialNo,"Confirm"));
+                    pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,"Approximate srlNo - " + serialNo,"1",newtime,"Confirm Book"));
 
                     fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
                     fragmentCardShadowTransformer.enableScaling(true);
@@ -198,7 +212,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                     viewPager.setAdapter(pagerAdapter);
                     viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
                     viewPager.setOffscreenPageLimit(3);
-                    Log.d("diff", String.valueOf(serialNo));
+                    Log.d("diff", String.valueOf(serialno));
                 }
             }
 

@@ -26,6 +26,7 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import patient.patientmanagement.pms.databinding.ActivityLoginBinding;
 import patient.patientmanagement.pms.entity.Utils;
+import patient.patientmanagement.pms.entity.appoinmentSchedule;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -35,8 +36,12 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private ProgressBar progressBar;
     private TextView signupText;
-    DatabaseReference databaseUsers;
+    DatabaseReference databaseUsers,databaseUsersAppoinment;
     String idvalue;
+
+    String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
+    long id = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -48,6 +53,17 @@ public class LoginActivity extends AppCompatActivity {
         if (extras != null) {
 
             idvalue = extras.getString("idvalue");
+
+            date = extras.getString("format");
+            disease = extras.getString("symptom");
+            doctorId = extras.getString("id");
+            hospitalId = extras.getString("hospitalId");
+            dates = extras.getString("date");
+            time = extras.getString("time");
+            serialNo = extras.getString("serial");
+            confirm = extras.getString("confirm");
+            id = Long.parseLong(extras.getString("appoinmentid"));
+
             //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
         }
 
@@ -57,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("patientInfo");
+        databaseUsersAppoinment = FirebaseDatabase.getInstance().getReference("appoinmentSchedule");
 
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,8 +105,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                         FirebaseUser firebaseUser = auth.getCurrentUser();
                                         if (firebaseUser != null) {
-                                            String userId = firebaseUser.getUid();
-                                            Toast.makeText(LoginActivity.this, "successfull"+idvalue, Toast.LENGTH_SHORT).show();
+                                            String patientId = firebaseUser.getUid();
+                                            //Toast.makeText(LoginActivity.this, "successfull"+idvalue, Toast.LENGTH_SHORT).show();
+                                            addvalue(date,disease,doctorId,hospitalId,id,patientId,serialNo,"1",time);
                                             progressDialog.dismiss();
                                         }
                                         //Intent intent = new Intent(LoginActivity.this, Doc.class);
@@ -104,6 +122,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void addvalue(String date, String disease, String doctorId, String hospitalId, long id, String patientId, String serialNo, String s, String time) {
+        appoinmentSchedule user = new appoinmentSchedule(date,disease,doctorId,hospitalId,id,patientId,serialNo,s,time);
+        long node = id - 1;
+        String idnode = String.valueOf(node);
+        databaseUsers.child(idnode).setValue(user);
     }
 
     private void showProcessDialog() {
