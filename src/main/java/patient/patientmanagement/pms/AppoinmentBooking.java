@@ -1,5 +1,6 @@
 package patient.patientmanagement.pms;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class AppoinmentBooking extends AppCompatActivity {
     String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime,timeappoinment;
     Long formatdate;
     long appid = 0;
+    private ProgressDialog progressDialog;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
@@ -61,6 +63,8 @@ public class AppoinmentBooking extends AppCompatActivity {
         else{
             monthformat = month;
         }
+
+        showProcessDialog();
 
         Date dNow = new Date( );
         SimpleDateFormat ft1 = new SimpleDateFormat ("dd-MMM-yyyy");
@@ -101,6 +105,13 @@ public class AppoinmentBooking extends AppCompatActivity {
 
 
 
+    }
+
+    private void showProcessDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Getting Data");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
     }
 
     private void getvalue(final String id, final String location, final String format) {
@@ -171,12 +182,13 @@ public class AppoinmentBooking extends AppCompatActivity {
 
         int hosid = Integer.parseInt(hospitalId);
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
+
         ref.orderByChild("date").equalTo(format).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    //dateTime = String.valueOf(childDataSnapshot.child("datetime").getValue());
+                    dateTime = String.valueOf(childDataSnapshot.child("date").getValue());
                     hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
                     serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
                     timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
@@ -199,11 +211,17 @@ public class AppoinmentBooking extends AppCompatActivity {
 
                     int slno = Integer.parseInt(serialNo);
                     int serialno = slno + 1;
+                    String sno = String.valueOf(serialno);
+
+
                     long aid = appid + 1;
                     ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
+                    //String ids = String.valueOf(aid);
+
+                    Log.d("sno",sno);
                     pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
-                    pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,"Approximate srlNo - " + serialNo,"1",newtime,"Confirm Book"));
+                    pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book"));
 
                     fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
                     fragmentCardShadowTransformer.enableScaling(true);
@@ -213,11 +231,13 @@ public class AppoinmentBooking extends AppCompatActivity {
                     viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
                     viewPager.setOffscreenPageLimit(3);
                     Log.d("diff", String.valueOf(serialno));
+                    progressDialog.dismiss();
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                progressDialog.dismiss();
             }
         });
 

@@ -96,7 +96,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
         //dateTextView.setText(item.getFormat());
         dateTextView.setText(ft1.format(dNow));
         timeTextView.setText(item.getTime());
-        slnoTextView.setText(item.getSerial());
+        slnoTextView.setText("Approximate Serial No-" + item.getSerial());
 
         format = item.getFormat();
         symptom = item.getSymptoms();
@@ -108,7 +108,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
         confirm = item.getConfirm();
         appoinmentid = item.getAid();
 
-        Log.d("val",format+time);
+        Log.d("val", String.valueOf(appoinmentid));
 
         confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,7 +122,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
                 intent.putExtra("time",time);
                 intent.putExtra("serial",serial);
                 intent.putExtra("confirm",confirm);
-                intent.putExtra("appoinmentid",appoinmentid);
+                intent.putExtra("appoinmentid",String.valueOf(appoinmentid));
 
                 v.getContext().startActivity(intent);
 

@@ -1,10 +1,19 @@
 package patient.patientmanagement.pms.entity;
 
 public class appoinmentSchedule {
-    String date,disease,doctorId,hospitalId,patientId,serialNo,status,time;
-    int id;
+    String date,disease,doctorId,patientId,time;
+    int hospitalId,serialNo,status,id;
 
-    public appoinmentSchedule(String date, String disease, String doctorId, String hospitalId, long id, String patientId, String serialNo, String s, String time) {
+    public appoinmentSchedule(String date, String disease, String doctorId, int hospitalId, int id, String patientId, int serialNo, int status, String time) {
+         this.date = date;
+         this.disease = disease;
+         this.doctorId = doctorId;
+         this.hospitalId = hospitalId;
+         this.id = id;
+         this.patientId = patientId;
+         this.serialNo = serialNo;
+         this.status = status;
+         this.time = time;
     }
 
     public String getDate() {
@@ -31,11 +40,11 @@ public class appoinmentSchedule {
         this.doctorId = doctorId;
     }
 
-    public String getHospitalId() {
+    public int getHospitalId() {
         return hospitalId;
     }
 
-    public void setHospitalId(String hospitalId) {
+    public void setHospitalId(int hospitalId) {
         this.hospitalId = hospitalId;
     }
 
@@ -47,19 +56,19 @@ public class appoinmentSchedule {
         this.patientId = patientId;
     }
 
-    public String getSerialNo() {
+    public int getSerialNo() {
         return serialNo;
     }
 
-    public void setSerialNo(String serialNo) {
+    public void setSerialNo(int serialNo) {
         this.serialNo = serialNo;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

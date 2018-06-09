@@ -1,5 +1,6 @@
 package patient.patientmanagement.pms.patient.patientmanagement.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,6 +40,7 @@ public class ApositiveFragment extends Fragment {
 
     String districtName,thanaName,bloodGroup;
     RecyclerView recyclerView;
+    private ProgressDialog progressDialog;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("bloodDonor");
@@ -53,6 +55,8 @@ public class ApositiveFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_apos, container, false);
+
+        showProcessDialog();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Bundle extras = getActivity().getIntent().getExtras();
@@ -86,6 +90,13 @@ public class ApositiveFragment extends Fragment {
 
 
         return view;
+    }
+
+    private void showProcessDialog() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Login");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
     }
 
     private void getValue(final String id, final String thanaName, final String bloodGroup) {
@@ -140,6 +151,7 @@ public class ApositiveFragment extends Fragment {
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(bloodAdapter);
+                        progressDialog.dismiss();
 
 
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);

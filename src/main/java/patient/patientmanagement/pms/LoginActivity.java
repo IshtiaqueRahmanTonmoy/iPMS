@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -40,8 +41,8 @@ public class LoginActivity extends AppCompatActivity {
     String idvalue;
 
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
-    long id = 0;
-
+    //long id = 0;
+    String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -62,7 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             time = extras.getString("time");
             serialNo = extras.getString("serial");
             confirm = extras.getString("confirm");
-            id = Long.parseLong(extras.getString("appoinmentid"));
+            //id = Long.parseLong(extras.getString("appoinmentid"));
+            id = extras.getString("appoinmentid");
+
+            Log.d("extra",id);
+            Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
 
             //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
         }
@@ -124,11 +129,20 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void addvalue(String date, String disease, String doctorId, String hospitalId, long id, String patientId, String serialNo, String s, String time) {
-        appoinmentSchedule user = new appoinmentSchedule(date,disease,doctorId,hospitalId,id,patientId,serialNo,s,time);
-        long node = id - 1;
-        String idnode = String.valueOf(node);
-        databaseUsers.child(idnode).setValue(user);
+    private void addvalue(String date, String disease, String doctorId, String hosId, String i, String patientId, String srlno, String sts, String time) {
+
+        int hospitalId = Integer.parseInt(hosId);
+        int serialNo = Integer.parseInt(srlno);
+        int status = Integer.parseInt(sts);
+        int id = Integer.parseInt(i);
+
+        Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+patientId+"\n"+serialNo+"\n"+status+"\n"+time);
+
+        appoinmentSchedule user = new appoinmentSchedule(date,disease,doctorId,hospitalId,id,patientId,serialNo,status,time);
+        //long node = id - 1;
+        //String idnode = String.valueOf(node);
+        int idnode = 2;
+        databaseUsersAppoinment.child(String.valueOf(idnode)).setValue(user);
     }
 
     private void showProcessDialog() {
