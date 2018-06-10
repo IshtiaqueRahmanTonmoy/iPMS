@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,6 +47,12 @@ public class SignupActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String photo,email,name,phone,gender,age,bloodgroup,password,created,uid;
 
+
+    String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
+    //long id = 0;
+    String id;
+    ImageButton back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -53,6 +61,48 @@ public class SignupActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("patientInfo");
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+
+            //idvalue = extras.getString("idvalue");
+
+            date = extras.getString("format");
+            disease = extras.getString("symptom");
+            doctorId = extras.getString("id");
+            hospitalId = extras.getString("hospitalId");
+            dates = extras.getString("date");
+            time = extras.getString("time");
+            serialNo = extras.getString("serial");
+            confirm = extras.getString("confirm");
+            //id = Long.parseLong(extras.getString("appoinmentid"));
+            id = extras.getString("appoinmentid");
+
+            Log.d("extra",id);
+            Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
+
+            //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
+        }
+
+        back = (ImageButton) findViewById(R.id.et_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                intent.putExtra("format",date);
+                intent.putExtra("symptom",disease);
+                intent.putExtra("id",doctorId);
+                intent.putExtra("hospitalId",hospitalId);
+                intent.putExtra("date",dates);
+                intent.putExtra("time",time);
+                intent.putExtra("serial",serialNo);
+                intent.putExtra("confirm",confirm);
+                intent.putExtra("appoinmentid",String.valueOf(id));
+
+                startActivity(intent);
+
+            }
+        });
 
         userEdt = (EditText) findViewById(R.id.et_full_name);
         emailEdt = (EditText) findViewById(R.id.et_email);

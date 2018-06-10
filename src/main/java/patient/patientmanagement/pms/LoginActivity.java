@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
     //long id = 0;
     String id;
+    ImageView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -75,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         emailEdt = (EditText) findViewById(R.id.et_phone);
         passwordEdt = (EditText) findViewById(R.id.et_password);
         loginBtn = (Button) findViewById(R.id.btn_login); 
-
         auth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("patientInfo");
         databaseUsersAppoinment = FirebaseDatabase.getInstance().getReference("appoinmentSchedule");
@@ -154,7 +155,20 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void signup(View view) {
-        startActivity(new Intent(this, SignupActivity.class));
+        Intent intent = new Intent(LoginActivity.this,SignupActivity.class);
+        intent.putExtra("format",date);
+        intent.putExtra("symptom",disease);
+        intent.putExtra("id",doctorId);
+        intent.putExtra("hospitalId",hospitalId);
+        intent.putExtra("date",dates);
+        intent.putExtra("time",time);
+        intent.putExtra("serial",serialNo);
+        intent.putExtra("confirm",confirm);
+        intent.putExtra("appoinmentid",String.valueOf(id));
+
+        startActivity(intent);
+
+        //startActivity(new Intent(this, SignupActivity.class));
     }
 
 

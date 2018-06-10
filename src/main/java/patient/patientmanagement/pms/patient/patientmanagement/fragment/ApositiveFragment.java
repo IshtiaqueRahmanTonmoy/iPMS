@@ -94,7 +94,7 @@ public class ApositiveFragment extends Fragment {
 
     private void showProcessDialog() {
         progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Login");
+        progressDialog.setTitle("Getting Blood Groups");
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
     }

@@ -57,13 +57,11 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
                         switch (item.getItemId()) {
-                            case R.id.navigation_about:
+                                case R.id.navigation_about:
                                 selectedFragment = AboutFragment.newInstance();
                                 break;
-                            case R.id.navigation_appoinment:
-                                selectedFragment = AppoinmentFragment.newInstance();
-                                break;
-                            case R.id.navigation_map:
+
+                                case R.id.navigation_map:
                                 selectedFragment = MapFragment.newInstance();
                                 break;
                         }

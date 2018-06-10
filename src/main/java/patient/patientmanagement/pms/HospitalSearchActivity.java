@@ -35,7 +35,7 @@ public class HospitalSearchActivity extends AppCompatActivity {
 
         //add the tabs
         mTabLayout.addTab(mTabLayout.newTab().setText("Info"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("Doctors"));
+        //mTabLayout.addTab(mTabLayout.newTab().setText("Doctors"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Location Map"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.Dash;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -54,7 +55,7 @@ public class DashboardActivity extends AppCompatActivity
 
     private RecyclerView recyclerView;
     private List<Item> data;
-    private String[] names = {"Hospital,Blood,HealthNews,HealthTips"};
+    private String[] names = {"Hospital,Blood,HealthNews,HealthTipsActivity"};
     private int flags[] = {R.mipmap.hospital,R.mipmap.blood,R.mipmap.healthnews,R.mipmap.healthtips};
     private HorizontalAdapter horizontalAdapter;
     private ConstraintLayout constraintLayout;
@@ -219,6 +220,15 @@ public class DashboardActivity extends AppCompatActivity
                     mViewPager.setOffscreenPageLimit(3);
                 }
 
+                if(position == 2){
+                    Intent intent = new Intent(DashboardActivity.this,HealthNewsActivity.class);
+                    startActivity(intent);
+                }
+
+                if(position == 3){
+                    Intent intent = new Intent(DashboardActivity.this,HealthTipsActivity.class);
+                    startActivity(intent);
+                }
             }
             @Override
             public void onLongClick(View view, int position) { }
@@ -287,7 +297,7 @@ public class DashboardActivity extends AppCompatActivity
         data.add(new Item( R.mipmap.hospital, "Hospital"));
         data.add(new Item( R.mipmap.blood, "Blood"));
         data.add(new Item( R.mipmap.healthnews, "HealthNews"));
-        data.add(new Item( R.mipmap.healthtips, "HealthTips"));
+        data.add(new Item( R.mipmap.healthtips, "HealthTipsActivity"));
         return data;
     }
 

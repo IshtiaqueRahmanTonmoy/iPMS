@@ -44,6 +44,9 @@ public class HospitalActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hospital);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         Bundle extras = getIntent().getExtras();
 
         showProcessDialog();
