@@ -50,8 +50,8 @@ public class ABnegativeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_abneg, container, false);
 
+        bloodList.clear();
         showProcessDialog();
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
@@ -59,7 +59,7 @@ public class ABnegativeFragment extends Fragment {
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
 
-
+            //bloodGroup = "AB-";
             myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

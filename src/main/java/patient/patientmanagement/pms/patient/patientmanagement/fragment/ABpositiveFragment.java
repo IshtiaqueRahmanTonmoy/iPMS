@@ -50,6 +50,7 @@ public class ABpositiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_appos, container, false);
 
+        bloodList.clear();
         showProcessDialog();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -58,7 +59,7 @@ public class ABpositiveFragment extends Fragment {
             districtName = extras.getString("district");
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
-
+            //bloodGroup = "AB+";
 
             myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

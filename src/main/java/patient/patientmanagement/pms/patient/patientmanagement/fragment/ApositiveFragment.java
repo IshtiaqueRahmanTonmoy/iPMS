@@ -56,6 +56,7 @@ public class ApositiveFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_apos, container, false);
 
+        bloodList.clear();
         showProcessDialog();
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -64,7 +65,7 @@ public class ApositiveFragment extends Fragment {
             districtName = extras.getString("district");
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
-
+            bloodGroup = "A+";
 
             myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -81,13 +82,7 @@ public class ApositiveFragment extends Fragment {
 
                 }
             });
-
-
-
         }
-
-
-
 
         return view;
     }
@@ -152,8 +147,6 @@ public class ApositiveFragment extends Fragment {
                         recyclerView.setItemAnimator(new DefaultItemAnimator());
                         recyclerView.setAdapter(bloodAdapter);
                         progressDialog.dismiss();
-
-
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
