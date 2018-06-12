@@ -415,9 +415,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                         btn8 = ((ColorDrawable)btnBlood8.getBackground()).getColor();
 
                         if(btn1 == -13388315){
-
                             //PagerBlood pg = new PagerBlood();
-
                             Intent intent = new Intent(v.getContext(), BloodActivity.class);
                             intent.putExtra("district",district);
                             intent.putExtra("thana",thana);
@@ -427,25 +425,67 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                             //Toast.makeText(v.getContext(), "A+", Toast.LENGTH_SHORT).show();
                         }
                         if(btn2 == -13388315){
-                            Toast.makeText(v.getContext(), "A-", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(v.getContext(), "A-", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","A-");
+                            v.getContext().startActivity(intent);
+
                         }
                         if(btn3 == -13388315){
-                            Toast.makeText(v.getContext(), "B+", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","B+");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "B+", Toast.LENGTH_SHORT).show();
                         }
                         if(btn4 == -13388315){
-                            Toast.makeText(v.getContext(), "B-", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","B-");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "B-", Toast.LENGTH_SHORT).show();
                         }
                         if(btn5 == -13388315){
-                            Toast.makeText(v.getContext(), "AB+", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","AB+");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "AB+", Toast.LENGTH_SHORT).show();
                         }
                         if(btn6 == -13388315){
-                            Toast.makeText(v.getContext(), "AB-", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","AB-");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "AB-", Toast.LENGTH_SHORT).show();
                         }
                         if(btn7 == -13388315){
-                            Toast.makeText(v.getContext(), "O+", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","O+");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "O+", Toast.LENGTH_SHORT).show();
                         }
                         if(btn8 == -13388315){
-                            Toast.makeText(v.getContext(), "O-", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(v.getContext(), BloodActivity.class);
+                            intent.putExtra("district",district);
+                            intent.putExtra("thana",thana);
+                            intent.putExtra("bloodgroup","O-");
+                            v.getContext().startActivity(intent);
+
+                            //Toast.makeText(v.getContext(), "O-", Toast.LENGTH_SHORT).show();
                         }
                         //Toast.makeText(v.getContext(), ""+color, Toast.LENGTH_SHORT).show();
                     }

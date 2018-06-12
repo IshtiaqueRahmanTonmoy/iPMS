@@ -17,7 +17,7 @@ public class BloodActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-
+    private String bloodgroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,44 @@ public class BloodActivity extends AppCompatActivity {
 
 
 
+        Bundle extras = getIntent().getExtras();
+
+        if (extras != null) {
+            bloodgroup = extras.getString("bloodgroup");
+            if(bloodgroup.equals("A+")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(0);
+                tab.select();
+            }
+            else if(bloodgroup.equals("A-")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(1);
+                tab.select();
+            }
+            else if(bloodgroup.equals("B+")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(2);
+                tab.select();
+            }
+            else if(bloodgroup.equals("B-")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(3);
+                tab.select();
+            }
+            else if(bloodgroup.equals("AB+")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(4);
+                tab.select();
+            }
+            else if(bloodgroup.equals("AB-")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(5);
+                tab.select();
+            }
+            else if(bloodgroup.equals("O+")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(6);
+                tab.select();
+            }
+            else if(bloodgroup.equals("O-")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(7);
+                tab.select();
+            }
+
+        }
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
