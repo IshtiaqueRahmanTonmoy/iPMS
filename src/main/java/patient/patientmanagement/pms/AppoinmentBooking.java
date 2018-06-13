@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -39,10 +40,14 @@ public class AppoinmentBooking extends AppCompatActivity {
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
     private DatabaseReference myRefAppSchedule = database.getReference("appoinmentSchedule");
 
+    String strDateFormat,strfullFormat,strDateFormats;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appoinment_booking);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         Date date = new Date();
         Calendar clndr = Calendar.getInstance();
@@ -76,8 +81,8 @@ public class AppoinmentBooking extends AppCompatActivity {
 
         Log.d("format",format);
         //formatting time to have AM/PM text using 'a' format
-        String strDateFormat = "hh:mm a";
-        String strfullFormat = "HH:mm:ss";
+        strDateFormat = "hh:mm a";
+        strfullFormat = "HH:mm:ss";
 
         SimpleDateFormat sdf = new SimpleDateFormat(strDateFormat);
         currentime = sdf.format(date);
@@ -183,55 +188,102 @@ public class AppoinmentBooking extends AppCompatActivity {
         int hosid = Integer.parseInt(hospitalId);
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
 
-        ref.orderByChild("date").equalTo(format).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.orderByChild("hospitalId").equalTo(hosid).addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     dateTime = String.valueOf(childDataSnapshot.child("date").getValue());
-                    hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
-                    serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
-                    timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
 
-                    appid = (long) childDataSnapshot.child("id").getValue();
+                    if(dateTime.equals(format)){
+                        //Toast.makeText(AppoinmentBooking.this, ""+dateTime, Toast.LENGTH_SHORT).show();
+                        hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
+                        serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
+                        timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
+
+                        appid = (long) childDataSnapshot.child("id").getValue();
 
 
-                    SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
-                    Date d = null;
-                    try {
-                        d = df.parse(timeappoinment);
-                        Calendar cal = Calendar.getInstance();
-                        cal.setTime(d);
-                        cal.add(Calendar.MINUTE, 30);
-                        newtime = df.format(cal.getTime());
+                        SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
+                        Date d = null;
+                        try {
+                            d = df.parse(timeappoinment);
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(d);
+                            cal.add(Calendar.MINUTE, 30);
+                            newtime = df.format(cal.getTime());
 
-                    } catch (ParseException e) {
-                        e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        int slno = Integer.parseInt(serialNo);
+                        int serialno = slno + 1;
+                        String sno = String.valueOf(serialno);
+
+
+                        long aid = appid + 1;
+
+                        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+                        //String ids = String.valueOf(aid);
+
+                        //Log.d("sno",sno);
+                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
+                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book"));
+                        //pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,4,null,"10","1",newtime,"Confirm Book"));
+
+
+                        fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
+                        fragmentCardShadowTransformer.enableScaling(true);
+
+
+                        viewPager.setAdapter(pagerAdapter);
+                        viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
+                        viewPager.setOffscreenPageLimit(3);
+                        //Log.d("diff", String.valueOf(serialno));
+                        progressDialog.dismiss();
                     }
 
-                    int slno = Integer.parseInt(serialNo);
-                    int serialno = slno + 1;
-                    String sno = String.valueOf(serialno);
+                    else{
+                        //Toast.makeText(AppoinmentBooking.this, ""+dateTime, Toast.LENGTH_SHORT).show();
+                        hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
+                        serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
+                        //timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
+
+                       // appid = (long) childDataSnapshot.child("id").getValue();
+
+                        strDateFormats = "hh:mm a";
+                        Date date = new Date();
+                        SimpleDateFormat sdf = new SimpleDateFormat(strDateFormats);
+                        String currtime = sdf.format(date);
+
+                        int slno = Integer.parseInt(serialNo);
+                        int serialno = 1;
+                        String sno = String.valueOf(serialno);
+
+                        long aid = appid + 1;
+
+                        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+                        //String ids = String.valueOf(aid);
+
+                        //Log.d("sno",sno);
+                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
+                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",currtime,"Confirm Book"));
+
+                        fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
+                        fragmentCardShadowTransformer.enableScaling(true);
 
 
-                    long aid = appid + 1;
-                    ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-
-                    //String ids = String.valueOf(aid);
-
-                    Log.d("sno",sno);
-                    pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this);
-                    pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book"));
-
-                    fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
-                    fragmentCardShadowTransformer.enableScaling(true);
+                        viewPager.setAdapter(pagerAdapter);
+                        viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
+                        viewPager.setOffscreenPageLimit(3);
+                        //Log.d("diff", String.valueOf(serialno));
+                        progressDialog.dismiss();
+                    }
 
 
-                    viewPager.setAdapter(pagerAdapter);
-                    viewPager.setPageTransformer(false, fragmentCardShadowTransformer);
-                    viewPager.setOffscreenPageLimit(3);
-                    Log.d("diff", String.valueOf(serialno));
-                    progressDialog.dismiss();
                 }
             }
 

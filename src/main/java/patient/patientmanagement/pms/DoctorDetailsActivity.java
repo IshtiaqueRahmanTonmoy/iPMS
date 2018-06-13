@@ -19,6 +19,7 @@ import patient.patientmanagement.pms.adapter.ShadowTransformer;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.AboutFragment;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.AppoinmentFragment;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.MapFragment;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.RelatedFragment;
 
 public class DoctorDetailsActivity extends AppCompatActivity {
 
@@ -63,6 +64,10 @@ public class DoctorDetailsActivity extends AppCompatActivity {
 
                                 case R.id.navigation_map:
                                 selectedFragment = MapFragment.newInstance();
+                                break;
+
+                            case R.id.navigation_related:
+                                selectedFragment = RelatedFragment.newInstance();
                                 break;
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

@@ -73,6 +73,7 @@ public class AboutFragment extends Fragment {
         educationTxt = (TextView) view.findViewById(R.id.education);
         specialityTxt = (TextView) view.findViewById(R.id.speciality);
 
+
         showProcessDialog();
         Bundle extras = getActivity().getIntent().getExtras();
 
