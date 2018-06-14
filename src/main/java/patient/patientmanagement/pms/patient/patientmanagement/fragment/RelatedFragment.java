@@ -200,7 +200,7 @@ public class RelatedFragment extends Fragment {
     private void setValueinList(String idval, String imageDoctor, String doctorName, String education, String specialityName, String designation, String location) {
 
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,location));
-        mAdapter = new DoctorListAdapter(doctorList);
+        mAdapter = new DoctorListAdapter(getActivity(),doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(getActivity(), R.drawable.divider));

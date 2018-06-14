@@ -15,7 +15,7 @@ public class HospitalSearchActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-
+    private String mapvalue;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +38,6 @@ public class HospitalSearchActivity extends AppCompatActivity {
         //mTabLayout.addTab(mTabLayout.newTab().setText("Doctors"));
         mTabLayout.addTab(mTabLayout.newTab().setText("Location Map"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

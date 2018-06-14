@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,7 +96,7 @@ public class HospitalActivity extends AppCompatActivity {
                     //value(id);
                 }
 
-                mAdapter = new HospitalListAdapter(hospitalList);
+                mAdapter = new HospitalListAdapter(HospitalActivity.this,hospitalList,districtName);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HospitalActivity.this);
                 recyclerView.addItemDecoration(
                         new DividerItemDecoration(HospitalActivity.this, R.drawable.divider));
@@ -105,12 +106,23 @@ public class HospitalActivity extends AppCompatActivity {
                 recyclerView.setAdapter(mAdapter);
                 progressDialog.dismiss();
 
+               /*
                 recyclerView.addOnItemTouchListener(
                         new RecyclerItemClickListener(HospitalActivity.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                             @Override public void onItemClick(View view, int position) {
 
                                 TextView idtxtview = (TextView) view.findViewById(R.id.idvalue);
                                 TextView nametxtview = (TextView) view.findViewById(R.id.name);
+
+                                /*
+                                TextView mapstxtview = (TextView) view.findViewById(R.id.maps);
+                                mapstxtview.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Toast.makeText(HospitalActivity.this, "fsd", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+
 
                                 String Hospitalname = nametxtview.getText().toString();
 
@@ -127,6 +139,8 @@ public class HospitalActivity extends AppCompatActivity {
                             }
                         })
                 );
+
+                */
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
             }
 

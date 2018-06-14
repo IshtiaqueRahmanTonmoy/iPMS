@@ -341,7 +341,7 @@ public class DoctorList extends AppCompatActivity {
         //Toast.makeText(DoctorList.this, ""+doctorName+education+designation+specialityName+hospitalName, Toast.LENGTH_SHORT).show();
 
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,hospitalName));
-        mAdapter = new DoctorListAdapter(doctorList);
+        mAdapter = new DoctorListAdapter(DoctorList.this,doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DoctorList.this);
         recyclerView.addItemDecoration(
                 new DividerItemDecoration(DoctorList.this, R.drawable.divider));
@@ -351,6 +351,7 @@ public class DoctorList extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
 
         progressDialog.dismiss();
+
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(DoctorList.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
@@ -389,6 +390,7 @@ public class DoctorList extends AppCompatActivity {
                     }
                 })
         );
+
     }
     /* End of search criteria 1*/
 }

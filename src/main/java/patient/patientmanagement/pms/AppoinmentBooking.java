@@ -101,11 +101,12 @@ public class AppoinmentBooking extends AppCompatActivity {
 
             id = extras.getString("idvalue");
             String namevalue = extras.getString("name");
+
             location.setText(namevalue);
             time.setText(currentime);
             datetxt.setText(format);
             getvalue(id,namevalue,format);
-            //Toast.makeText(this, ""+id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, ""+id+namevalue, Toast.LENGTH_SHORT).show();
         }
 
 
