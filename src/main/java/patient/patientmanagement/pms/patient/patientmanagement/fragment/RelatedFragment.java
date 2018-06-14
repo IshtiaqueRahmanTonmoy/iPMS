@@ -76,8 +76,8 @@ public class RelatedFragment extends Fragment {
             education = extras.getString("education");
             speciality = extras.getString("speciality");
 
-            Toast.makeText(getActivity(), ""+education, Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), ""+speciality, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), ""+education, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), ""+speciality, Toast.LENGTH_SHORT).show();
             getValue(education,speciality);
         }
 
@@ -199,7 +199,7 @@ public class RelatedFragment extends Fragment {
 
     private void setValueinList(String idval, String imageDoctor, String doctorName, String education, String specialityName, String designation, String location) {
 
-        doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,hospitalName));
+        doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,location));
         mAdapter = new DoctorListAdapter(doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.addItemDecoration(

@@ -102,7 +102,7 @@ public class BnegativeFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String idthana = String.valueOf(childDataSnapshot.child("thanaId").getValue());
-                    Toast.makeText(getActivity(), ""+idthana, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), ""+idthana, Toast.LENGTH_SHORT).show();
                     setValue(id,idthana,bloodGroup);
                 }
             }
