@@ -38,7 +38,7 @@
                 style="@style/EditTextStyle"
                 android:layout_below="@id/signup_title"
                 android:layout_marginTop="5dp"
-                android:hint="@string/full_name_hint"
+                android:hint="@string/name_hint"
                 android:inputType="text" />
 
             <EditText

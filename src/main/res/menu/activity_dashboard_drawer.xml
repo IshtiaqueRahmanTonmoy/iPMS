@@ -8,6 +8,12 @@
             android:id="@+id/ask_doctor"
             android:icon="@drawable/ic_faq"
             android:title="Ask a Doctor" />
+
+        <item
+            android:id="@+id/nav_bloodregister"
+            android:icon="@drawable/ic_blood"
+            android:title="Register as a blood donor" />
+
         <item
             android:id="@+id/nav_faq"
             android:icon="@drawable/ic_ask"
@@ -16,6 +22,7 @@
             android:id="@+id/nav_appointment"
             android:icon="@drawable/ic_appoinment"
             android:title="How to get an appointment" />
+
     </group>
 
     <item android:title="Communicate">

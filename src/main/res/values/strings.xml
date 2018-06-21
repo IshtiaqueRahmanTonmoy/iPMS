@@ -40,6 +40,7 @@
 
     <!--Edit Text hints-->
     <string name="phone_hint">Phone</string>
+    <string name="address_hint">Address</string>
     <string name="full_name_hint">Full Name</string>
     <string name="gender_hint">Gender</string>
     <string name="age_hint">Age</string>

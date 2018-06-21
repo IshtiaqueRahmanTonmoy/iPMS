@@ -10,6 +10,7 @@
     <color name="colorExpertise">#303031</color>
     <color name="colorButton">#4e879e</color>
 
+    <color name="textColorPrimary">#FFFFFF</color>
     <color name="colorBlood">#447a8f</color>
     <color name="circleBorder">#50FFFFFF</color>
     <color name="solidCircle">#AAFFFFFF</color>
@@ -19,6 +20,7 @@
     <color name="white">#FFFFFF</color>
     <color name="white_trans">#99FFFFFF</color>
 
+    <color name="ColorShade">#d7dcdc</color>
     <color name="primary_txt">#212121</color>
     <color name="orange">#ff563f</color>
     <color name="fb_blue">#475993</color>

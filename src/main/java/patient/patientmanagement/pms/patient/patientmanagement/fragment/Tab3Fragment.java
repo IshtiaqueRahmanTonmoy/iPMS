@@ -63,6 +63,8 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
         if (extras != null) {
 
             hospitalName = extras.getString("hospital");
+
+            Toast.makeText(getActivity(), ""+hospitalName, Toast.LENGTH_SHORT).show();
             myRefHospital.orderByChild("hospitalName").equalTo(String.valueOf(hospitalName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

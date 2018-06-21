@@ -202,7 +202,6 @@ public class DashboardActivity extends AppCompatActivity
                     mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
 
-
                     mViewPager.setAdapter(mCardAdapter);
                     mViewPager.setPageTransformer(false, mCardShadowTransformer);
                     mViewPager.setOffscreenPageLimit(3);
@@ -213,7 +212,6 @@ public class DashboardActivity extends AppCompatActivity
                     mCardAdapterBlood = new CardPagerAdapterBlood(DashboardActivity.this);
                     mCardAdapterBlood.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapterBlood);
-
 
                     mViewPager.setAdapter(mCardAdapterBlood);
                     mViewPager.setPageTransformer(false, mCardShadowTransformer);
@@ -312,13 +310,6 @@ public class DashboardActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -341,7 +332,12 @@ public class DashboardActivity extends AppCompatActivity
 
         if (id == R.id.ask_doctor) {
             // Handle the camera action
-        } else if (id == R.id.nav_faq) {
+        } else if (id == R.id.nav_bloodregister) {
+            Intent intent = new Intent(DashboardActivity.this,BloodDonorActivity.class);
+            startActivity(intent);
+        }
+
+        else if (id == R.id.nav_faq) {
 
         } else if (id == R.id.nav_appointment) {
 
