@@ -1,6 +1,8 @@
 package patient.patientmanagement.pms.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -8,6 +10,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import patient.patientmanagement.pms.BloodActivity;
+import patient.patientmanagement.pms.BloodDonorActivity;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
@@ -40,7 +44,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
     private List<CardItem> mData;
     private float mBaseElevation;
     private String bloodname;
-    private List<String> thanaItem;
+    private List<String> thanaItem,districtItem;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("district");
     DatabaseReference myRefThana = database.getReference("thana");
@@ -62,6 +66,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
 
         this.context = context;
         getValue("Dhaka");
+        districtItem = new ArrayList<>();
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
         thanaItem = new ArrayList<>();
@@ -128,6 +133,8 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         btnBlood6 = (Button) view.findViewById(R.id.bloodButton6);
         btnBlood7 = (Button) view.findViewById(R.id.bloodButton7);
         btnBlood8 = (Button) view.findViewById(R.id.bloodButton8);
+
+
 
         final int color = ((ColorDrawable)btnBlood1.getBackground()).getColor();
 
@@ -325,31 +332,56 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                 btnBlood4.setTextColor(Color.parseColor("#447a8f")); }
         });
 
-                districtEditView.setText("Dhaka");
+                //districtEditView.setText("Dhaka");
 
                 districtEditView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 final PopupMenu popup = new PopupMenu(v.getContext(), districtEditView);
-                popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
 
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-
+                myRef.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public boolean onMenuItemClick(MenuItem item) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot zoneSnapshot: dataSnapshot.getChildren()) {
+                            Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
+                            String districtName = zoneSnapshot.child("districtName").getValue(String.class);
+                            districtItem.add(districtName);
+                        }
 
-                        districtEditView.setText(item.getTitle());
-                        String districtName = item.getTitle().toString();
-                        getValue(districtName);
+                        for(int i=0; i<districtItem.size(); i++){
+                            popup.getMenu().add(Menu.NONE, i, i, districtItem.get(i));
+
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
+
+                                    districtEditView.setText(item.getTitle());
+                                    String districtName = item.getTitle().toString();
+
+                                    //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+
+
+                                    getValue(districtName);
 
                        /*
                        Toast.makeText(v.getContext(),
                                item.getTitle(), Toast.LENGTH_SHORT).show();
                          */
-                        return true;
+                                    return true;
+                                }
+                            });
+                            popup.show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "onCancelled", databaseError.toException());
                     }
                 });
-                popup.show();
+
+
             }
         });
     }

@@ -61,7 +61,11 @@ public class BloodActivity extends AppCompatActivity {
         if (extras != null) {
             bloodgroup = extras.getString("bloodgroup");
 
-            if(bloodgroup.equals("A-")){
+            if(bloodgroup.equals("A+")){
+                TabLayout.Tab tab = mTabLayout.getTabAt(0);
+                tab.select();
+            }
+            else if(bloodgroup.equals("A-")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(1);
                 tab.select();
             }

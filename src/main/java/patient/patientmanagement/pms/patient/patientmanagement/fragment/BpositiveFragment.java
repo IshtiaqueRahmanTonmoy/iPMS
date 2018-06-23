@@ -63,7 +63,6 @@ public class BpositiveFragment extends Fragment {
         bloodList.clear();
         showProcessDialog();
 
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
@@ -159,7 +158,7 @@ public class BpositiveFragment extends Fragment {
                     }
                     else{
                         Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
-                        //progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
                 }

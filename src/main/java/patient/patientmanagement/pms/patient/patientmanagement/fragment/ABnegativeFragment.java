@@ -52,6 +52,7 @@ public class ABnegativeFragment extends Fragment {
 
         bloodList.clear();
         showProcessDialog();
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
@@ -59,7 +60,7 @@ public class ABnegativeFragment extends Fragment {
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
 
-            //bloodGroup = "AB-";
+            bloodGroup = "AB-";
             myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -75,13 +76,7 @@ public class ABnegativeFragment extends Fragment {
 
                 }
             });
-
-
-
         }
-
-
-
 
         return view;
     }
@@ -152,7 +147,7 @@ public class ABnegativeFragment extends Fragment {
                     }
                     else{
                         Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
-                        //progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
                 }

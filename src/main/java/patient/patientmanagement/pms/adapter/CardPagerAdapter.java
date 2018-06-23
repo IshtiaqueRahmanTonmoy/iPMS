@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     private List<CardView> mViews;
     private List<CardItem> mData;
     private List<String> items;
-    private List<String> itemsSpeciality;
+    private List<String> itemsSpeciality,districtItem;
     private float mBaseElevation;
     private Context context;
     private PopupMenu popmenu;
@@ -62,6 +63,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     DatabaseReference myRefExpertise = database.getReference("speciality");
 
     public CardPagerAdapter() {
+        districtItem = new ArrayList<>();
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
         items = new ArrayList<String>();
@@ -169,32 +171,56 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
             }
         });
 
-        districtEditView.setText("Dhaka");
+        //districtEditView.setText("Dhaka");
 
         districtEditView.setOnClickListener(new View.OnClickListener() {
            @Override
-           public void onClick(final View v) {
-               final PopupMenu popup = new PopupMenu(v.getContext(), districtEditView);
-               popup.getMenuInflater().inflate(R.menu.pop_up_menu, popup.getMenu());
+           public void onClick ( final View v){
+                   final PopupMenu popup = new PopupMenu(v.getContext(), districtEditView);
 
-               popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                   myRef.addValueEventListener(new ValueEventListener() {
+                       @Override
+                       public void onDataChange(DataSnapshot dataSnapshot) {
+                           for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
+                               Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
+                               String districtName = zoneSnapshot.child("districtName").getValue(String.class);
+                               districtItem.add(districtName);
+                           }
 
-                   @Override
-                   public boolean onMenuItemClick(MenuItem item) {
+                           for (int i = 0; i < districtItem.size(); i++) {
+                               popup.getMenu().add(Menu.NONE, i, i, districtItem.get(i));
 
-                       districtEditView.setText(item.getTitle());
-                       getValue(item.getTitle());
+                               popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+
+                                   @Override
+                                   public boolean onMenuItemClick(MenuItem item) {
+
+                                       districtEditView.setText(item.getTitle());
+                                       String districtName = item.getTitle().toString();
+
+                                       //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+
+
+                                       getValue(districtName);
 
                        /*
                        Toast.makeText(v.getContext(),
                                item.getTitle(), Toast.LENGTH_SHORT).show();
                          */
-                       return true;
-                   }
-               });
-               popup.show();
-           }
-       });
+                                       return true;
+                                   }
+                               });
+                               popup.show();
+                           }
+                       }
+
+                       @Override
+                       public void onCancelled(DatabaseError databaseError) {
+                           //Log.w(TAG, "onCancelled", databaseError.toException());
+                       }
+                   });
+               }
+        });
 
           searchButton.setOnClickListener(new View.OnClickListener() {
               @Override

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,12 +88,16 @@ public class ApositiveFragment extends Fragment {
         return view;
     }
 
+
+
     private void showProcessDialog() {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setTitle("Getting Blood Groups");
         progressDialog.setMessage("Please wait...");
         progressDialog.show();
     }
+
+
 
     private void getValue(final String id, final String thanaName, final String bloodGroup) {
 
@@ -114,6 +119,10 @@ public class ApositiveFragment extends Fragment {
     }
 
     private void setValue(final String id, String idthana, String bloodGroup) {
+
+        Log.d("value",id);
+        Log.d("values",idthana);
+        Log.d("valuess",bloodGroup);
 
         final int ids = Integer.parseInt(id);
         final int idsthana = Integer.parseInt(idthana);
@@ -151,7 +160,7 @@ public class ApositiveFragment extends Fragment {
                     }
                     else{
                         Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
-                        //progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
                 }

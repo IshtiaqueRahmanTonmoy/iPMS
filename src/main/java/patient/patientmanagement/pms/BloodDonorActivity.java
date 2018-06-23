@@ -2,8 +2,10 @@ package patient.patientmanagement.pms;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -61,6 +63,15 @@ public class BloodDonorActivity extends AppCompatActivity {
             false
     };
 
+    int value;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String VALUE = "valueKey";
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
+    String emailval;
+    int valueid;
+
+
 
     String[] Bloodgroups = new String[]{
             "O+",
@@ -92,6 +103,11 @@ public class BloodDonorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        valueid = sharedpreferences.getInt(VALUE, 0);
+
 
         itemsDistrict = new ArrayList<>();
         itemsThana = new ArrayList<>();
@@ -175,7 +191,7 @@ public class BloodDonorActivity extends AppCompatActivity {
                 } else {
 
                     if ( checkValidation () )
-                        confirmSignin();
+                        confirmSignin(valueid);
                     else
                         Toast.makeText(BloodDonorActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
                     //String url = "https://firebasestorage.googleapis.com/v0/b/i-help-e7082.appspot.com/o/users%2F";
@@ -320,7 +336,15 @@ public class BloodDonorActivity extends AppCompatActivity {
         });
     }
 
-    private void confirmSignin() {
+    private void confirmSignin(int value) {
+
+        value = value + 1;
+
+        emailval = "noemail"+value+"@gmail.com";
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        editor = sharedpreferences.edit();
+        editor.putInt(VALUE,value);
+        editor.apply();
 
         //Toast.makeText(this, ""+thanaid, Toast.LENGTH_SHORT).show();
         address = addressEdt.getText().toString();
@@ -338,6 +362,12 @@ public class BloodDonorActivity extends AppCompatActivity {
         districtId = Integer.parseInt(districtid);
         thanaId = Integer.parseInt(thanaid);
 
+        if(emailEdt.getText().length() == 0){
+            email = emailval;
+        }
+        else {
+            email = emailEdt.getText().toString();
+        }
         showProcessDialog();
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(BloodDonorActivity.this, new OnCompleteListener<AuthResult>() {
@@ -393,7 +423,7 @@ public class BloodDonorActivity extends AppCompatActivity {
     private boolean checkValidation() {
         boolean ret = true;
 
-        if (!Validation.isEmailAddress(emailEdt, true)) ret = false;
+        if (!Validation.isEmailAddress(emailEdt, false)) ret = false;
         if (!Validation.isPhoneNumber(phoneEdt, false)) ret = false;
 
         return ret;

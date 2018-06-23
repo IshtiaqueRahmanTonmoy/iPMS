@@ -59,7 +59,7 @@ public class AnegativeFragment extends Fragment {
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
 
-            //bloodGroup = "A-";
+            bloodGroup = "A-";
             myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -152,7 +152,7 @@ public class AnegativeFragment extends Fragment {
                     }
                     else{
                         Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
-                        //progressDialog.dismiss();
+                        progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
                 }
