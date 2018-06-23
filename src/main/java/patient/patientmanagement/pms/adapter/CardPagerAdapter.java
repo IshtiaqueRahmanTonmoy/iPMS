@@ -127,6 +127,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         expertiseEditView = (AutoCompleteTextView) view.findViewById(R.id.et_speciality);
 
 
+        districtEditView.setText("Dhaka");
         myRefHospital.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

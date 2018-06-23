@@ -125,6 +125,8 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         thanaEditView = (AutoCompleteTextView) view.findViewById(R.id.et_thana);
         btnSearch = (Button) view.findViewById(R.id.btn_search);
 
+        districtEditView.setText("Dhaka");
+
         btnBlood1 = (Button) view.findViewById(R.id.bloodButton1);
         btnBlood2 = (Button) view.findViewById(R.id.bloodButton2);
         btnBlood3 = (Button) view.findViewById(R.id.bloodButton3);

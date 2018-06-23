@@ -343,8 +343,8 @@ public class DoctorList extends AppCompatActivity {
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,hospitalName));
         mAdapter = new DoctorListAdapter(DoctorList.this,doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(DoctorList.this);
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(DoctorList.this, R.drawable.divider));
+        //recyclerView.addItemDecoration(
+        //        new DividerItemDecoration(DoctorList.this, R.drawable.divider));
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

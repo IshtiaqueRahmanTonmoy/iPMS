@@ -170,8 +170,8 @@ public class Tab1Fragment extends Fragment {
 
                                   mAdapter = new SpecialistAdapter(specialistList);
                                   RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                                  recyclerView.addItemDecoration(
-                                          new DividerItemDecoration(getActivity(), R.drawable.divider));
+                                  //recyclerView.addItemDecoration(
+                                  //        new DividerItemDecoration(getActivity(), R.drawable.divider));
 
                                   recyclerView.setLayoutManager(mLayoutManager);
                                   recyclerView.setItemAnimator(new DefaultItemAnimator());

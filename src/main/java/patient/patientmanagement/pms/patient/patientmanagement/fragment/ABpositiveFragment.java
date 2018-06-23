@@ -141,8 +141,8 @@ public class ABpositiveFragment extends Fragment {
                         bloodList.add(new Blood(name,address,phone));
                         bloodAdapter = new BloodListAdapter(getActivity(),bloodList);
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                        recyclerView.addItemDecoration(
-                                new DividerItemDecoration(getActivity(), R.drawable.divider));
+                        //recyclerView.addItemDecoration(
+                        //        new DividerItemDecoration(getActivity(), R.drawable.divider));
 
                         recyclerView.setLayoutManager(mLayoutManager);
                         recyclerView.setItemAnimator(new DefaultItemAnimator());

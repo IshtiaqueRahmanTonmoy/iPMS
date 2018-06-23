@@ -98,8 +98,8 @@ public class HospitalActivity extends AppCompatActivity {
 
                 mAdapter = new HospitalListAdapter(HospitalActivity.this,hospitalList,districtName);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HospitalActivity.this);
-                recyclerView.addItemDecoration(
-                        new DividerItemDecoration(HospitalActivity.this, R.drawable.divider));
+                //recyclerView.addItemDecoration(
+                //        new DividerItemDecoration(HospitalActivity.this, R.drawable.divider));
 
                 recyclerView.setLayoutManager(mLayoutManager);
                 recyclerView.setItemAnimator(new DefaultItemAnimator());

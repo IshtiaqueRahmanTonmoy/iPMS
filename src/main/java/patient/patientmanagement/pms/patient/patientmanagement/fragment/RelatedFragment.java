@@ -202,8 +202,8 @@ public class RelatedFragment extends Fragment {
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,location));
         mAdapter = new DoctorListAdapter(getActivity(),doctorList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.addItemDecoration(
-                new DividerItemDecoration(getActivity(), R.drawable.divider));
+        //recyclerView.addItemDecoration(
+        //        new DividerItemDecoration(getActivity(), R.drawable.divider));
 
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
