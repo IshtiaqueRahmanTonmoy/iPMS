@@ -1,8 +1,14 @@
 package patient.patientmanagement.pms.adapter;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab1Fragment;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab2Fragment;
@@ -15,11 +21,13 @@ import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Frag
 public class Pager extends FragmentStatePagerAdapter {
 
     int tabCount;
+    String hospitalname;
 
-    public Pager(FragmentManager fm, int tabCount){
+    public Pager(FragmentManager fm, int tabCount) {
         super(fm);
-        this.tabCount=tabCount;
+        this.tabCount = tabCount;
     }
+
 
     @Override
     public Fragment getItem(int position) {

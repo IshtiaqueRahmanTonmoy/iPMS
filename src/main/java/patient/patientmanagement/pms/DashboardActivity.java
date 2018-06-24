@@ -5,8 +5,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.drm.DrmStore;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +17,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -43,6 +48,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import patient.patientmanagement.pms.adapter.BloodListAdapter;
 import patient.patientmanagement.pms.adapter.CardPagerAdapter;
 import patient.patientmanagement.pms.adapter.CardPagerAdapterBlood;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
@@ -80,6 +86,11 @@ public class DashboardActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         checkConnection();
+
+        //DashboardActivity.PhoneCallListener phoneListener = new Da.PhoneCallListener();
+        //TelephonyManager telephonyManager = (TelephonyManager) DashboardActivity.this.getSystemService(Context.TELEPHONY_SERVICE);
+        //telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
 
         dataModels= new ArrayList<CardItem>();
 
@@ -129,8 +140,19 @@ public class DashboardActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //String phone = blood.getPhoneNumber().toString();
+                //Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
+                String phoneNumber = String.format("tel: %s", "16484");
+                // Create the intent.
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                // Set the data for the intent as the phone number.
+                dialIntent.setData(Uri.parse(phoneNumber));
+                // If package resolves to an app, send intent.
+                if (dialIntent.resolveActivity(DashboardActivity.this.getPackageManager()) != null) {
+                    DashboardActivity.this.startActivity(dialIntent);
+                } else {
+                    Log.e("intent", "Can't resolve app for ACTION_DIAL Intent.");
+                }
             }
         });
 
@@ -198,7 +220,7 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position) {
                 if(position == 0){
-                    mCardAdapter = new CardPagerAdapter();
+                    mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
                     mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
 
@@ -348,7 +370,15 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_privacypolicy) {
 
         }else if (id == R.id.nav_share) {
-
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            String shareboyd = "";
+            String shareboyd1 = "Get Patient Management Application From link below";
+            String sharesub = "https://play.google.com/store/apps/details?id=iaccess.iaccess.com.iaccess";
+            intent.putExtra(Intent.EXTRA_SUBJECT,shareboyd);
+            intent.putExtra(Intent.EXTRA_SUBJECT,shareboyd1);
+            intent.putExtra(Intent.EXTRA_TEXT,sharesub);
+            startActivity(Intent.createChooser(intent,"Share using"));
         }
 
 
@@ -430,6 +460,50 @@ public class DashboardActivity extends AppCompatActivity
         @Override
         public int getItemCount() {
             return horizontalList.size();
+        }
+    }
+
+    private class PhoneCallListener extends PhoneStateListener {
+
+        private boolean isPhoneCalling = false;
+
+        String LOG_TAG = "LOGGING 123";
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+
+            if (TelephonyManager.CALL_STATE_RINGING == state) {
+                // phone ringing
+                Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
+            }
+
+            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
+                // active
+                Log.i(LOG_TAG, "OFFHOOK");
+
+                isPhoneCalling = true;
+            }
+
+            if (TelephonyManager.CALL_STATE_IDLE == state) {
+                // run when class initial and phone call ended,
+                // need detect flag from CALL_STATE_OFFHOOK
+                Log.i(LOG_TAG, "IDLE");
+
+                if (isPhoneCalling) {
+
+                    Log.i(LOG_TAG, "restart app");
+
+                    // restart app
+                    Intent i = DashboardActivity.this.getApplicationContext().getPackageManager()
+                            .getLaunchIntentForPackage(
+                                    DashboardActivity.this.getApplicationContext().getPackageName());
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    DashboardActivity.this.startActivity(i);
+
+                    isPhoneCalling = false;
+                }
+
+            }
         }
     }
 }

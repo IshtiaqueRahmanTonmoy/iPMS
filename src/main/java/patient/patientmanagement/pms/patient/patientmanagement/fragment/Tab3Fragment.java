@@ -1,6 +1,11 @@
 package patient.patientmanagement.pms.patient.patientmanagement.fragment;
 
+import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Criteria;
 import android.location.Geocoder;
@@ -8,8 +13,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +39,10 @@ import java.io.IOException;
 import java.util.List;
 
 import patient.patientmanagement.pms.R;
+import patient.patientmanagement.pms.entity.VolleyCallback;
+
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by suraj on 23/6/17.
  */
@@ -46,9 +58,14 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
     String location;
     private String hospitalName,hospitalAddress;
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
+    private VolleyCallback callback;
+
+    private SharedPreferences mPref;
+    private  static final String PREF_NAME = "sp_name";
+    private  static final String VALUE = "value";
 
     public static Fragment newInstance() {
-        MapFragment fragment = new MapFragment();
+        Tab3Fragment fragment = new Tab3Fragment();
         //Toast.makeText(fragment.getActivity(), "ss", Toast.LENGTH_SHORT).show();
         return fragment;
     }
@@ -59,18 +76,25 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
 
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
 
+
+        //LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
+        //        new IntentFilter("custom-event-name"));
+
+        //mPref = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
+
+        //hospitalName = mPref.getString(VALUE, "");
+        //Log.d("hp",hospitalName);
+
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
-
             hospitalName = extras.getString("hospital");
 
-            Toast.makeText(getActivity(), ""+hospitalName, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), ""+hospitalName, Toast.LENGTH_SHORT).show();
             myRefHospital.orderByChild("hospitalName").equalTo(String.valueOf(hospitalName)).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                         hospitalAddress = String.valueOf(childDataSnapshot.child("hospitalAddress").getValue());
-
                         Geocoder coder = new Geocoder(getActivity());
                         List<Address> address;
                         try {
@@ -80,7 +104,6 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
                             latitude = locations.getLatitude();
                             longitude = locations.getLongitude();
                             p1 = new LatLng(latitude, longitude);
-
                             //Toast.makeText(MapActivity.this, "latitude"+lat+"longitude"+longt, Toast.LENGTH_SHORT).show();
 
 
@@ -130,6 +153,22 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
         }
         return view;
     }
+
+
+    /*
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            hospitalName = intent.getStringExtra("hospitalName");
+            SharedPreferences.Editor editor = mPref.edit();
+            editor.putString(VALUE, hospitalName);
+            editor.apply();
+
+            Log.d("receiver", "Got message: " + hospitalName);
+        }
+    };
+    */
 
     @Override
     public void onLocationChanged(Location location) {

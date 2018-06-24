@@ -1,9 +1,12 @@
 package patient.patientmanagement.pms.adapter;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -32,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import patient.patientmanagement.pms.DashboardActivity;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.HospitalActivity;
 import patient.patientmanagement.pms.HospitalSearchActivity;
@@ -56,18 +60,21 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     ArrayAdapter<String> adapter,adapterSpeciality;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-
     DatabaseReference myRef = database.getReference("district");
     DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     DatabaseReference myRefExpertise = database.getReference("speciality");
 
     public CardPagerAdapter() {
+
         districtItem = new ArrayList<>();
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
         items = new ArrayList<String>();
         itemsSpeciality = new ArrayList<String>();
+    }
+
+    public CardPagerAdapter(Context context) {
+        this.context = context;
     }
 
     public void addCardItem(CardItem item) {
@@ -254,7 +261,6 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                   }
 
                   else{
-
                       Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
