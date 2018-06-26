@@ -28,6 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import patient.patientmanagement.pms.AppoinmentBooking;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.adapter.ChamberAdapter;
@@ -50,7 +51,7 @@ public class AboutFragment extends Fragment {
     private ShadowTransformer mCardShadowTransformer;
     private TextView nameTxt, shortDescriptionTxt, educationTxt, specialityTxt, noofchamberTxt;
     private TextView mTextMessage;
-    private String idvalue, name, shortdescription, education, speciality;
+    private String idvalue, name, shortdescription, education, speciality,district,hospital,expertise;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("doctorInfo");
@@ -75,9 +76,14 @@ public class AboutFragment extends Fragment {
 
 
         showProcessDialog();
+
         Bundle extras = getActivity().getIntent().getExtras();
 
         if (extras != null) {
+
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
 
             idvalue = extras.getString("idvalue");
             getvalue(idvalue);
@@ -128,7 +134,7 @@ public class AboutFragment extends Fragment {
                     String number = ds.child("location").getValue(String.class);
 
 
-                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW"));
+                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW",district,hospital,expertise,shortdescription,education,speciality));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 
                     Log.d("TAG", name + " / " + number);

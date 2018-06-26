@@ -14,7 +14,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    private Integer [] images = {R.mipmap.image3, R.mipmap.image2, R.mipmap.image};
+    private Integer [] images = {R.mipmap.image5, R.mipmap.image4, R.mipmap.image3};
 
     public ViewPagerAdapter(Context context) {
         this.context = context;

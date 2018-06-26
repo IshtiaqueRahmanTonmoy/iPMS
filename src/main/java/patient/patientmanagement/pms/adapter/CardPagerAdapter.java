@@ -66,15 +66,12 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     public CardPagerAdapter() {
 
+        getValue("Dhaka");
         districtItem = new ArrayList<>();
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
         items = new ArrayList<String>();
         itemsSpeciality = new ArrayList<String>();
-    }
-
-    public CardPagerAdapter(Context context) {
-        this.context = context;
     }
 
     public void addCardItem(CardItem item) {

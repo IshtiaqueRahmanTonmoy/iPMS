@@ -359,6 +359,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                                 public boolean onMenuItemClick(MenuItem item) {
 
                                     districtEditView.setText(item.getTitle());
+                                    districtItem.clear();
                                     String districtName = item.getTitle().toString();
 
                                     //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
@@ -396,6 +397,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                     String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
                     //Log.d("val",id);
                     value(id);
+                    thanaItem.clear();
                 }
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
             }

@@ -3,7 +3,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">i-PMS</string>
-    <string name="nav_header_subtitle">patient.management@pms.com</string>
+    <string name="nav_header_subtitle">Powered by ingenious technologies</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_doctor_details">DoctorDetailsActivity</string>
@@ -47,6 +47,7 @@
     <string name="bloodgroup_hint">Blood Group</string>
     <string name="email_hint">E-mail</string>
     <string name="password_hint">Password</string>
+    <string name="confirmpassword_hint">Confirm Password</string>
 
 
     <!--Misc texts-->

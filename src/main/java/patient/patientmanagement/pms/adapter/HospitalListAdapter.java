@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
     }
 
     @Override
-    public void onBindViewHolder(HospitalListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final HospitalListAdapter.MyViewHolder holder, int position) {
         final Hospital hospital = hospitalList.get(position);
         //holder.image.setImageDrawable(R.drawable.ic_user);
 
@@ -71,10 +72,10 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, HospitalSearchActivity.class);
+                Intent intent = new Intent(view.getContext(), HospitalSearchActivity.class);
                 intent.putExtra("district",districtName);
                 intent.putExtra("hospital",hospital.getHospitalName());
-                context.startActivity(intent);
+                view.getContext().startActivity(intent);
 
             }
         });
@@ -82,11 +83,17 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
         holder.maps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, MapActivity.class);
+
+                String hos = holder.name.getText().toString();
+                Log.d("hos",hos);
+
+
+                Intent intent = new Intent(view.getContext(), MapActivity.class);
                 intent.putExtra("district",districtName);
-                intent.putExtra("hospital",hospital.getHospitalName());
+                intent.putExtra("hospital",hos);
                 intent.putExtra("map","mapvalue");
-                context.startActivity(intent);
+                view.getContext().startActivity(intent);
+
 
             }
         });

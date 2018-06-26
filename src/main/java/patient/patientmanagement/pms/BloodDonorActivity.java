@@ -184,20 +184,35 @@ public class BloodDonorActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (phoneEdt.getText().length() < 0) {
-                    Utils.showToast(BloodDonorActivity.this, "Please input your phone");
-                } else if (passwordEdt.getText().length() < 0) {
-                    Utils.showToast(BloodDonorActivity.this, "Please input your password");
-                } else {
+                if (nameEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    nameEdt.setError("This field can not be blank");
+                } else if (emailEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    emailEdt.setError("This field can not be blank");
+                }else if (addressEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    addressEdt.setError("This field can not be blank");
+                }else if (ageEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    ageEdt.setError("This field can not be blank");
+                }else if (phoneEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    phoneEdt.setError("This field can not be blank");
+                }
+                  else if (passwordEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    passwordEdt.setError("This field can not be blank");
 
+                }
+                else if (confirmpassEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    confirmpassEdt.setError("This field can not be blank");
+
+                }else {
+                    confirmSignin(valueid);
+                    /*
                     if ( checkValidation () )
                         confirmSignin(valueid);
                     else
                         Toast.makeText(BloodDonorActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
-                    //String url = "https://firebasestorage.googleapis.com/v0/b/i-help-e7082.appspot.com/o/users%2F";
-                    //final String photoUrl = "?alt=media&token=6d7f7e63-3478-4af5-b0d1-cfdf49ba9a61";
+                    */
+                    }
                 }
-            }
+
         });
     }
 

@@ -8,6 +8,8 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -49,6 +51,32 @@ public class HealthTipsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            Intent intent = new Intent(HealthTipsActivity.this,DashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
     private void showProcessDialog() {
         progressDialog = new ProgressDialog(HealthTipsActivity.this);
         //progressDialog.setTitle("Getting Informations");
@@ -86,6 +114,7 @@ public class HealthTipsActivity extends AppCompatActivity {
 
                     progressDialog.dismiss();
 
+                    /*
                     recyclerView.addOnItemTouchListener(
                             new RecyclerItemClickListener(HealthTipsActivity.this, recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                                 @Override public void onItemClick(View view, int position) {
@@ -106,6 +135,7 @@ public class HealthTipsActivity extends AppCompatActivity {
                                 }
                             })
                     );
+                    */
                     //mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW"));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 

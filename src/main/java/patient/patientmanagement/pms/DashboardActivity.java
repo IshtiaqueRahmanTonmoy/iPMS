@@ -82,6 +82,7 @@ public class DashboardActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -136,6 +137,7 @@ public class DashboardActivity extends AppCompatActivity
 
         */
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +157,7 @@ public class DashboardActivity extends AppCompatActivity
                 }
             }
         });
+
 
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
@@ -220,7 +223,7 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position) {
                 if(position == 0){
-                    mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
+                    mCardAdapter = new CardPagerAdapter();
                     mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
 

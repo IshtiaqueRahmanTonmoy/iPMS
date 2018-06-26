@@ -75,6 +75,7 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/imagearrow"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center"
@@ -109,15 +110,15 @@
 
 
                 <TextView
-                    android:id="@+id/callnow"
+                    android:id="@+id/sharenow"
                     android:layout_width="85dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="200dp"
                     android:layout_marginRight="20dp"
-                    android:drawableLeft="@mipmap/facebook"
+                    android:drawableLeft="@mipmap/share"
                     android:gravity="center"
                     android:text="SHARE"
-                    android:textColor="#3c819f"
+                    android:textColor="#207ba3"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 

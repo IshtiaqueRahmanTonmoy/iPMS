@@ -1,6 +1,7 @@
 package patient.patientmanagement.pms.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,9 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
+import patient.patientmanagement.pms.HealthNewsDetails;
+import patient.patientmanagement.pms.HealthTipsDetails;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.DoctorInfo;
 import patient.patientmanagement.pms.entity.HealthNews;
@@ -20,16 +24,16 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
     Context context;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
-        public TextView id,headline,details,date;
+        public TextView id,headline,details,date,sharenow;
 
         public MyViewHolder(View view) {
             super(view);
-            image = (ImageView) view.findViewById(R.id.image);
+            image = (ImageView) view.findViewById(R.id.imagearrow);
             id = (TextView) view.findViewById(R.id.idvalue);
             headline = (TextView) view.findViewById(R.id.headline);
             details = (TextView) view.findViewById(R.id.detailssome);
             date = (TextView) view.findViewById(R.id.uploadedon);
-
+            sharenow = (TextView) view.findViewById(R.id.sharenow);
         }
     }
 
@@ -49,7 +53,7 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
     }
 
     @Override
-    public void onBindViewHolder(HealthNewsAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final HealthNewsAdapter.MyViewHolder holder, int position) {
         HealthNews healthnews = healthnewsList.get(position);
         //holder.image.setImageDrawable(R.drawable.ic_user);
 
@@ -57,6 +61,73 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
         holder.headline.setText(healthnews.getHeading());
         holder.details.setText(healthnews.getDetails());
         holder.date.setText(healthnews.getDate());
+
+        final String idvalues = holder.id.getText().toString();
+        holder.headline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), HealthNewsDetails.class);
+                intent.putExtra("idvalue",idvalues);
+                view.getContext().startActivity(intent);
+
+            }
+        });
+        holder.details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), HealthNewsDetails.class);
+                intent.putExtra("idvalue",idvalues);
+                view.getContext().startActivity(intent);
+
+            }
+        });
+
+        holder.date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), HealthNewsDetails.class);
+                intent.putExtra("idvalue",idvalues);
+                view.getContext().startActivity(intent);
+
+            }
+        });
+        holder.headline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), HealthNewsDetails.class);
+                intent.putExtra("idvalue",idvalues);
+                view.getContext().startActivity(intent);
+
+            }
+        });
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), HealthNewsDetails.class);
+                intent.putExtra("idvalue",idvalues);
+                view.getContext().startActivity(intent);
+
+            }
+        });
+        holder.sharenow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String heading = holder.headline.getText().toString();
+                String body = holder.details.getText().toString();
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String shareboyd = "";
+                //String shareboyd1 = heading;
+                //String sharesub = body;
+                //intent.putExtra(Intent.EXTRA_SUBJECT,shareboyd);
+                intent.putExtra(Intent.EXTRA_SUBJECT,heading);
+                intent.putExtra(Intent.EXTRA_TEXT,body);
+                view.getContext().startActivity(Intent.createChooser(intent,"Share using"));
+            }
+        });
+
         //holder.image.setText(doctor.getDesignation()+","+doctor.getHospitalName());
     }
 

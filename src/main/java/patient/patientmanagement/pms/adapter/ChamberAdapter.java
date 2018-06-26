@@ -30,6 +30,7 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
     private float mBaseElevation;
     Context context;
     private String id;
+    private String name,description,speciality,district,hospital,education,expertise;
     public ChamberAdapter(Context context) {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
@@ -41,6 +42,14 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
         mData.add(item);
 
         id = mData.get(0).getIdvalue();
+        district = mData.get(0).getDistrict();
+        hospital = mData.get(0).getHospital();
+        expertise = mData.get(0).getExpertise();
+
+        //name = mData.get(0).getName();
+        description = mData.get(0).getDescription();
+        speciality = mData.get(0).getSpeciality();
+        education = mData.get(0).getEducation();
     }
 
     public float getBaseElevation() {
@@ -81,11 +90,17 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
             public void onClick(View v) {
 
                TextView nametxt = (TextView) v.findViewById(R.id.name);
-               String name = nametxt.getText().toString();
+               name = nametxt.getText().toString();
                 //Toast.makeText(v.getContext(), ""+mData.get(position).getChamberLocation(), Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(v.getContext(),AppoinmentBooking.class);
                intent.putExtra("idvalue",id);
+               intent.putExtra("district", district);
+               intent.putExtra("hospital", hospital);
+               intent.putExtra("expertise", expertise);
                intent.putExtra("name",name);
+                intent.putExtra("education",education);
+               intent.putExtra("description",description);
+               intent.putExtra("speciality",speciality);
                v.getContext().startActivity(intent);
 
             }

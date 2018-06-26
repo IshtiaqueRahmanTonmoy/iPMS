@@ -1,6 +1,9 @@
 package patient.patientmanagement.pms;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,11 +14,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,12 +53,30 @@ public class SignupActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private String photo,email,name,phone,gender,age,bloodgroup,password,created,uid;
 
-
+    ScrollView scrollview;
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
     //long id = 0;
     String id;
     ImageButton back;
 
+    String[] AlertDialogItems = new String[]{
+            "Male",
+            "Female"
+    };
+
+    String[] Bloodgroups = new String[]{
+            "O+",
+            "O-",
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-"
+    };
+
+
+    AlertDialog alertdialogbuilder,alertdialogbuilder1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -120,29 +144,87 @@ public class SignupActivity extends AppCompatActivity {
         ageEdt = (EditText) findViewById(R.id.et_age);
         bloodgroupEdt = (EditText) findViewById(R.id.et_email_bloodgroup);
         passwordEdt = (EditText) findViewById(R.id.et_password);
+        scrollview = (ScrollView) findViewById(R.id.scrollview);
+
+
+        genderEdt.setFocusable(false);
+        bloodgroupEdt.setFocusable(false);
+
+        genderEdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+
+                builder.setTitle("Select Your Gender");
+
+                builder.setSingleChoiceItems(AlertDialogItems, -1, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        String genderValue = AlertDialogItems[item];
+                        genderEdt.setText(genderValue);
+                        alertdialogbuilder.dismiss();
+                    }
+                });
+                alertdialogbuilder = builder.create();
+                alertdialogbuilder.show();
+            }
+        });
+
+        bloodgroupEdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(SignupActivity.this);
+
+                builder.setTitle("Select Your BloodGroup");
+
+                builder.setSingleChoiceItems(Bloodgroups, -1, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int item) {
+                        String bloodValue = Bloodgroups[item];
+                        bloodgroupEdt.setText(bloodValue);
+                        alertdialogbuilder1.dismiss();
+                    }
+                });
+                alertdialogbuilder1 = builder.create();
+                alertdialogbuilder1.show();
+            }
+        });
 
         signupBtn = (Button) findViewById(R.id.btn_signup);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (phoneEdt.getText().length() < 0) {
-                    Utils.showToast(SignupActivity.this, "Please input your phone");
-                } else if (passwordEdt.getText().length() < 0) {
+                if (userEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    userEdt.setError("This field can not be blank");
+                } else if (emailEdt.getText().length() < 0) {
+                    emailEdt.setError("This field can not be blank");
+                }else if (phoneEdt.getText().length() < 0) {
+                    phoneEdt.setError("This field can not be blank");
+                }else if (ageEdt.getText().length() < 0) {
+                    ageEdt.setError("This field can not be blank");
+                }
+                else if (passwordEdt.getText().length() < 0) {
                     Utils.showToast(SignupActivity.this, "Please input your password");
                 } else {
 
+                    confirmSignin();
+                    /*
                     if ( checkValidation () )
                         confirmSignin();
                     else
                         Toast.makeText(SignupActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
-                    //String url = "https://firebasestorage.googleapis.com/v0/b/i-help-e7082.appspot.com/o/users%2F";
-                    //final String photoUrl = "?alt=media&token=6d7f7e63-3478-4af5-b0d1-cfdf49ba9a61";
+                   */
                 }
               }
             });
 
         //Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideKeyboard(View v) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     private boolean checkValidation() {

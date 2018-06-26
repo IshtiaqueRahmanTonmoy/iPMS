@@ -2,10 +2,13 @@ package patient.patientmanagement.pms;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +37,14 @@ public class AppoinmentBooking extends AppCompatActivity {
     String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime,timeappoinment;
     Long formatdate;
     long appid = 0;
+    String district,hospital,expertise,namevalue;
     private ProgressDialog progressDialog;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
     private DatabaseReference myRefAppSchedule = database.getReference("appoinmentSchedule");
 
-    String strDateFormat,strfullFormat,strDateFormats;
+    String strDateFormat,strfullFormat,strDateFormats,names,description,speciality,education;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,18 +103,62 @@ public class AppoinmentBooking extends AppCompatActivity {
 
         if (extras != null) {
 
+            description = extras.getString("description");
+            speciality = extras.getString("speciality");
+            education = extras.getString("education");
+
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
+
             id = extras.getString("idvalue");
-            String namevalue = extras.getString("name");
+            namevalue = extras.getString("name");
 
             location.setText(namevalue);
             time.setText(currentime);
             datetxt.setText(format);
             getvalue(id,namevalue,format);
-            //Toast.makeText(this, ""+id+namevalue, Toast.LENGTH_SHORT).show();
+
+            Log.d("id",id);
+
         }
 
 
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            Intent intent = new Intent(AppoinmentBooking.this,DoctorDetailsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.putExtra("idvalue", "ZXri36XsB6UYqdK9CLiqV32U6ml2");
+            intent.putExtra("district", district);
+            intent.putExtra("hospital", hospital);
+            intent.putExtra("expertise", expertise);
+            intent.putExtra("name",namevalue);
+            intent.putExtra("education",education);
+            intent.putExtra("description",description);
+            intent.putExtra("speciality",speciality);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void showProcessDialog() {
