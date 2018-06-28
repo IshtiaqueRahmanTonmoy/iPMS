@@ -33,7 +33,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     private ShadowTransformer mCardShadowTransformer;
     private TextView nameTxt, shortDescriptionTxt, educationTxt, specialityTxt;
     private TextView mTextMessage;
-    private String idvalue, name, shortdescription, education, speciality,district,hospital,expertise;
+    private String idvalue, name, shortdescription, education,idvalrecong,idvalrecongd, idvalrecondoctor,speciality,district,hospital,expertise;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("doctorInfo");
@@ -55,7 +55,9 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             district = extras.getString("district");
             hospital = extras.getString("hospital");
             expertise = extras.getString("expertise");
-
+            idvalrecong = extras.getString("idvalueforrecongnize");
+            idvalrecongd = extras.getString("idvalueforrecongnized");
+            idvalrecondoctor = extras.getString("idvalueforrecongnizedoctor");
 
         }
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
@@ -75,6 +77,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                                     bundle.putString("district", district);
                                     bundle.putString("hosptial", hospital);
                                     bundle.putString("expertise", expertise);
+                                    bundle.putString("idvalrecongd",idvalrecongd);
                                     selectedFragment = AboutFragment.newInstance();
                                     AboutFragment fragobj = new AboutFragment();
                                     fragobj.setArguments(bundle);
@@ -128,6 +131,9 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             intent.putExtra("district", district);
             intent.putExtra("hospital", hospital);
             intent.putExtra("expertise", expertise);
+            intent.putExtra("idvalueforrecongnize","2");
+            intent.putExtra("idvalueforrecongnized","3");
+            intent.putExtra("idvalueforrecongnizedoctor", "4");
             startActivity(intent);
             finish();
         }

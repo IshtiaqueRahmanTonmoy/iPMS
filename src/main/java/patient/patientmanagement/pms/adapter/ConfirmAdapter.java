@@ -115,6 +115,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),LoginActivity.class);
                 intent.putExtra("format",format);
+                intent.putExtra("idvalueforrecongnize", "1");
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("id",id);
                 intent.putExtra("hospitalId",hospitalId);

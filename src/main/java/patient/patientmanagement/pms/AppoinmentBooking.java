@@ -44,7 +44,7 @@ public class AppoinmentBooking extends AppCompatActivity {
     private DatabaseReference myRefDoctor = database.getReference("doctorInfo");
     private DatabaseReference myRefAppSchedule = database.getReference("appoinmentSchedule");
 
-    String strDateFormat,strfullFormat,strDateFormats,names,description,speciality,education;
+    String idvalrecondoctor,strDateFormat,strfullFormat,strDateFormats,names,description,speciality,education,idvalrecong,idvalrecongd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +110,9 @@ public class AppoinmentBooking extends AppCompatActivity {
             district = extras.getString("district");
             hospital = extras.getString("hospital");
             expertise = extras.getString("expertise");
-
+            idvalrecong = extras.getString("idvalueforrecongnize");
+            idvalrecongd = extras.getString("idvalueforrecongnized");
+            idvalrecondoctor = extras.getString("idvalueforrecongnizedoctor");
             id = extras.getString("idvalue");
             namevalue = extras.getString("name");
 
@@ -147,6 +149,9 @@ public class AppoinmentBooking extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             intent.putExtra("idvalue", "ZXri36XsB6UYqdK9CLiqV32U6ml2");
             intent.putExtra("district", district);
+            intent.putExtra("idvalueforrecongnize", "2");
+            intent.putExtra("idvalueforrecongnized", "3");
+            intent.putExtra("idvalueforrecongnizedoctor", "4");
             intent.putExtra("hospital", hospital);
             intent.putExtra("expertise", expertise);
             intent.putExtra("name",namevalue);

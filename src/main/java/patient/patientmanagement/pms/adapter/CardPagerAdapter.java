@@ -240,6 +240,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
+                      intent.putExtra("idvalueforrecongnizedoctor","4");
                       v.getContext().startActivity(intent);
                   }
 
@@ -248,17 +249,22 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", "null");
                       intent.putExtra("expertise", expertise);
+                      intent.putExtra("idvalueforrecongnize","1");
+                      intent.putExtra("idvalueforrecongnizedoctor","4");
+
                       v.getContext().startActivity(intent);
                   }
 
                   else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
                       Intent intent = new Intent(v.getContext(), HospitalActivity.class);
+                      intent.putExtra("idvalueforrecongnize","1");
                       intent.putExtra("district", district);
                       v.getContext().startActivity(intent);
                   }
 
                   else{
                       Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
+                      intent.putExtra("idvalueforrecongnize","3");
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);

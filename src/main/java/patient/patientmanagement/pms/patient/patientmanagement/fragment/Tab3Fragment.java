@@ -60,10 +60,6 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private VolleyCallback callback;
 
-    private SharedPreferences mPref;
-    private  static final String PREF_NAME = "sp_name";
-    private  static final String VALUE = "value";
-
     public static Fragment newInstance() {
         Tab3Fragment fragment = new Tab3Fragment();
         //Toast.makeText(fragment.getActivity(), "ss", Toast.LENGTH_SHORT).show();
@@ -76,17 +72,11 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
 
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
 
-
-        //LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mMessageReceiver,
-        //        new IntentFilter("custom-event-name"));
-
-        //mPref = getActivity().getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-
-        //hospitalName = mPref.getString(VALUE, "");
-        //Log.d("hp",hospitalName);
-
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
+
+            p1 = new LatLng(23.8103, 90.4125);
+            //hospitalName = "Apollo Gleneagles Hospitals";
             hospitalName = extras.getString("hospital");
 
             //Toast.makeText(getActivity(), ""+hospitalName, Toast.LENGTH_SHORT).show();
@@ -154,22 +144,6 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
         return view;
     }
 
-
-    /*
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Get extra data included in the Intent
-            hospitalName = intent.getStringExtra("hospitalName");
-            SharedPreferences.Editor editor = mPref.edit();
-            editor.putString(VALUE, hospitalName);
-            editor.apply();
-
-            Log.d("receiver", "Got message: " + hospitalName);
-        }
-    };
-    */
-
     @Override
     public void onLocationChanged(Location location) {
 
@@ -207,4 +181,6 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
         // Enabling MyLocation Layer of Google Map
         googleMap.setMyLocationEnabled(true);
     }
+
+
 }

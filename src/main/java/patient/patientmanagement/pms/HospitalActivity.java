@@ -2,11 +2,13 @@ package patient.patientmanagement.pms;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -41,6 +43,7 @@ public class HospitalActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private HospitalListAdapter mAdapter;
     private ProgressDialog progressDialog;
+    String hospitalName,hospitalAddress,hospitalPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +58,9 @@ public class HospitalActivity extends AppCompatActivity {
         showProcessDialog();
         if (extras != null) {
             districtName = extras.getString("district");
+            hospitalName = extras.getString("hospital");
 
+            //getSupportActionBar().setTitle(districtName);
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -76,48 +81,15 @@ public class HospitalActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-
-        int id = item.getItemId();
-
-        if(id == android.R.id.home){
-            Intent intent = new Intent(HospitalActivity.this,DashboardActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
-    private void showProcessDialog() {
-        progressDialog = new ProgressDialog(HospitalActivity.this);
-        //progressDialog.setTitle("Getting Informations");
-        progressDialog.setMessage("Please wait...");
-        progressDialog.show();
-
-    }
-
     private void value(final String districtName, final String id) {
         int ids = Integer.parseInt(id);
         myRef.orderByChild("districtId").equalTo(ids).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    String hospitalName = String.valueOf(childDataSnapshot.child("hospitalName").getValue());
-                    String hospitalAddress = String.valueOf(childDataSnapshot.child("hospitalAddress").getValue());
-                    String hospitalPhone = String.valueOf(childDataSnapshot.child("phone").getValue());
+                    hospitalName = String.valueOf(childDataSnapshot.child("hospitalName").getValue());
+                    hospitalAddress = String.valueOf(childDataSnapshot.child("hospitalAddress").getValue());
+                    hospitalPhone = String.valueOf(childDataSnapshot.child("phone").getValue());
 
                     hospitalList.add(new Hospital(id,hospitalName,hospitalAddress,hospitalPhone));
                     //value(id);
@@ -176,5 +148,38 @@ public class HospitalActivity extends AppCompatActivity {
 
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+
+        if(id == android.R.id.home){
+            Intent intent = new Intent(HospitalActivity.this,DashboardActivity.class);
+            //intent.putExtra("hospital",hospitalName);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+    private void showProcessDialog() {
+        progressDialog = new ProgressDialog(HospitalActivity.this);
+        //progressDialog.setTitle("Getting Informations");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
     }
 }

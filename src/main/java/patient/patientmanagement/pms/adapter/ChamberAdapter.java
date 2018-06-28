@@ -93,6 +93,9 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
                name = nametxt.getText().toString();
                 //Toast.makeText(v.getContext(), ""+mData.get(position).getChamberLocation(), Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(v.getContext(),AppoinmentBooking.class);
+                intent.putExtra("idvalueforrecongnize","1");
+                intent.putExtra("idvalueforrecongnized","3");
+                intent.putExtra("idvalueforrecongnizedoctor","4");
                intent.putExtra("idvalue",id);
                intent.putExtra("district", district);
                intent.putExtra("hospital", hospital);

@@ -1,6 +1,7 @@
 package patient.patientmanagement.pms;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -9,9 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import patient.patientmanagement.pms.adapter.Pager;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Fragment;
@@ -20,9 +23,9 @@ public class HospitalSearchActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-    private String mapvalue;
+    private String mapvalue,district,hospitalName;
     Intent intent;
-    String hosptial;
+    String hosptial,idvalrecong,idvalrecongd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +40,22 @@ public class HospitalSearchActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        intent = getIntent();
-        hosptial = intent.getStringExtra("hospital");
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            idvalrecong = extras.getString("idvalueforrecongnize");
+            idvalrecongd = extras.getString("idvalueforrecongnized");
+
+            district = extras.getString("district");
+            hospitalName = extras.getString("hospital");
+
+            //getSupportActionBar().setTitle(district);
+            //getSupportActionBar().setSubtitle(hospitalName);
+            //getSupportActionBar().setTitle(district);
+
+            //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
+
+            Log.d("hospitalName",hospitalName+district);
+        }
 
         //tab id
         mTabLayout=(TabLayout)findViewById(R.id.tabs);
@@ -53,7 +70,7 @@ public class HospitalSearchActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        Pager adapter=new Pager(getSupportFragmentManager(), mTabLayout.getTabCount());
+        Pager adapter=new Pager(getSupportFragmentManager(), mTabLayout.getTabCount(),hospitalName);
 
         mViewPager.setAdapter(adapter);
 
@@ -121,10 +138,49 @@ public class HospitalSearchActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            Intent intent = new Intent(HospitalSearchActivity.this,DashboardActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+
+            /*
+                if(idvalrecongd.equals("3")){
+                    Intent intent = new Intent(HospitalSearchActivity.this, DashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                }
+                */
+                if(idvalrecong.equals("2")){
+                    Intent intent = new Intent(HospitalSearchActivity.this, HospitalActivity.class);
+                    intent.putExtra("district", district);
+                    //intent.putExtra("district",district);
+                    intent.putExtra("hospital", hospitalName);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                }
+
+                else {
+                    Intent intent = new Intent(HospitalSearchActivity.this, DashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                }
+                /*
+                else{
+                    Intent intent = new Intent(HospitalSearchActivity.this, HospitalActivity.class);
+                    intent.putExtra("district", district);
+                    //intent.putExtra("district",district);
+                    intent.putExtra("hospital", hospitalName);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                }
+                */
+
+            /*
+            LocalBroadcastManager.getInstance(HospitalSearchActivity.this).sendBroadcast(intent);
+            intent = new Intent("BROADCAST_RANDOM_NUMBER");
+            // Put the random number to intent to broadcast it
+            intent.putExtra("RandomNumber",hospitalName);
+            */
+
+            //startActivity(intent);
             finish();
+
         }
 
 

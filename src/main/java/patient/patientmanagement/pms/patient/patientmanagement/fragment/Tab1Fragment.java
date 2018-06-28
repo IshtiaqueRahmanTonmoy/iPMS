@@ -186,6 +186,10 @@ public class Tab1Fragment extends Fragment {
 
 
                                                   Intent intent = new Intent(getContext(), DoctorList.class);
+                                                  intent.putExtra("idvalueforrecongnize", "2");
+                                                  intent.putExtra("idvalueforrecongnize", "1");
+                                                  intent.putExtra("idvalueforrecongnized", "3");
+
                                                   intent.putExtra("district", district);
                                                   intent.putExtra("hospital", hospitalName);
                                                   intent.putExtra("expertise", specialityName);
