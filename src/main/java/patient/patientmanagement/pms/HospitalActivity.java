@@ -43,7 +43,7 @@ public class HospitalActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private HospitalListAdapter mAdapter;
     private ProgressDialog progressDialog;
-    String hospitalName,hospitalAddress,hospitalPhone;
+    String hospitalName,hospitalAddress,hospitalPhone,hospitalactivity,fromonlydistrict;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +59,11 @@ public class HospitalActivity extends AppCompatActivity {
         if (extras != null) {
             districtName = extras.getString("district");
             hospitalName = extras.getString("hospital");
+            hospitalactivity = extras.getString("hospitalactivity");
 
-            //getSupportActionBar().setTitle(districtName);
+            fromonlydistrict = extras.getString("fromonlydistrict");
+
+            getSupportActionBar().setTitle(districtName);
         }
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);

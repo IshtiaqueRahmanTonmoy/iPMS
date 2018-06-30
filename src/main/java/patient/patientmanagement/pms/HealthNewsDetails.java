@@ -31,6 +31,8 @@ public class HealthNewsDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        getSupportActionBar().setTitle("Health News Details");
+
         showProcessDialog();
         headingTxt = (TextView) findViewById(R.id.heading);
         detailsTxt = (TextView) findViewById(R.id.details);

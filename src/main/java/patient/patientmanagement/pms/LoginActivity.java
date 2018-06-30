@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -42,9 +43,11 @@ public class LoginActivity extends AppCompatActivity {
     String idvalue;
 
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
+    String description,speciality,education,district,hospital,expertise,ids,namevalue,idvalues,fromonlydistrict,fromonlydistrictandhos,doctorlist;
     //long id = 0;
     String id;
     ImageView back;
+    ImageButton imageBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -68,12 +71,27 @@ public class LoginActivity extends AppCompatActivity {
             //id = Long.parseLong(extras.getString("appoinmentid"));
             id = extras.getString("appoinmentid");
 
-            Log.d("extra",id);
+            description = extras.getString("description");
+            speciality = extras.getString("speciality");
+            education = extras.getString("education");
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
+            idvalues = extras.getString("idvalues");
+            namevalue = extras.getString("name");
+
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
+            doctorlist = extras.getString("doctorlist");
+
+
+            Log.d("extra",doctorlist);
             Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
 
             //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
         }
 
+        imageBtn = (ImageButton) findViewById(R.id.imageback);
         emailEdt = (EditText) findViewById(R.id.et_phone);
         passwordEdt = (EditText) findViewById(R.id.et_password);
         loginBtn = (Button) findViewById(R.id.btn_login); 
@@ -82,6 +100,28 @@ public class LoginActivity extends AppCompatActivity {
         databaseUsersAppoinment = FirebaseDatabase.getInstance().getReference("appoinmentSchedule");
 
 
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this,AppoinmentBooking.class);
+
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("education",education);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("expertise",expertise);
+                intent.putExtra("idvalue",idvalues);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
+                intent.putExtra("doctorlist", doctorlist);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,6 +184,8 @@ public class LoginActivity extends AppCompatActivity {
         //String idnode = String.valueOf(node);
         int idnode = 2;
         databaseUsersAppoinment.child(String.valueOf(idnode)).setValue(user);
+
+
     }
 
     private void showProcessDialog() {
@@ -166,6 +208,18 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("confirm",confirm);
         intent.putExtra("appoinmentid",String.valueOf(id));
 
+        intent.putExtra("description",description);
+        intent.putExtra("speciality",speciality);
+        intent.putExtra("education",education);
+        intent.putExtra("district",district);
+        intent.putExtra("hospital",hospital);
+        intent.putExtra("expertise",expertise);
+        intent.putExtra("idvalues",idvalues);
+        intent.putExtra("name",namevalue);
+        intent.putExtra("fromonlydistrict",fromonlydistrict);
+        intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+        intent.putExtra("doctorlist", doctorlist);
+
         startActivity(intent);
 
         //startActivity(new Intent(this, SignupActivity.class));
@@ -176,6 +230,9 @@ public class LoginActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                Intent intent = new Intent(LoginActivity.this,AppoinmentBooking.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
                 finish();
                 return true;
         }

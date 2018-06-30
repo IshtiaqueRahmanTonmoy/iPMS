@@ -134,8 +134,8 @@ public class Tab3Fragment extends Fragment implements LocationListener, OnMapRea
 
                 if (location != null)
                     onLocationChanged(location);
-                else
-                    Toast.makeText(getActivity(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
+                //else
+                    //Toast.makeText(getActivity(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
 
             } else {
                 Toast.makeText(getActivity(), "No Provider Found", Toast.LENGTH_SHORT).show();

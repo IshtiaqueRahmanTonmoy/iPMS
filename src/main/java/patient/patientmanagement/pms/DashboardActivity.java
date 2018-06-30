@@ -85,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Patient Management System");
+        getSupportActionBar().setTitle("i-PMS");
 
 
         checkConnection();
@@ -225,7 +225,7 @@ public class DashboardActivity extends AppCompatActivity
             @Override
             public void onClick(View view, int position) {
                 if(position == 0){
-                    mCardAdapter = new CardPagerAdapter();
+                    mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
                     mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
                     mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
 

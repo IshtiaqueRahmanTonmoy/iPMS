@@ -28,11 +28,24 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
     private float mBaseElevation;
     Context context;
     String format,symptom,id,hospitalId,date,time,serial,confirm;
+    String description,speciality,education,district,hospital,expertise,ids,namevalue,fromonlydistrict,fromdistrictandhos,doctorlist;
     long appoinmentid = 0;
 
-    public ConfirmAdapter(Context context) {
+    public ConfirmAdapter(Context context, String description, String speciality, String education, String district, String hospital, String expertise, String ids, String namevalue,String fromonlydistrict,String fromdistrictandhos,String doctorlist) {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
+
+        this.description = description;
+        this.speciality = speciality;
+        this.education = education;
+        this.district = district;
+        this.hospital = hospital;
+        this.expertise = expertise;
+        this.ids = ids;
+        this.namevalue = namevalue;
+        this.fromonlydistrict = fromonlydistrict;
+        this.fromdistrictandhos = fromdistrictandhos;
+        this.doctorlist = doctorlist;
     }
 
     public void addCardItem(AvailableTIme item) {
@@ -115,7 +128,6 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(),LoginActivity.class);
                 intent.putExtra("format",format);
-                intent.putExtra("idvalueforrecongnize", "1");
                 intent.putExtra("symptom",symptom);
                 intent.putExtra("id",id);
                 intent.putExtra("hospitalId",hospitalId);
@@ -123,7 +135,20 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
                 intent.putExtra("time",time);
                 intent.putExtra("serial",serial);
                 intent.putExtra("confirm",confirm);
+                intent.putExtra("fromonlydistrict", fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", fromdistrictandhos);
+                intent.putExtra("doctorlist", "3");
                 intent.putExtra("appoinmentid",String.valueOf(appoinmentid));
+
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("education",education);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("expertise",expertise);
+                intent.putExtra("idvalues",ids);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("fromonlydistrict","1");
 
                 v.getContext().startActivity(intent);
 

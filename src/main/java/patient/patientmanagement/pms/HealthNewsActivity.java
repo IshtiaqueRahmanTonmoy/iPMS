@@ -47,6 +47,8 @@ public class HealthNewsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        getSupportActionBar().setTitle("Health News");
+
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         showProcessDialog();
         getValue();

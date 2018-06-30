@@ -45,6 +45,8 @@ public class HealthTipsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        getSupportActionBar().setTitle("Health Tips");
+
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         showProcessDialog();
         getValue();

@@ -51,7 +51,7 @@ public class Tab1Fragment extends Fragment {
     private DatabaseReference myRefSpecialites = database.getReference("speciality");
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
-    private String district,districtId,specialitstId,hospitalName,hospitalAddress,hospitalPhone,hospitalId;
+    private String fromonlydistrict,fromdistandhos,district,districtId,specialitstId,hospitalName,hospitalAddress,hospitalPhone,hospitalId;
     private int specialityId;
     private List<speciality> specialistList = new ArrayList<>();
     private SpecialistAdapter mAdapter;
@@ -76,8 +76,12 @@ public class Tab1Fragment extends Fragment {
         if (extras != null) {
             district = extras.getString("district");
             hospitalName = extras.getString("hospital");
-
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromdistandhos = extras.getString("fromdistandhos");
             hospitalTxt.setText(hospitalName);
+
+            //Log.d("doctorlistttab",fromdistandhos);
+            //Toast.makeText(getActivity(), ""+fromdistandhos, Toast.LENGTH_SHORT).show();
 
 
             myRefHospital.orderByChild("hospitalName").equalTo(String.valueOf(hospitalName)).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -181,16 +185,18 @@ public class Tab1Fragment extends Fragment {
                                   recyclerView.addOnItemTouchListener(
                                           new RecyclerItemClickListener(getContext(), recyclerView ,new RecyclerItemClickListener.OnItemClickListener() {
                                               @Override public void onItemClick(View view, int position) {
+
+                                                  //Toast.makeText(view.getContext(), ""+fromdistandhos, Toast.LENGTH_SHORT).show();
+
                                                   TextView txtview = (TextView) view.findViewById(R.id.title);
                                                   String specialityName = txtview.getText().toString();
 
 
                                                   Intent intent = new Intent(getContext(), DoctorList.class);
-                                                  intent.putExtra("idvalueforrecongnize", "2");
-                                                  intent.putExtra("idvalueforrecongnize", "1");
-                                                  intent.putExtra("idvalueforrecongnized", "3");
 
                                                   intent.putExtra("district", district);
+                                                  intent.putExtra("fromonlydistrict", fromonlydistrict);
+                                                  intent.putExtra("fromonlydistrictandhosptial", "2");
                                                   intent.putExtra("hospital", hospitalName);
                                                   intent.putExtra("expertise", specialityName);
                                                   startActivity(intent);

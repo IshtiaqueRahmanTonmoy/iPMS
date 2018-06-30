@@ -51,7 +51,7 @@ public class SignupActivity extends AppCompatActivity {
     DatabaseReference databaseUsers;
     Long tsLong;
     private ProgressDialog progressDialog;
-    private String photo,email,name,phone,gender,age,bloodgroup,password,created,uid;
+    private String photo,email,name,phone,gender,age,bloodgroup,password,created,uid,fromonlydistrict,fromdistandhos;
 
     ScrollView scrollview;
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm;
@@ -77,6 +77,11 @@ public class SignupActivity extends AppCompatActivity {
 
 
     AlertDialog alertdialogbuilder,alertdialogbuilder1;
+    String description,speciality,education,district,hospital,expertise,ids,namevalue,idvalues;
+
+    ImageButton imgback;
+    private String doctorlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -102,6 +107,19 @@ public class SignupActivity extends AppCompatActivity {
             //id = Long.parseLong(extras.getString("appoinmentid"));
             id = extras.getString("appoinmentid");
 
+            description = extras.getString("description");
+            speciality = extras.getString("speciality");
+            education = extras.getString("education");
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
+            idvalues = extras.getString("idvalues");
+            namevalue = extras.getString("name");
+
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromdistandhos = extras.getString("fromonlydistrictandhosptial");
+            doctorlist = extras.getString("doctorlist");
+
             Log.d("extra",id);
             Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
 
@@ -123,6 +141,17 @@ public class SignupActivity extends AppCompatActivity {
                 intent.putExtra("confirm",confirm);
                 intent.putExtra("appoinmentid",String.valueOf(id));
 
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("education",education);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("expertise",expertise);
+                intent.putExtra("idvalues",idvalues);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
+                intent.putExtra("doctorlist", doctorlist);
                 startActivity(intent);
 
             }

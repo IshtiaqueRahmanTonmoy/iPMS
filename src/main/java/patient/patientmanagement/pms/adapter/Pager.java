@@ -23,13 +23,17 @@ import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Frag
 public class Pager extends FragmentStatePagerAdapter {
 
     int tabCount;
-    String hospitalname;
+    String hospitalname,fromonlydistrict,fromdistictandhos;
 
-    public Pager(FragmentManager fm, int tabCount, String hospitalname) {
+    public Pager(FragmentManager fm, int tabCount, String name, String fromonlydistrict,String fromdistrictandhos) {
         super(fm);
         this.tabCount = tabCount;
         this.hospitalname = hospitalname;
-        //Log.d("hospitalName",hospitalname);
+        this.fromonlydistrict = fromonlydistrict;
+        this.fromdistictandhos = fromdistrictandhos;
+
+        //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
+        //Log.d("hospitalfrom",fromdistrictandhos);
     }
 
 
@@ -37,7 +41,13 @@ public class Pager extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch(position){
                 case 0 :
+                    Bundle bundle1 = new Bundle();
+                    bundle1.putString("fromonlydistrict", fromonlydistrict);
+                    bundle1.putString("fromdistandhos", "2");
+// set MyFragment Arguments
                     Tab1Fragment tab1Fragment=new Tab1Fragment();
+                    tab1Fragment.setArguments(bundle1);
+
                     return tab1Fragment;
 
                 case 1 :

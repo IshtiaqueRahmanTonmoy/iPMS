@@ -8,17 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import patient.patientmanagement.pms.AppoinmentBooking;
-import patient.patientmanagement.pms.LoginActivity;
 import patient.patientmanagement.pms.R;
-import patient.patientmanagement.pms.SignupActivity;
-import patient.patientmanagement.pms.SplashActivity;
-import patient.patientmanagement.pms.VerifyNumber;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.Chamber;
 
@@ -29,12 +24,15 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
     private TextView nameTxt,locationTxt,booknowTxt;
     private float mBaseElevation;
     Context context;
-    private String id;
+    private String id,fromonlydistrict,fromonlydistrictandhos,doctorlist;
     private String name,description,speciality,district,hospital,education,expertise;
-    public ChamberAdapter(Context context) {
+    public ChamberAdapter(Context context, String fromonlydistrict, String fromonlydistrictandhos,String doctorlist) {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
 
+        this.fromonlydistrict = fromonlydistrict;
+        this.fromonlydistrictandhos = fromonlydistrictandhos;
+        this.doctorlist = doctorlist;
     }
 
     public void addCardItem(Chamber item) {
@@ -93,14 +91,14 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
                name = nametxt.getText().toString();
                 //Toast.makeText(v.getContext(), ""+mData.get(position).getChamberLocation(), Toast.LENGTH_SHORT).show();
                Intent intent = new Intent(v.getContext(),AppoinmentBooking.class);
-                intent.putExtra("idvalueforrecongnize","1");
-                intent.putExtra("idvalueforrecongnized","3");
-                intent.putExtra("idvalueforrecongnizedoctor","4");
                intent.putExtra("idvalue",id);
                intent.putExtra("district", district);
                intent.putExtra("hospital", hospital);
                intent.putExtra("expertise", expertise);
                intent.putExtra("name",name);
+                intent.putExtra("fromonlydistrict", fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", "2");
+                intent.putExtra("doctorlist", "3");
                 intent.putExtra("education",education);
                intent.putExtra("description",description);
                intent.putExtra("speciality",speciality);

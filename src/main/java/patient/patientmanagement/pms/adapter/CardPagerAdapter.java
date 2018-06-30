@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
@@ -43,6 +45,8 @@ import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.CardAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     private List<CardView> mViews;
@@ -56,6 +60,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     Button searchButton;
     EditText districtEditView;
+
     AutoCompleteTextView hospitalEditView,expertiseEditView;
     ArrayAdapter<String> adapter,adapterSpeciality;
 
@@ -63,6 +68,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
     DatabaseReference myRef = database.getReference("district");
     DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     DatabaseReference myRefExpertise = database.getReference("speciality");
+
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    SharedPreferences sharedpreferences;
+
 
     public CardPagerAdapter() {
 
@@ -72,6 +81,18 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         mViews = new ArrayList<>();
         items = new ArrayList<String>();
         itemsSpeciality = new ArrayList<String>();
+    }
+
+
+    public CardPagerAdapter(Context context) {
+         this.context = context;
+         getValue("Dhaka");
+         districtItem = new ArrayList<>();
+         mData = new ArrayList<>();
+         mViews = new ArrayList<>();
+         items = new ArrayList<String>();
+         itemsSpeciality = new ArrayList<String>();
+
     }
 
     public void addCardItem(CardItem item) {
@@ -240,34 +261,34 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
-                      intent.putExtra("idvalueforrecongnizedoctor","4");
+                      intent.putExtra("doctorlist", "3");
+
                       v.getContext().startActivity(intent);
                   }
 
                   else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
                       Intent intent = new Intent(v.getContext(), DoctorList.class);
                       intent.putExtra("district", district);
-                      intent.putExtra("hospital", "null");
+                      intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
-                      intent.putExtra("idvalueforrecongnize","1");
-                      intent.putExtra("idvalueforrecongnizedoctor","4");
+                      intent.putExtra("doctorlist", "3");
 
                       v.getContext().startActivity(intent);
                   }
 
                   else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
                       Intent intent = new Intent(v.getContext(), HospitalActivity.class);
-                      intent.putExtra("idvalueforrecongnize","1");
+                      intent.putExtra("fromonlydistrict", "1");
                       intent.putExtra("district", district);
                       v.getContext().startActivity(intent);
                   }
 
                   else{
                       Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
-                      intent.putExtra("idvalueforrecongnize","3");
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
+                      intent.putExtra("fromonlydistrictandhosptial", "2");
                       v.getContext().startActivity(intent);
                       /*
                       Intent intent = new Intent(v.getContext(), DoctorList.class);

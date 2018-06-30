@@ -52,11 +52,13 @@ public class AboutFragment extends Fragment {
     private TextView nameTxt, shortDescriptionTxt, educationTxt, specialityTxt, noofchamberTxt;
     private TextView mTextMessage;
     private String idvalue, name, shortdescription, education, speciality,district,hospital,expertise;
-
+    String fromonlydistrict,fromonlydistrictandhos;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("doctorInfo");
 
     private ProgressDialog progressDialog;
+    private String doctorlist;
+
     public static AboutFragment newInstance() {
         AboutFragment fragment = new AboutFragment();
         return fragment;
@@ -94,6 +96,10 @@ public class AboutFragment extends Fragment {
             education = extras.getString("education");
             speciality = extras.getString("speciality");
 
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhos");
+            doctorlist = extras.getString("doctorlist");
+
             nameTxt.setText(name);
             shortDescriptionTxt.setText(shortdescription);
 
@@ -121,7 +127,7 @@ public class AboutFragment extends Fragment {
 
     private void getvalue(final String idvalue) {
 
-        mCardAdapter = new ChamberAdapter(getActivity());
+        mCardAdapter = new ChamberAdapter(getActivity(),fromonlydistrict,fromonlydistrictandhos,doctorlist);
         myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

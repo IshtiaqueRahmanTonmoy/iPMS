@@ -34,6 +34,8 @@ public class BloodActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+        getSupportActionBar().setTitle("Search Blood");
+
         //tab id
         mTabLayout=(TabLayout)findViewById(R.id.tab_layout);
         mTabLayout.setupWithViewPager(mViewPager);

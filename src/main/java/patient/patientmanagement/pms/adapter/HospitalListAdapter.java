@@ -91,8 +91,9 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
 
                 Intent intent = new Intent(view.getContext(), HospitalSearchActivity.class);
                 intent.putExtra("district",districtName);
-                intent.putExtra("idvalueforrecongnize","1");
                 intent.putExtra("hospital",hospitalName);
+                intent.putExtra("fromonlydistrict", "1");
+
                 view.getContext().startActivity(intent);
 
 

@@ -1,7 +1,10 @@
 package patient.patientmanagement.pms;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -31,6 +34,8 @@ import patient.patientmanagement.pms.entity.DoctorInfo;
 import patient.patientmanagement.pms.entity.RecyclerItemClickListener;
 import patient.patientmanagement.pms.entity.speciality;
 
+import static patient.patientmanagement.pms.adapter.CardPagerAdapter.MY_PREFS_NAME;
+
 public class DoctorList extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -40,14 +45,23 @@ public class DoctorList extends AppCompatActivity {
     DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     DatabaseReference myRefExpertise = database.getReference("speciality");
     DatabaseReference myRefDoctor = database.getReference("doctorInfo");
+    String  fromonlydistrict;
     private String district,hospital,expertise;
     private String districtId,hospitalId,specialityId;
     private List<DoctorInfo> doctorList = new ArrayList<>();
     private DoctorListAdapter mAdapter;
     private ProgressDialog progressDialog;
 
-    private String idvalrecong,idvalrecongd,idvalrecondoctor,idval,ImageDoctor,doctorName,education,specialityName,designation,location,specialistId,hospitalsId,hospitalName;
+    private String doctorlist,idvalrecong,idvalrecongd,idvalrecondoctor,idval,ImageDoctor,doctorName,education,specialityName,designation,location,specialistId,hospitalsId,hospitalName;
     private RecyclerView recyclerView;
+
+    private String redirect;
+    private String fromonlydistrictandhos;
+
+    public static final String MY_PREFS_NAME = "MyPrefsFile";
+    SharedPreferences sharedpreferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,14 +79,18 @@ public class DoctorList extends AppCompatActivity {
             district = extras.getString("district");
             hospital = extras.getString("hospital");
             expertise = extras.getString("expertise");
-            idvalrecong = extras.getString("idvalueforrecongnize");
-            idvalrecongd = extras.getString("idvalueforrecongnized");
-            idvalrecondoctor = extras.getString("idvalueforrecongnizedoctor");
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
+            doctorlist = extras.getString("doctorlist");
 
-          Toast.makeText(DoctorList.this, ""+idvalrecondoctor, Toast.LENGTH_SHORT).show();
-          Toast.makeText(DoctorList.this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
-          Toast.makeText(DoctorList.this, ""+idvalrecongd, Toast.LENGTH_SHORT).show();
-            //Log.d("idvalrecondotcor",idvalrecondoctor);
+            getSupportActionBar().setTitle(district);
+            getSupportActionBar().setSubtitle(hospital);
+            getSupportActionBar().setSubtitle(expertise);
+
+            //Toast.makeText(DoctorList.this, "dist"+fromonlydistrict, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "hosandist"+fromonlydistrictandhos, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "doctorlist"+doctorlist, Toast.LENGTH_SHORT).show();
+
 
             if(hospital.matches("null")){
                 gethosptialwithout(district,expertise);
@@ -87,11 +105,20 @@ public class DoctorList extends AppCompatActivity {
                 getAllIdValues(district,hospital,expertise);
             }
 
+            else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
+                gethosptialwithout(district,expertise);
+                //Toast.makeText(this, "all folks", Toast.LENGTH_SHORT).show();
+            }
+
             else{
                 Toast.makeText(this, "all null", Toast.LENGTH_SHORT).show();
             }
 
         }
+    }
+
+    private void valueswithouthos(String district, String hospital, String expertise) {
+
     }
 
     @Override
@@ -108,54 +135,33 @@ public class DoctorList extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         int id = item.getItemId();
-        
-        idvalrecong = idvalrecondoctor;
-        idvalrecong = idvalrecong;
-        idvalrecong = idvalrecongd;
 
         //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
 
         if(id == android.R.id.home){
-
-            if(idvalrecong.equals("1")){
-                Intent intent = new Intent(DoctorList.this,DashboardActivity.class);
-                intent.putExtra("hospital", hospital);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
-            }
-            else if(idvalrecong.equals("2")){
+            if(fromonlydistrict.equals("1")){
                 Intent intent = new Intent(DoctorList.this,HospitalSearchActivity.class);
-                intent.putExtra("district", district);
-                intent.putExtra("hospital", hospital);
-                intent.putExtra("idvalueforrecongnize","3");
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                //intent.putExtra("fromonlydistrictandhosptial","null");
                 startActivity(intent);
-                finish();
             }
-            else if(idvalrecong.equals("3")){
+            else if(fromonlydistrictandhos.equals("2")){
                 Intent intent = new Intent(DoctorList.this,HospitalSearchActivity.class);
-                intent.putExtra("district", district);
-                intent.putExtra("hospital", hospital);
-                intent.putExtra("idvalueforrecongnized","3");
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                //intent.putExtra("fromonlydistrict","null");
+                intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
                 startActivity(intent);
-                finish();
             }
-            else if(idvalrecong.equals("4")){
+            else if(doctorlist.equals("3")){
                 Intent intent = new Intent(DoctorList.this,DashboardActivity.class);
-                intent.putExtra("hospital", hospital);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("doctorlist",doctorlist);
                 startActivity(intent);
-                finish();
             }
-            /*
-            Intent intent = new Intent(DoctorList.this,HospitalSearchActivity.class);
-            intent.putExtra("hospital", hospital);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-            */
         }
 
 
@@ -453,11 +459,10 @@ public class DoctorList extends AppCompatActivity {
                         Intent intent = new Intent(DoctorList.this, DoctorDetailsActivity.class);
                         intent.putExtra("idvalue",idvalue);
                         intent.putExtra("name",name);
-                        intent.putExtra("idvalueforrecongnize","1");
-                        intent.putExtra("idvalueforrecongnized","3");
-                        intent.putExtra("idvalueforrecongnizedoctor","4");
                         intent.putExtra("designationlocation", designatinlocation);
-
+                        intent.putExtra("fromonlydistrict", fromonlydistrict);
+                        intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+                        intent.putExtra("doctorlist", doctorlist);
                         intent.putExtra("education",education);
                         intent.putExtra("speciality",specialtiy);
 

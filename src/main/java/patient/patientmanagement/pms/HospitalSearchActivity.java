@@ -23,9 +23,9 @@ public class HospitalSearchActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
-    private String mapvalue,district,hospitalName;
+    private String mapvalue,district,hospitalName,fromonlydistrict,redirect;
     Intent intent;
-    String hosptial,idvalrecong,idvalrecongd;
+    String hosptial,idvalrecong,idvalrecongd,hospitalactivity,fromonlydistrictandhos; ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +42,19 @@ public class HospitalSearchActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            idvalrecong = extras.getString("idvalueforrecongnize");
-            idvalrecongd = extras.getString("idvalueforrecongnized");
 
             district = extras.getString("district");
             hospitalName = extras.getString("hospital");
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
 
-            //getSupportActionBar().setTitle(district);
-            //getSupportActionBar().setSubtitle(hospitalName);
+
+            getSupportActionBar().setTitle(district);
+            getSupportActionBar().setSubtitle(hospitalName);
             //getSupportActionBar().setTitle(district);
 
-            //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, ""+fromonlydistrict, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, ""+fromonlydistrictandhos, Toast.LENGTH_SHORT).show();
 
             Log.d("hospitalName",hospitalName+district);
         }
@@ -70,7 +72,7 @@ public class HospitalSearchActivity extends AppCompatActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
 
-        Pager adapter=new Pager(getSupportFragmentManager(), mTabLayout.getTabCount(),hospitalName);
+        Pager adapter=new Pager(getSupportFragmentManager(), mTabLayout.getTabCount(),hospitalName,fromonlydistrict,fromonlydistrictandhos);
 
         mViewPager.setAdapter(adapter);
 
@@ -135,52 +137,25 @@ public class HospitalSearchActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
+        //redirect = fromonlydistrict;
+        //redirect = fromonlydistrictandhos;
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-
-            /*
-                if(idvalrecongd.equals("3")){
-                    Intent intent = new Intent(HospitalSearchActivity.this, DashboardActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                }
-                */
-                if(idvalrecong.equals("2")){
-                    Intent intent = new Intent(HospitalSearchActivity.this, HospitalActivity.class);
-                    intent.putExtra("district", district);
-                    //intent.putExtra("district",district);
-                    intent.putExtra("hospital", hospitalName);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                }
-
-                else {
-                    Intent intent = new Intent(HospitalSearchActivity.this, DashboardActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                }
-                /*
-                else{
-                    Intent intent = new Intent(HospitalSearchActivity.this, HospitalActivity.class);
-                    intent.putExtra("district", district);
-                    //intent.putExtra("district",district);
-                    intent.putExtra("hospital", hospitalName);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                }
-                */
-
-            /*
-            LocalBroadcastManager.getInstance(HospitalSearchActivity.this).sendBroadcast(intent);
-            intent = new Intent("BROADCAST_RANDOM_NUMBER");
-            // Put the random number to intent to broadcast it
-            intent.putExtra("RandomNumber",hospitalName);
-            */
-
-            //startActivity(intent);
-            finish();
-
+            if(fromonlydistrict.equals("1")){
+                Intent intent = new Intent(HospitalSearchActivity.this,HospitalActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospitalName);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                startActivity(intent);
+            }
+            else if(fromonlydistrictandhos.equals("2")){
+                Intent intent = new Intent(HospitalSearchActivity.this,DashboardActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospitalName);
+                intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
+                startActivity(intent);
+            }
         }
 
 
