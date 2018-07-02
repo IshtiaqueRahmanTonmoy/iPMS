@@ -30,6 +30,7 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import patient.patientmanagement.pms.databinding.ActivityLoginBinding;
 import patient.patientmanagement.pms.entity.Utils;
 import patient.patientmanagement.pms.entity.appoinmentSchedule;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.AppoinmentSuccess;
 
 public class LoginActivity extends AppCompatActivity {
     ActivityLoginBinding binding;
@@ -177,15 +178,39 @@ public class LoginActivity extends AppCompatActivity {
         int status = Integer.parseInt(sts);
         int id = Integer.parseInt(i);
 
-        Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+patientId+"\n"+serialNo+"\n"+status+"\n"+time);
+        Log.d("value", date + "\n" + disease + "\n" + doctorId + "\n" + hospitalId + "\n" + id + "\n" + patientId + "\n" + serialNo + "\n" + status + "\n" + time);
 
-        appoinmentSchedule user = new appoinmentSchedule(date,disease,doctorId,hospitalId,id,patientId,serialNo,status,time);
+        appoinmentSchedule user = new appoinmentSchedule(date, disease, doctorId, hospitalId, id, patientId, serialNo, status, time);
         //long node = id - 1;
         //String idnode = String.valueOf(node);
         int idnode = 2;
         databaseUsersAppoinment.child(String.valueOf(idnode)).setValue(user);
 
+        Intent intent = new Intent(LoginActivity.this, AppoinmentSuccess.class);
+        intent.putExtra("format",date);
+        intent.putExtra("symptom",disease);
+        intent.putExtra("id",doctorId);
+        intent.putExtra("hospitalId",hospitalId);
+        intent.putExtra("date",dates);
+        intent.putExtra("time",time);
+        intent.putExtra("serial",serialNo);
+        intent.putExtra("confirm",confirm);
+        intent.putExtra("appoinmentid",String.valueOf(id));
 
+        intent.putExtra("description",description);
+        intent.putExtra("speciality",speciality);
+        intent.putExtra("education",education);
+        intent.putExtra("district",district);
+        intent.putExtra("hospital",hospital);
+        intent.putExtra("expertise",expertise);
+        intent.putExtra("idvalues",idvalues);
+        intent.putExtra("name",namevalue);
+        intent.putExtra("fromonlydistrict",fromonlydistrict);
+        intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+        intent.putExtra("doctorlist", doctorlist);
+
+        startActivity(intent);
+        startActivity(intent);
     }
 
     private void showProcessDialog() {

@@ -71,7 +71,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".MapActivity" />
-        <activity android:name=".BloodDonorActivity"></activity>
+        <activity android:name=".BloodDonorActivity" />
+        <activity android:name=".patient.patientmanagement.fragment.AppoinmentSuccess"></activity>
     </application>
 
 </manifest>

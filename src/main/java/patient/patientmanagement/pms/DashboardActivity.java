@@ -146,7 +146,7 @@ public class DashboardActivity extends AppCompatActivity
             public void onClick(View view) {
                 //String phone = blood.getPhoneNumber().toString();
                 //Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
-                String phoneNumber = String.format("tel: %s", "16484");
+                String phoneNumber = String.format("tel: %s", "1212");
                 // Create the intent.
                 Intent dialIntent = new Intent(Intent.ACTION_DIAL);
                 // Set the data for the intent as the phone number.
@@ -379,7 +379,7 @@ public class DashboardActivity extends AppCompatActivity
             intent.setType("text/plain");
             String shareboyd = "";
             String shareboyd1 = "Get Patient Management Application From link below";
-            String sharesub = "https://play.google.com/store/apps/details?id=iaccess.iaccess.com.iaccess";
+            String sharesub = "https://play.google.com/store/apps/details?id=patientsmanagement.patientmanagement.patientsmanagementsystem";
             intent.putExtra(Intent.EXTRA_SUBJECT,shareboyd);
             intent.putExtra(Intent.EXTRA_SUBJECT,shareboyd1);
             intent.putExtra(Intent.EXTRA_TEXT,sharesub);

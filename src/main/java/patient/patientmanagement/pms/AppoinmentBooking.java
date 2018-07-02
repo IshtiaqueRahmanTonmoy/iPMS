@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -205,6 +206,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
     private void getvalueid(final String id, String hospitalid, final String location, final String format) {
 
+        //Toast.makeText(AppoinmentBooking.this, "hosptialid"+hospitalid, Toast.LENGTH_SHORT).show();
         int hospid = Integer.parseInt(hospitalid);
         myRefHospital.orderByChild("hospitalId").equalTo(hospid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -250,6 +252,8 @@ public class AppoinmentBooking extends AppCompatActivity {
         Log.d("day",format);
 
         int hosid = Integer.parseInt(hospitalId);
+
+        //Toast.makeText(AppoinmentBooking.this, "format"+format, Toast.LENGTH_SHORT).show();
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
 
         ref.orderByChild("hospitalId").equalTo(hosid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -257,7 +261,10 @@ public class AppoinmentBooking extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
                     dateTime = String.valueOf(childDataSnapshot.child("date").getValue());
+
+                    //Toast.makeText(AppoinmentBooking.this, "datetime"+dateTime, Toast.LENGTH_SHORT).show();
 
                     if(dateTime.equals(format)){
                         //Toast.makeText(AppoinmentBooking.this, ""+dateTime, Toast.LENGTH_SHORT).show();
@@ -285,10 +292,22 @@ public class AppoinmentBooking extends AppCompatActivity {
                         int serialno = slno + 1;
                         String sno = String.valueOf(serialno);
 
-
                         long aid = appid + 1;
-
                         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+
+                        Log.d("descriptions",description);
+                        Log.d("speciality",speciality);
+                        Log.d("education",education);
+                        Log.d("district",district);
+                        Log.d("hospital",hospital);
+                        Log.d("expertise",expertise);
+                        Log.d("id",id);
+                        Log.d("namevalue",namevalue);
+                        Log.d("aid", String.valueOf(aid));
+
+                        Log.d("hospitalid", hospitalId);
+                        Log.d("serialno", String.valueOf(slno));
+                        Log.d("newtime", newtime);
 
                         //String ids = String.valueOf(aid);
 
@@ -310,7 +329,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                     }
 
                     else{
-                        //Toast.makeText(AppoinmentBooking.this, ""+dateTime, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(AppoinmentBooking.this, "not matched", Toast.LENGTH_SHORT).show();
                         hosptialid  = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
                         serialNo = String.valueOf(childDataSnapshot.child("serialNo").getValue());
                         //timeappoinment = String.valueOf(childDataSnapshot.child("time").getValue());
@@ -354,10 +373,10 @@ public class AppoinmentBooking extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+                //Toast.makeText(AppoinmentBooking.this, "ds", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
             }
         });
-
     }
 
     public static float dpToPixels(int dp, Context context) {
