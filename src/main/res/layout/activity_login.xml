@@ -31,7 +31,7 @@
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:text="@string/login_title"
-                android:textColor="@color/orange" />
+                android:textColor="@color/colorExpertise" />
 
             <EditText
                 android:id="@+id/et_phone"
@@ -57,7 +57,7 @@
                 android:layout_marginTop="@dimen/layout_in_between_margins"
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:text="@string/forgot_password"
-                android:textColor="@color/orange"
+                android:textColor="@color/fb_blue"
                 android:textSize="16sp" />
 
             <Button
@@ -140,7 +140,7 @@
                     android:fontFamily="@font/sf_pro_display_medium"
                     android:onClick="signup"
                     android:text="@string/signup_label"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/signintext"
                     android:textSize="16sp" />
             </RelativeLayout>
         </RelativeLayout>

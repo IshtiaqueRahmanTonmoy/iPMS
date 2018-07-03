@@ -31,7 +31,7 @@
                 android:layout_marginTop="0dp"
                 android:fontFamily="@font/sf_pro_display_medium"
                 android:text="@string/signup_title"
-                android:textColor="@color/orange" />
+                android:textColor="@color/colorExpertise" />
 
             <EditText
                 android:id="@+id/et_full_name"
@@ -169,7 +169,7 @@
                     android:fontFamily="@font/sf_pro_display_medium"
                     android:onClick="login"
                     android:text="@string/login_label"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/signintext"
                     android:textSize="18sp" />
             </RelativeLayout>
         </RelativeLayout>

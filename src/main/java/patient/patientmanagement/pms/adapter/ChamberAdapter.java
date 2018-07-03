@@ -21,7 +21,7 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
 
     private List<CardView> mViews;
     private List<Chamber> mData;
-    private TextView nameTxt,locationTxt,booknowTxt;
+    private TextView nameTxt,locationTxt,booknowTxt,timeTxt;
     private float mBaseElevation;
     Context context;
     private String id,fromonlydistrict,fromonlydistrictandhos,doctorlist;
@@ -122,11 +122,13 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
 
         nameTxt = (TextView) view.findViewById(R.id.name);
         locationTxt = (TextView) view.findViewById(R.id.location);
+        timeTxt = (TextView) view.findViewById(R.id.time);
         booknowTxt = (TextView) view.findViewById(R.id.bookappoinment);
 
         //Toast.makeText(view.getContext(), ""+item.getIdvalue(), Toast.LENGTH_SHORT).show();
         nameTxt.setText(item.getChamberName());
         locationTxt.setText(item.getChamberLocation());
         booknowTxt.setText(item.getBooknow());
+        timeTxt.setText(item.getChambertime());
     }
 }

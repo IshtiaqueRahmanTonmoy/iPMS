@@ -138,9 +138,9 @@ public class AboutFragment extends Fragment {
                     String name = ds.child("chambername").getValue(String.class);
                     //names.add(name);
                     String number = ds.child("location").getValue(String.class);
+                    String chambertime = ds.child("chambertime").getValue(String.class);
 
-
-                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,"BOOK APPOINMENT NOW",district,hospital,expertise,shortdescription,education,speciality));
+                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,chambertime,"BOOK APPOINMENT NOW",district,hospital,expertise,shortdescription,education,speciality));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 
                     Log.d("TAG", name + " / " + number);

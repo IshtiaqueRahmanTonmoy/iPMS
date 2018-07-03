@@ -5,7 +5,7 @@ public class Chamber {
     String chamberName;
     String chamberLocation;
     String booknow;
-    String name,district,hospital,expertise,description,education,speciality;
+    String name,district,hospital,expertise,description,education,speciality,chambertime;
 
     public Chamber(String idvalue, String chamberName, String chamberLocation, String booknow){
         this.idvalue = idvalue;
@@ -75,10 +75,19 @@ public class Chamber {
         this.name = name;
     }
 
-    public Chamber(String idvalue, String chamberName, String chamberLocation, String booknow, String district, String hospital, String expertise, String description, String education, String speciality){
+    public String getChambertime() {
+        return chambertime;
+    }
+
+    public void setChambertime(String chambertime) {
+        this.chambertime = chambertime;
+    }
+
+    public Chamber(String idvalue, String chamberName, String chamberLocation, String chambertime, String booknow, String district, String hospital, String expertise, String description, String education, String speciality){
         this.idvalue = idvalue;
         this.chamberName = chamberName;
         this.chamberLocation = chamberLocation;
+        this.chambertime = chambertime;
         this.booknow = booknow;
 
         this.name = name;

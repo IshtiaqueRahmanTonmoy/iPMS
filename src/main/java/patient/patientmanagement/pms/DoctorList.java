@@ -87,9 +87,9 @@ public class DoctorList extends AppCompatActivity {
             getSupportActionBar().setSubtitle(hospital);
             getSupportActionBar().setSubtitle(expertise);
 
-            //Toast.makeText(DoctorList.this, "dist"+fromonlydistrict, Toast.LENGTH_SHORT).show();
-            //Toast.makeText(DoctorList.this, "hosandist"+fromonlydistrictandhos, Toast.LENGTH_SHORT).show();
-            //Toast.makeText(DoctorList.this, "doctorlist"+doctorlist, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "dist"+district, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "hosandist"+hospital, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "doctorlist"+expertise, Toast.LENGTH_SHORT).show();
 
 
             if(hospital.matches("null")){
@@ -196,6 +196,8 @@ public class DoctorList extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     specialityId = String.valueOf(childDataSnapshot.child("specialityId").getValue());
+                    Toast.makeText(DoctorList.this, ""+specialityId, Toast.LENGTH_SHORT).show();
+
                     valuegetsetvalue(districtId,specialityId);
                     //Log.d("valuesspecialist",districtId+specialityId);
                 }
@@ -213,6 +215,9 @@ public class DoctorList extends AppCompatActivity {
 
         int districtid = Integer.parseInt(districtId);
         final int specialid = Integer.parseInt(specialityId);
+
+        Toast.makeText(DoctorList.this, "specialityid"+specialid, Toast.LENGTH_SHORT).show();
+
 
         myRefDoctor.orderByChild("districtId").equalTo(districtid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -353,7 +358,11 @@ public class DoctorList extends AppCompatActivity {
                     hospitalsId = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
 
                     int specialitymatch = Integer.parseInt(specialistId);
+
+                    //Toast.makeText(DoctorList.this, "matched"+specialitymatch, Toast.LENGTH_SHORT).show();
+
                     if(specialid == specialitymatch){
+                        //Toast.makeText(DoctorList.this, "matched", Toast.LENGTH_SHORT).show();
                         getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
@@ -422,7 +431,7 @@ public class DoctorList extends AppCompatActivity {
     }
 
     private void setValueinList(String idval,String imageDoctor, String doctorName, String education, final String specialityName, String designation, String hospitalName) {
-        //Toast.makeText(DoctorList.this, ""+doctorName+education+designation+specialityName+hospitalName, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(DoctorList.this, ""+idval+doctorName+education+designation+specialityName+hospitalName, Toast.LENGTH_SHORT).show();
 
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,hospitalName));
         mAdapter = new DoctorListAdapter(DoctorList.this,doctorList);
