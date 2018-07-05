@@ -295,6 +295,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                         long aid = appid + 1;
                         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
+                        /*
                         Log.d("descriptions",description);
                         Log.d("speciality",speciality);
                         Log.d("education",education);
@@ -308,7 +309,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                         Log.d("hospitalid", hospitalId);
                         Log.d("serialno", String.valueOf(slno));
                         Log.d("newtime", newtime);
-
+                        */
                         //String ids = String.valueOf(aid);
 
                         //Log.d("sno",sno);

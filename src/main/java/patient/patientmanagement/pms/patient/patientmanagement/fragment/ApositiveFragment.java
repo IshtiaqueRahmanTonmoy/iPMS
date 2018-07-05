@@ -75,6 +75,7 @@ public class ApositiveFragment extends Fragment {
                         String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
                         //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
                         getValue(id,thanaName,bloodGroup);
+                        progressDialog.dismiss();
                     }
                 }
 
@@ -159,7 +160,7 @@ public class ApositiveFragment extends Fragment {
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();

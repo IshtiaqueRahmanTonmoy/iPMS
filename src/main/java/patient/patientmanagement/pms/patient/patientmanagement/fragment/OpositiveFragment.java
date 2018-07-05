@@ -51,12 +51,13 @@ public class OpositiveFragment extends Fragment {
         View view=inflater.inflate(R.layout.fragment_opos, container, false);
 
         bloodList.clear();
-        showProcessDialog();
+        //showProcessDialog();
 
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
+            showProcessDialog();
             districtName = extras.getString("district");
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
@@ -69,6 +70,7 @@ public class OpositiveFragment extends Fragment {
                         String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
                         //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
                         getValue(id,thanaName,bloodGroup);
+                        progressDialog.dismiss();
                     }
                 }
 
@@ -153,7 +155,7 @@ public class OpositiveFragment extends Fragment {
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();

@@ -142,20 +142,21 @@ public class HospitalSearchActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            if(fromonlydistrict.equals("1")){
+            if(fromonlydistrict.equals("1") && fromonlydistrictandhos.equals("null")){
                 Intent intent = new Intent(HospitalSearchActivity.this,HospitalActivity.class);
                 intent.putExtra("district",district);
                 intent.putExtra("hospital",hospitalName);
                 intent.putExtra("fromonlydistrict",fromonlydistrict);
                 startActivity(intent);
             }
-            else if(fromonlydistrictandhos.equals("2")){
+            else if(fromonlydistrictandhos.equals("2") && fromonlydistrict.equals("null")){
                 Intent intent = new Intent(HospitalSearchActivity.this,DashboardActivity.class);
                 intent.putExtra("district",district);
                 intent.putExtra("hospital",hospitalName);
                 intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
                 startActivity(intent);
             }
+
         }
 
 

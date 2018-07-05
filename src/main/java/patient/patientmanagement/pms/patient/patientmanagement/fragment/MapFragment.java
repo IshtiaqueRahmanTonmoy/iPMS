@@ -60,6 +60,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         View view = inflater.inflate(R.layout.fragment_tab3, container, false);
 
+        p1 = new LatLng(23.8103, 90.4125);
         Bundle extras = getActivity().getIntent().getExtras();
 
         if (extras != null) {

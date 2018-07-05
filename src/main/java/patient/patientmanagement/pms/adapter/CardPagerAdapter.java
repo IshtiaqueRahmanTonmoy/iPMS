@@ -288,6 +288,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("district", district);
                       intent.putExtra("hospital", hospital);
                       intent.putExtra("expertise", expertise);
+                      intent.putExtra("fromonlydistrict", "null");
                       intent.putExtra("fromonlydistrictandhosptial", "2");
                       v.getContext().startActivity(intent);
                       /*

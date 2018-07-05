@@ -434,7 +434,7 @@ public class DashboardActivity extends AppCompatActivity
                         animatedView.setAnimation(null);
                         animatedView = itemView;
                     }
-                    ScaleAnimation fade_in = new ScaleAnimation(1f, 1.3f, 1f, 1.3f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+                    ScaleAnimation fade_in = new ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.2f, Animation.RELATIVE_TO_SELF, 0.2f);
                     fade_in.setDuration(100);     // animation duration in milliseconds
                     fade_in.setFillAfter(true);    // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
                     itemView.startAnimation(fade_in);
