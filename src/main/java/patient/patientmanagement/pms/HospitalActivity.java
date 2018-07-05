@@ -45,6 +45,8 @@ public class HospitalActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     String hospitalName,hospitalAddress,hospitalPhone,hospitalactivity,fromonlydistrict;
 
+    int District,DistrictAndHos,DistrictHosSpeciality;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,10 @@ public class HospitalActivity extends AppCompatActivity {
             hospitalactivity = extras.getString("hospitalactivity");
 
             fromonlydistrict = extras.getString("fromonlydistrict");
+
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
 
             getSupportActionBar().setTitle(districtName);
         }
@@ -168,11 +174,15 @@ public class HospitalActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            Intent intent = new Intent(HospitalActivity.this,DashboardActivity.class);
-            //intent.putExtra("hospital",hospitalName);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
+
+            if(District == 1 && DistrictAndHos == 0 && DistrictHosSpeciality == 0) {
+
+                Intent intent = new Intent(HospitalActivity.this, DashboardActivity.class);
+                //intent.putExtra("hospital",hospitalName);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
         }
 
 

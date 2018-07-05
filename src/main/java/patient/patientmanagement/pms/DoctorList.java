@@ -60,6 +60,7 @@ public class DoctorList extends AppCompatActivity {
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences sharedpreferences;
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
 
     @Override
@@ -83,13 +84,18 @@ public class DoctorList extends AppCompatActivity {
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
             doctorlist = extras.getString("doctorlist");
 
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+
             getSupportActionBar().setTitle(district);
             getSupportActionBar().setSubtitle(hospital);
             getSupportActionBar().setSubtitle(expertise);
 
-            //Toast.makeText(DoctorList.this, "dist"+district, Toast.LENGTH_SHORT).show();
-            //Toast.makeText(DoctorList.this, "hosandist"+hospital, Toast.LENGTH_SHORT).show();
-            //Toast.makeText(DoctorList.this, "doctorlist"+expertise, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "dist"+District, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "hosandist"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorList.this, "doctorlist"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
 
 
             if(hospital.matches("null")){
@@ -139,6 +145,28 @@ public class DoctorList extends AppCompatActivity {
         //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
 
         if(id == android.R.id.home){
+
+            if(District == 1 && DistrictAndHos == 0 && DistrictHosSpeciality == 0) {
+                Intent intent = new Intent(DoctorList.this,HospitalSearchActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                //intent.putExtra("fromonlydistrictandhosptial","null");
+                startActivity(intent);
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+                startActivity(intent);
+            }
+
+            if(District == 0 && DistrictAndHos == 0 && DistrictHosSpeciality == 1) {
+                Intent intent = new Intent(DoctorList.this,DashboardActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("doctorlist",doctorlist);
+                startActivity(intent);
+            }
+           /*
             if(fromonlydistrict.equals("1")){
                 Intent intent = new Intent(DoctorList.this,HospitalSearchActivity.class);
                 intent.putExtra("district",district);
@@ -162,6 +190,7 @@ public class DoctorList extends AppCompatActivity {
                 intent.putExtra("doctorlist",doctorlist);
                 startActivity(intent);
             }
+            */
         }
 
 
@@ -478,6 +507,10 @@ public class DoctorList extends AppCompatActivity {
                         intent.putExtra("district", district);
                         intent.putExtra("hospital", hospital);
                         intent.putExtra("expertise", expertise);
+
+                        intent.putExtra("District",District);
+                        intent.putExtra("DistrictAndHos",DistrictAndHos);
+                        intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
 
                         startActivity(intent);
 

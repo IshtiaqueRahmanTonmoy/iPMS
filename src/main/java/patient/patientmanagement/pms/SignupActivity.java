@@ -81,6 +81,7 @@ public class SignupActivity extends AppCompatActivity {
 
     ImageButton imgback;
     private String doctorlist;
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,12 @@ public class SignupActivity extends AppCompatActivity {
             fromdistandhos = extras.getString("fromonlydistrictandhosptial");
             doctorlist = extras.getString("doctorlist");
 
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+
+
             Log.d("extra",id);
             Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
 
@@ -152,6 +159,11 @@ public class SignupActivity extends AppCompatActivity {
                 intent.putExtra("fromonlydistrict",fromonlydistrict);
                 intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
                 intent.putExtra("doctorlist", doctorlist);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
                 startActivity(intent);
 
             }

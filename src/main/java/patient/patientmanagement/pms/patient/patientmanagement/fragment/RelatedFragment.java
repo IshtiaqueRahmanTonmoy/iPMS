@@ -49,7 +49,7 @@ public class RelatedFragment extends Fragment {
     private ProgressDialog progressDialog;
     private List<DoctorInfo> doctorList = new ArrayList<>();
     private DoctorListAdapter mAdapter;
-    String speciality,specialityId;
+    String speciality,specialityId,district,hospital,expertise,fromonlydistrict,fromonlydistrictandhos,doctorlist;
     private RecyclerView recyclerView;
 
     public static Fragment newInstance() {
@@ -75,6 +75,14 @@ public class RelatedFragment extends Fragment {
 
             education = extras.getString("education");
             speciality = extras.getString("speciality");
+
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
+
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhos");
+            doctorlist = extras.getString("doctorlist");
 
             //Toast.makeText(getActivity(), ""+education, Toast.LENGTH_SHORT).show();
             //Toast.makeText(getActivity(), ""+speciality, Toast.LENGTH_SHORT).show();
@@ -197,7 +205,7 @@ public class RelatedFragment extends Fragment {
         });
     }
 
-    private void setValueinList(String idval, String imageDoctor, String doctorName, String education, String specialityName, String designation, String location) {
+    private void setValueinList(String idval, String imageDoctor, String doctorName, String education, String specialityName, String designation, final String location) {
 
         doctorList.add(new DoctorInfo(idval,imageDoctor,doctorName,education,specialityName,designation,location));
         mAdapter = new DoctorListAdapter(getActivity(),doctorList);
@@ -234,9 +242,24 @@ public class RelatedFragment extends Fragment {
                         intent.putExtra("idvalue",idvalue);
                         intent.putExtra("name",name);
                         intent.putExtra("designationlocation", designatinlocation);
+                        //intent.putExtra("hospital", location);
 
                         intent.putExtra("education",education);
                         intent.putExtra("speciality",specialtiy);
+
+                        intent.putExtra("fromonlydistrict", fromonlydistrict);
+                        intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+                        intent.putExtra("doctorlist", doctorlist);
+
+                        intent.putExtra("district", district);
+                        intent.putExtra("hospital", hospital);
+                        intent.putExtra("expertise", expertise);
+
+
+                        intent.putExtra("District",1);
+                        intent.putExtra("DistrictAndHos",0);
+                        intent.putExtra("DistrictHosSpeciality",0);
+
 
                         startActivity(intent);
 

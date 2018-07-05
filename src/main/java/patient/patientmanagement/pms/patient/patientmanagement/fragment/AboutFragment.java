@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import patient.patientmanagement.pms.AppoinmentBooking;
+import patient.patientmanagement.pms.DoctorDetailsActivity;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.adapter.ChamberAdapter;
@@ -59,6 +60,7 @@ public class AboutFragment extends Fragment {
     private ProgressDialog progressDialog;
     private String doctorlist;
 
+    private int District,DistrictAndHos,DistrictHosSpeciality;
     public static AboutFragment newInstance() {
         AboutFragment fragment = new AboutFragment();
         return fragment;
@@ -100,6 +102,15 @@ public class AboutFragment extends Fragment {
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhos");
             doctorlist = extras.getString("doctorlist");
 
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+            //Toast.makeText(getActivity(), "District"+District, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Hospital"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), "Speciality"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
+
+
             nameTxt.setText(name);
             shortDescriptionTxt.setText(shortdescription);
 
@@ -127,7 +138,7 @@ public class AboutFragment extends Fragment {
 
     private void getvalue(final String idvalue) {
 
-        mCardAdapter = new ChamberAdapter(getActivity(),fromonlydistrict,fromonlydistrictandhos,doctorlist);
+        mCardAdapter = new ChamberAdapter(getActivity(),fromonlydistrict,fromonlydistrictandhos,doctorlist,District,DistrictAndHos,DistrictHosSpeciality);
         myRef.child(idvalue).child("chamber").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -140,7 +151,7 @@ public class AboutFragment extends Fragment {
                     String number = ds.child("location").getValue(String.class);
                     String chambertime = ds.child("chambertime").getValue(String.class);
 
-                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,chambertime,"BOOK APPOINMENT NOW",district,hospital,expertise,shortdescription,education,speciality));
+                    mCardAdapter.addCardItem(new Chamber(idvalue,name,number,chambertime,"BOOK APPOINMENT NOW",district,hospital,expertise,shortdescription,education,speciality,District,DistrictAndHos,DistrictHosSpeciality));
                     //mCardAdapter.addCardItem(new Chamber("Syed Diagonstics & Consultation Center,Main Branch", "Ka 164/2(Ground Floor),Bottola,Khilagaon,Dhaka", "BOOK APPOINMENT NOW"));
 
                     Log.d("TAG", name + " / " + number);

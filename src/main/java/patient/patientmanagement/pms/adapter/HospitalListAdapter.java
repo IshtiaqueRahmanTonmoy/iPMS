@@ -94,6 +94,10 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
                 intent.putExtra("hospital",hospitalName);
                 intent.putExtra("fromonlydistrict", "1");
 
+                intent.putExtra("District",1);
+                intent.putExtra("DistrictAndHos",0);
+                intent.putExtra("DistrictHosSpeciality",0);
+
                 view.getContext().startActivity(intent);
 
 

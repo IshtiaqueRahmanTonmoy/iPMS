@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -47,6 +46,8 @@ public class AppoinmentBooking extends AppCompatActivity {
     String fromonlydistrict,idvalrecondoctor,strDateFormat,strfullFormat,strDateFormats,names,description,speciality,education,idvalrecong,idvalrecongd;
     private String fromonlydistrictandhos;
     private String doctorlist;
+
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +121,15 @@ public class AppoinmentBooking extends AppCompatActivity {
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
             doctorlist = extras.getString("doctorlist");
 
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+            //Toast.makeText(AppoinmentBooking.this, "Districtappbooking"+District, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AppoinmentBooking.this, "Hospitalappbooking"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AppoinmentBooking.this, "Specialityappbooking"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
+
+
             location.setText(namevalue);
             time.setText(currentime);
             datetxt.setText(format);
@@ -154,23 +164,58 @@ public class AppoinmentBooking extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
-            Intent intent = new Intent(AppoinmentBooking.this,DoctorDetailsActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            intent.putExtra("idvalue", "ZXri36XsB6UYqdK9CLiqV32U6ml2");
-            //intent.putExtra("idvalue", id);
-            intent.putExtra("district", district);
-            intent.putExtra("hospital", hospital);
-            intent.putExtra("expertise", expertise);
-            intent.putExtra("name",namevalue);
-            intent.putExtra("education",education);
-            intent.putExtra("description",description);
-            intent.putExtra("speciality",speciality);
-            intent.putExtra("fromonlydistrict",fromonlydistrict);
-            intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
-            intent.putExtra("doctorlist", doctorlist);
-            intent.putExtra("designationlocation", speciality+","+hospital);
-            startActivity(intent);
-            finish();
+
+            if(District == 1 && DistrictAndHos == 0 && DistrictHosSpeciality == 0) {
+                Intent intent = new Intent(AppoinmentBooking.this,DoctorDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("idvalue", "ZXri36XsB6UYqdK9CLiqV32U6ml2");
+                //intent.putExtra("idvalue", id);
+                intent.putExtra("district", district);
+                intent.putExtra("hospital", hospital);
+                intent.putExtra("expertise", expertise);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("education",education);
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+                intent.putExtra("doctorlist", doctorlist);
+                intent.putExtra("designationlocation", speciality+","+hospital);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                startActivity(intent);
+                finish();
+            }
+
+            if(District == 0 && DistrictAndHos == 0 && DistrictHosSpeciality == 1) {
+                Intent intent = new Intent(AppoinmentBooking.this,DoctorDetailsActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("idvalue", "ZXri36XsB6UYqdK9CLiqV32U6ml2");
+                //intent.putExtra("idvalue", id);
+                intent.putExtra("district", district);
+                intent.putExtra("hospital", hospital);
+                intent.putExtra("expertise", expertise);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("education",education);
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
+                intent.putExtra("doctorlist", doctorlist);
+                intent.putExtra("designationlocation", speciality+","+hospital);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                startActivity(intent);
+                finish();
+            }
+
+
         }
 
 
@@ -313,7 +358,7 @@ public class AppoinmentBooking extends AppCompatActivity {
                         //String ids = String.valueOf(aid);
 
                         //Log.d("sno",sno);
-                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this,description,speciality,education,district,hospital,expertise,id,namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist);
+                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this,description,speciality,education,district,hospital,expertise,id,namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist,District,DistrictAndHos,DistrictHosSpeciality);
                         pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book"));
                         //pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,4,null,"10","1",newtime,"Confirm Book"));
 
@@ -354,7 +399,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
                         //Log.d("sno",sno);
 
-                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this, description, speciality, education, district, hospital, expertise, id, namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist);
+                        pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this, description, speciality, education, district, hospital, expertise, id, namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist, District, DistrictAndHos, DistrictHosSpeciality);
                         pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",currtime,"Confirm Book"));
 
                         fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);

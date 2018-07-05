@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
     String id;
     ImageView back;
     ImageButton imageBtn;
+    int District,DistrictAndHos,DistrictHosSpeciality;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
@@ -80,6 +82,10 @@ public class LoginActivity extends AppCompatActivity {
             expertise = extras.getString("expertise");
             idvalues = extras.getString("idvalues");
             namevalue = extras.getString("name");
+
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
 
             fromonlydistrict = extras.getString("fromonlydistrict");
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
@@ -117,6 +123,10 @@ public class LoginActivity extends AppCompatActivity {
                 intent.putExtra("fromonlydistrict",fromonlydistrict);
                 intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
                 intent.putExtra("doctorlist", doctorlist);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -209,6 +219,11 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
         intent.putExtra("doctorlist", doctorlist);
 
+        intent.putExtra("District",District);
+        intent.putExtra("DistrictAndHos",DistrictAndHos);
+        intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+
         startActivity(intent);
         startActivity(intent);
     }
@@ -244,6 +259,11 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("fromonlydistrict",fromonlydistrict);
         intent.putExtra("fromonlydistrictandhosptial", fromonlydistrictandhos);
         intent.putExtra("doctorlist", doctorlist);
+
+        intent.putExtra("District",District);
+        intent.putExtra("DistrictAndHos",DistrictAndHos);
+        intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
 
         startActivity(intent);
 

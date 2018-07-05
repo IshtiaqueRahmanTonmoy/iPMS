@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -30,8 +31,8 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
     String format,symptom,id,hospitalId,date,time,serial,confirm;
     String description,speciality,education,district,hospital,expertise,ids,namevalue,fromonlydistrict,fromdistrictandhos,doctorlist;
     long appoinmentid = 0;
-
-    public ConfirmAdapter(Context context, String description, String speciality, String education, String district, String hospital, String expertise, String ids, String namevalue,String fromonlydistrict,String fromdistrictandhos,String doctorlist) {
+    int District,DistrictAndHos,DistrictHosSpeciality;
+    public ConfirmAdapter(Context context, String description, String speciality, String education, String district, String hospital, String expertise, String ids, String namevalue, String fromonlydistrict, String fromdistrictandhos, String doctorlist, int District, int DistrictAndHos, int DistrictHosSpeciality) {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
 
@@ -46,6 +47,15 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
         this.fromonlydistrict = fromonlydistrict;
         this.fromdistrictandhos = fromdistrictandhos;
         this.doctorlist = doctorlist;
+
+        this.District = District;
+        this.DistrictAndHos = DistrictAndHos;
+        this.DistrictHosSpeciality = DistrictHosSpeciality;
+
+        //Toast.makeText(context, "Districtappbooking"+District, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Hospitalappbooking"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Specialityappbooking"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
+
     }
 
     public void addCardItem(AvailableTIme item) {
@@ -149,6 +159,11 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
                 intent.putExtra("idvalues",ids);
                 intent.putExtra("name",namevalue);
                 intent.putExtra("fromonlydistrict","1");
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
 
                 v.getContext().startActivity(intent);
 

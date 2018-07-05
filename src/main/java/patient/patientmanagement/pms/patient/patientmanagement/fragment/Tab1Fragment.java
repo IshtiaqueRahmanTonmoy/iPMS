@@ -202,6 +202,11 @@ public class Tab1Fragment extends Fragment {
                                 intent.putExtra("fromonlydistrictandhosptial", "2");
                                 intent.putExtra("hospital", hospitalName);
                                 intent.putExtra("expertise", specialityName);
+
+                                intent.putExtra("District",1);
+                                intent.putExtra("DistrictAndHos",0);
+                                intent.putExtra("DistrictHosSpeciality",0);
+
                                 startActivity(intent);
 
                                 //Toast.makeText(getContext(), ""+district+""+hospitalName, Toast.LENGTH_SHORT).show();

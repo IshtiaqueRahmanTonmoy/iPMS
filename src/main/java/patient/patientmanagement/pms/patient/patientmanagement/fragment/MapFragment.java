@@ -47,6 +47,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     double latitude,longitude;
     LatLng p1 = null;
     String locations;
+    String education,speciality,specialityId,district,hospital,expertise,fromonlydistrict,fromonlydistrictandhos,doctorlist;
 
     public static Fragment newInstance() {
         MapFragment fragment = new MapFragment();
@@ -65,6 +66,18 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         if (extras != null) {
             locations = extras.getString("designationlocation");
+
+            education = extras.getString("education");
+            speciality = extras.getString("speciality");
+
+            district = extras.getString("district");
+            hospital = extras.getString("hospital");
+            expertise = extras.getString("expertise");
+
+            fromonlydistrict = extras.getString("fromonlydistrict");
+            fromonlydistrictandhos = extras.getString("fromonlydistrictandhos");
+            doctorlist = extras.getString("doctorlist");
+
         }
 
         Geocoder coder = new Geocoder(getActivity());

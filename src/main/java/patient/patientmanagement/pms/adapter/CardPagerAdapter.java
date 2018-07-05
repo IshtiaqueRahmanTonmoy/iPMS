@@ -263,6 +263,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("expertise", expertise);
                       intent.putExtra("doctorlist", "3");
 
+                      intent.putExtra("District",0);
+                      intent.putExtra("DistrictAndHos",0);
+                      intent.putExtra("DistrictHosSpeciality",1);
+
                       v.getContext().startActivity(intent);
                   }
 
@@ -273,6 +277,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("expertise", expertise);
                       intent.putExtra("doctorlist", "3");
 
+                      intent.putExtra("District",0);
+                      intent.putExtra("DistrictAndHos",0);
+                      intent.putExtra("DistrictHosSpeciality",1);
+
                       v.getContext().startActivity(intent);
                   }
 
@@ -280,6 +288,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       Intent intent = new Intent(v.getContext(), HospitalActivity.class);
                       intent.putExtra("fromonlydistrict", "1");
                       intent.putExtra("district", district);
+
+                      intent.putExtra("District",1);
+                      intent.putExtra("DistrictAndHos",0);
+                      intent.putExtra("DistrictHosSpeciality",0);
                       v.getContext().startActivity(intent);
                   }
 
@@ -290,7 +302,14 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("expertise", expertise);
                       intent.putExtra("fromonlydistrict", "null");
                       intent.putExtra("fromonlydistrictandhosptial", "2");
+
+                      intent.putExtra("District",0);
+                      intent.putExtra("DistrictAndHos",1);
+                      intent.putExtra("DistrictHosSpeciality",0);
+
                       v.getContext().startActivity(intent);
+
+
                       /*
                       Intent intent = new Intent(v.getContext(), DoctorList.class);
                       intent.putExtra("district", district);

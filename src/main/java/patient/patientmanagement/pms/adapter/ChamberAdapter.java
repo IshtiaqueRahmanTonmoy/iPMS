@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,26 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
     private TextView nameTxt,locationTxt,booknowTxt,timeTxt;
     private float mBaseElevation;
     Context context;
+    private int District,DistrictAndHos,DistrictHosSpeciality;
     private String id,fromonlydistrict,fromonlydistrictandhos,doctorlist;
     private String name,description,speciality,district,hospital,education,expertise;
-    public ChamberAdapter(Context context, String fromonlydistrict, String fromonlydistrictandhos,String doctorlist) {
+
+    public ChamberAdapter(Context context, String fromonlydistrict, String fromonlydistrictandhos, String doctorlist, int District, int DistrictAndHos, int DistrictHosSpeciality) {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
 
         this.fromonlydistrict = fromonlydistrict;
         this.fromonlydistrictandhos = fromonlydistrictandhos;
         this.doctorlist = doctorlist;
+
+        this.District = District;
+        this.DistrictAndHos = DistrictAndHos;
+        this.DistrictHosSpeciality = DistrictHosSpeciality;
+
+        //Toast.makeText(context, "District"+District, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Hospital"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "Speciality"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
+
     }
 
     public void addCardItem(Chamber item) {
@@ -48,6 +60,12 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
         description = mData.get(0).getDescription();
         speciality = mData.get(0).getSpeciality();
         education = mData.get(0).getEducation();
+
+        District = mData.get(0).getDistricts();
+        DistrictAndHos = mData.get(0).getDistrictAndHos();
+        DistrictHosSpeciality = mData.get(0).getDistrictHosSpeciality();
+
+
     }
 
     public float getBaseElevation() {
@@ -102,6 +120,10 @@ public class ChamberAdapter extends PagerAdapter implements CardAdapter {
                 intent.putExtra("education",education);
                intent.putExtra("description",description);
                intent.putExtra("speciality",speciality);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
                v.getContext().startActivity(intent);
 
             }

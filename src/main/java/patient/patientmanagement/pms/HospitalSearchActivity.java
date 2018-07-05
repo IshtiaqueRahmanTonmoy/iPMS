@@ -25,7 +25,8 @@ public class HospitalSearchActivity extends AppCompatActivity {
     private TabLayout mTabLayout;
     private String mapvalue,district,hospitalName,fromonlydistrict,redirect;
     Intent intent;
-    String hosptial,idvalrecong,idvalrecongd,hospitalactivity,fromonlydistrictandhos; ;
+    String hosptial,idvalrecong,idvalrecongd,hospitalactivity,fromonlydistrictandhos;
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,10 @@ public class HospitalSearchActivity extends AppCompatActivity {
             fromonlydistrict = extras.getString("fromonlydistrict");
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
 
+
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
 
             getSupportActionBar().setTitle(district);
             getSupportActionBar().setSubtitle(hospitalName);
@@ -142,6 +147,26 @@ public class HospitalSearchActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
+
+            if(District == 1 && DistrictAndHos == 0 && DistrictHosSpeciality == 0) {
+                Intent intent = new Intent(HospitalSearchActivity.this,HospitalActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospitalName);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+                startActivity(intent);
+            }
+            else if(District == 0 && DistrictAndHos == 1 && DistrictHosSpeciality == 0){
+                Intent intent = new Intent(HospitalSearchActivity.this,DashboardActivity.class);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospitalName);
+                intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
+                startActivity(intent);
+            }
+            /*
             if(fromonlydistrict.equals("1") && fromonlydistrictandhos.equals("null")){
                 Intent intent = new Intent(HospitalSearchActivity.this,HospitalActivity.class);
                 intent.putExtra("district",district);
@@ -156,6 +181,7 @@ public class HospitalSearchActivity extends AppCompatActivity {
                 intent.putExtra("fromonlydistrictandhosptial",fromonlydistrictandhos);
                 startActivity(intent);
             }
+            */
 
         }
 

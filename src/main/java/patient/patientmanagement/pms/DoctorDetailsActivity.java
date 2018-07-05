@@ -39,6 +39,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference myRef = database.getReference("doctorInfo");
     private String doctorlist;
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
 
     @Override
@@ -61,6 +62,14 @@ public class DoctorDetailsActivity extends AppCompatActivity {
             fromonlydistrict = extras.getString("fromonlydistrict");
             fromonlydistrictandhos = extras.getString("fromonlydistrictandhosptial");
             doctorlist = extras.getString("doctorlist");
+
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+            //Toast.makeText(DoctorDetailsActivity.this, "District"+District, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorDetailsActivity.this, "Hospital"+DistrictAndHos, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(DoctorDetailsActivity.this, "Speciality"+DistrictHosSpeciality, Toast.LENGTH_SHORT).show();
 
             getSupportActionBar().setTitle(name);
             getSupportActionBar().setSubtitle(designation);
@@ -93,17 +102,52 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                                     bundle.putString("fromonlydistrictandhos",fromonlydistrictandhos);
                                     bundle.putString("doctorlist",doctorlist);
 
+                                    bundle.putInt("District",District);
+                                    bundle.putInt("DistrictAndHos",DistrictAndHos);
+                                    bundle.putInt("DistrictHosSpeciality",DistrictHosSpeciality);
+
                                     selectedFragment = AboutFragment.newInstance();
                                     AboutFragment fragobj = new AboutFragment();
                                     fragobj.setArguments(bundle);
                                 break;
 
                                 case R.id.navigation_map:
-                                selectedFragment = MapFragment.newInstance();
+                                    Bundle bundle2 = new Bundle();
+                                    bundle2.putString("district", district);
+                                    bundle2.putString("hosptial", hospital);
+                                    bundle2.putString("expertise", expertise);
+                                    bundle2.putString("idvalrecongd",idvalrecongd);
+
+                                    bundle2.putString("fromonlydistrict",fromonlydistrict);
+                                    bundle2.putString("fromonlydistrictandhos",fromonlydistrictandhos);
+                                    bundle2.putString("doctorlist",doctorlist);
+
+                                    selectedFragment = MapFragment.newInstance();
+                                    MapFragment fragobj2 = new MapFragment();
+                                    fragobj2.setArguments(bundle2);
+
                                 break;
 
                             case R.id.navigation_related:
+                                Bundle bundle1 = new Bundle();
+                                bundle1.putString("district", district);
+                                bundle1.putString("hosptial", hospital);
+                                bundle1.putString("expertise", expertise);
+                                bundle1.putString("idvalrecongd",idvalrecongd);
+
+                                bundle1.putString("fromonlydistrict",fromonlydistrict);
+                                bundle1.putString("fromonlydistrictandhos",fromonlydistrictandhos);
+                                bundle1.putString("doctorlist",doctorlist);
+
+                                bundle1.putInt("District",District);
+                                bundle1.putInt("DistrictAndHos",DistrictAndHos);
+                                bundle1.putInt("DistrictHosSpeciality",DistrictHosSpeciality);
+
                                 selectedFragment = RelatedFragment.newInstance();
+                                RelatedFragment fragobj1 = new RelatedFragment();
+                                fragobj1.setArguments(bundle1);
+
+
                                 break;
                         }
 
@@ -141,6 +185,41 @@ public class DoctorDetailsActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == android.R.id.home){
+
+            if(District == 1 && DistrictAndHos == 0 && DistrictHosSpeciality == 0) {
+                Intent intent = new Intent(DoctorDetailsActivity.this,DoctorList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("district", district);
+                intent.putExtra("hospital", hospital);
+                intent.putExtra("expertise", expertise);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", "null");
+                intent.putExtra("doctorlist", "null");
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                startActivity(intent);
+                finish();
+            }
+            if(District == 0 && DistrictAndHos == 0 && DistrictHosSpeciality == 1) {
+                Intent intent = new Intent(DoctorDetailsActivity.this,DoctorList.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("district", district);
+                intent.putExtra("hospital", hospital);
+                intent.putExtra("expertise", expertise);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", "null");
+                intent.putExtra("doctorlist", "null");
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                startActivity(intent);
+                finish();
+            }
+            /*
             if(fromonlydistrict.equals("1")){
                 Intent intent = new Intent(DoctorDetailsActivity.this,DoctorList.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -177,6 +256,7 @@ public class DoctorDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
+            */
 
         }
 

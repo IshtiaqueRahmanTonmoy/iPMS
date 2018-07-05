@@ -26,7 +26,7 @@ public class AppoinmentSuccess extends AppCompatActivity {
     ScrollView scrollview;
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm,id,doctorlist;
     String description,speciality,education,district,hospital,expertise,ids,namevalue,idvalues;
-
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,12 @@ public class AppoinmentSuccess extends AppCompatActivity {
             fromonlydistrict = extras.getString("fromonlydistrict");
             fromdistandhos = extras.getString("fromonlydistrictandhosptial");
             doctorlist = extras.getString("doctorlist");
+
+            District = extras.getInt("District");
+            DistrictAndHos = extras.getInt("DistrictAndHos");
+            DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+
 
             Log.d("extra",id);
             Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
@@ -121,6 +127,11 @@ public class AppoinmentSuccess extends AppCompatActivity {
             intent.putExtra("fromonlydistrict",fromonlydistrict);
             intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
             intent.putExtra("doctorlist", doctorlist);
+
+            intent.putExtra("District",District);
+            intent.putExtra("DistrictAndHos",DistrictAndHos);
+            intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
             startActivity(intent);
         }
 

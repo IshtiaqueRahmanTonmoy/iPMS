@@ -6,6 +6,7 @@ public class Chamber {
     String chamberLocation;
     String booknow;
     String name,district,hospital,expertise,description,education,speciality,chambertime;
+    int District,DistrictAndHos,DistrictHosSpeciality;
 
     public Chamber(String idvalue, String chamberName, String chamberLocation, String booknow){
         this.idvalue = idvalue;
@@ -83,7 +84,31 @@ public class Chamber {
         this.chambertime = chambertime;
     }
 
-    public Chamber(String idvalue, String chamberName, String chamberLocation, String chambertime, String booknow, String district, String hospital, String expertise, String description, String education, String speciality){
+    public int getDistrictAndHos() {
+        return DistrictAndHos;
+    }
+
+    public void setDistrictAndHos(int districtAndHos) {
+        DistrictAndHos = districtAndHos;
+    }
+
+    public int getDistrictHosSpeciality() {
+        return DistrictHosSpeciality;
+    }
+
+    public void setDistrictHosSpeciality(int districtHosSpeciality) {
+        DistrictHosSpeciality = districtHosSpeciality;
+    }
+
+    public int getDistricts() {
+        return District;
+    }
+
+    public void setDistrict(int District) {
+        District = District;
+    }
+
+    public Chamber(String idvalue, String chamberName, String chamberLocation, String chambertime, String booknow, String district, String hospital, String expertise, String description, String education, String speciality, int District, int DistrictAndHos, int DistrictHosSpeciality){
         this.idvalue = idvalue;
         this.chamberName = chamberName;
         this.chamberLocation = chamberLocation;
@@ -100,6 +125,9 @@ public class Chamber {
         this.education = education;
 
         this.speciality = speciality;
+        this.District = District;
+        this.DistrictAndHos = DistrictAndHos;
+        this.DistrictHosSpeciality = DistrictHosSpeciality;
     }
     public String getIdvalue() {
         return idvalue;
