@@ -225,7 +225,7 @@ public class DoctorList extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     specialityId = String.valueOf(childDataSnapshot.child("specialityId").getValue());
-                    Toast.makeText(DoctorList.this, ""+specialityId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(DoctorList.this, ""+specialityId, Toast.LENGTH_SHORT).show();
 
                     valuegetsetvalue(districtId,specialityId);
                     //Log.d("valuesspecialist",districtId+specialityId);
@@ -245,7 +245,7 @@ public class DoctorList extends AppCompatActivity {
         int districtid = Integer.parseInt(districtId);
         final int specialid = Integer.parseInt(specialityId);
 
-        Toast.makeText(DoctorList.this, "specialityid"+specialid, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(DoctorList.this, "specialityid"+specialid, Toast.LENGTH_SHORT).show();
 
 
         myRefDoctor.orderByChild("districtId").equalTo(districtid).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -270,7 +270,7 @@ public class DoctorList extends AppCompatActivity {
                         getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        Toast.makeText(DoctorList.this, "Value not found..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(DoctorList.this, "Value not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
@@ -395,7 +395,7 @@ public class DoctorList extends AppCompatActivity {
                         getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        Toast.makeText(DoctorList.this, "Value not found..", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DoctorList.this, "Doctor's not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();

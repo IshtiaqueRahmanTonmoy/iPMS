@@ -25,6 +25,10 @@
     <string name="login_welcome_txt">Hello there !\nWelcome Back</string>
     <string name="signup_welcome_txt">Hello there !\nWelcome to you</string>
 
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
 
     <!--Button labels-->
     <string name="login_btn_label">Login</string>

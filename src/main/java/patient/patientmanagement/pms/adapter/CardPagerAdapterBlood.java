@@ -61,6 +61,8 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
     Button btnBlood6;
     Button btnBlood7;
     Button btnBlood8;
+    PopupMenu popup;
+    AlertDialog alertdialogbuilder1;
 
     public CardPagerAdapterBlood(Context context) {
 
@@ -334,12 +336,12 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                 btnBlood4.setTextColor(Color.parseColor("#447a8f")); }
         });
 
-                //districtEditView.setText("Dhaka");
+        //districtEditView.setText("Dhaka");
 
-                districtEditView.setOnClickListener(new View.OnClickListener() {
+        districtEditView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                final PopupMenu popup = new PopupMenu(v.getContext(), districtEditView);
+                popup = new PopupMenu(v.getContext(), districtEditView);
 
                 myRef.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -350,32 +352,27 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                             districtItem.add(districtName);
                         }
 
-                        for(int i=0; i<districtItem.size(); i++){
-                            popup.getMenu().add(Menu.NONE, i, i, districtItem.get(i));
+                        final String namesdistrict[]=districtItem.toArray(new String[districtItem.size()]);
 
-                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
-                                @Override
-                                public boolean onMenuItemClick(MenuItem item) {
+                        builder.setTitle("Select Your District");
 
-                                    districtEditView.setText(item.getTitle());
-                                    districtItem.clear();
-                                    String districtName = item.getTitle().toString();
+                        builder.setSingleChoiceItems(namesdistrict, -1, new DialogInterface.OnClickListener() {
 
-                                    //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+                            public void onClick(DialogInterface dialog, int item) {
+                                String districtName = namesdistrict[item];
+                                districtEditView.setText(districtName);
+                                //String districtName = item.getTitle().toString();
+                                //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+                                getValue(districtName);
+                                alertdialogbuilder1.dismiss();
+                                districtItem.clear();
+                            }
+                        });
+                        alertdialogbuilder1 = builder.create();
+                        alertdialogbuilder1.show();
 
-
-                                    getValue(districtName);
-
-                       /*
-                       Toast.makeText(v.getContext(),
-                               item.getTitle(), Toast.LENGTH_SHORT).show();
-                         */
-                                    return true;
-                                }
-                            });
-                            popup.show();
-                        }
                     }
 
                     @Override

@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import patient.patientmanagement.pms.BloodDonorActivity;
 import patient.patientmanagement.pms.DashboardActivity;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.HospitalActivity;
@@ -71,7 +72,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
     public static final String MY_PREFS_NAME = "MyPrefsFile";
     SharedPreferences sharedpreferences;
-
+    PopupMenu popup;
+    AlertDialog alertdialogbuilder1;
 
     public CardPagerAdapter() {
 
@@ -85,13 +87,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
 
 
     public CardPagerAdapter(Context context) {
-         this.context = context;
-         getValue("Dhaka");
-         districtItem = new ArrayList<>();
-         mData = new ArrayList<>();
-         mViews = new ArrayList<>();
-         items = new ArrayList<String>();
-         itemsSpeciality = new ArrayList<String>();
+        this.context = context;
+        getValue("Dhaka");
+        districtItem = new ArrayList<>();
+        mData = new ArrayList<>();
+        mViews = new ArrayList<>();
+        items = new ArrayList<String>();
+        itemsSpeciality = new ArrayList<String>();
 
     }
 
@@ -160,13 +162,13 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                     Log.i("hospitalName", zoneSnapshot.child("hospitalName").getValue(String.class));
                     String hospitalName = zoneSnapshot.child("hospitalName").getValue(String.class);
                     items.add(hospitalName);
-                    }
+                }
                 adapter = new ArrayAdapter<String>
                         (view.getContext(),R.layout.hint_completion_text,R.id.tvHintCompletion, items);
 
                 hospitalEditView.setThreshold(1);
                 hospitalEditView.setAdapter(adapter);
-                }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -200,114 +202,135 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         //districtEditView.setText("Dhaka");
 
         districtEditView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick ( final View v){
-                   final PopupMenu popup = new PopupMenu(v.getContext(), districtEditView);
+            @Override
+            public void onClick ( final View v){
+                districtItem.clear();
+                popup = new PopupMenu(v.getContext(), districtEditView);
 
-                   myRef.addValueEventListener(new ValueEventListener() {
-                       @Override
-                       public void onDataChange(DataSnapshot dataSnapshot) {
-                           for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
-                               Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
-                               String districtName = zoneSnapshot.child("districtName").getValue(String.class);
-                               districtItem.add(districtName);
-                           }
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot zoneSnapshot : dataSnapshot.getChildren()) {
+                            Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
+                            String districtName = zoneSnapshot.child("districtName").getValue(String.class);
+                            districtItem.add(districtName);
 
-                           for (int i = 0; i < districtItem.size(); i++) {
-                               popup.getMenu().add(Menu.NONE, i, i, districtItem.get(i));
+                        }
 
-                               popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        //for (int i = 0; i < districtItem.size(); i++) {
+                            //final String[] stringArray = districtItem.toArray(new String[i]);
+                        final String namesdistrict[]=districtItem.toArray(new String[districtItem.size()]);
 
-                                   @Override
-                                   public boolean onMenuItemClick(MenuItem item) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
-                                       districtEditView.setText(item.getTitle());
-                                       String districtName = item.getTitle().toString();
+                            builder.setTitle("Select Your District");
 
-                                       //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+                            builder.setSingleChoiceItems(namesdistrict, -1, new DialogInterface.OnClickListener() {
 
+                                public void onClick(DialogInterface dialog, int item) {
+                                    String districtName = namesdistrict[item];
+                                    districtEditView.setText(districtName);
+                                    //String districtName = item.getTitle().toString();
+                                    //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+                                    getValue(districtName);
+                                    alertdialogbuilder1.dismiss();
+                                    districtItem.clear();
+                                }
+                            });
+                            alertdialogbuilder1 = builder.create();
+                            alertdialogbuilder1.show();
+                            /*
+                            popup.getMenu().add(Menu.NONE, i, i, districtItem.get(i));
 
-                                       getValue(districtName);
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
-                       /*
-                       Toast.makeText(v.getContext(),
-                               item.getTitle(), Toast.LENGTH_SHORT).show();
-                         */
-                                       return true;
-                                   }
-                               });
-                               popup.show();
-                           }
-                       }
+                                @Override
+                                public boolean onMenuItemClick(MenuItem item) {
 
-                       @Override
-                       public void onCancelled(DatabaseError databaseError) {
-                           //Log.w(TAG, "onCancelled", databaseError.toException());
-                       }
-                   });
-               }
+                                    districtEditView.setText(item.getTitle());
+                                    String districtName = item.getTitle().toString();
+
+                                    //Toast.makeText(v.getContext(),districtName, Toast.LENGTH_SHORT).show();
+                                    getValue(districtName);
+                                    districtItem.clear();
+                                    popup.dismiss();
+
+                                    return true;
+                                }
+                            });
+                            popup.show();
+                            */
+                        //}
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //Log.w(TAG, "onCancelled", databaseError.toException());
+                    }
+                });
+            }
         });
 
-          searchButton.setOnClickListener(new View.OnClickListener() {
-              @Override
-              public void onClick(View v) {
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                  String district = districtEditView.getText().toString();
-                  String hospital = hospitalEditView.getText().toString();
-                  String expertise = expertiseEditView.getText().toString();
+                String district = districtEditView.getText().toString();
+                String hospital = hospitalEditView.getText().toString();
+                String expertise = expertiseEditView.getText().toString();
 
-                  if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()) {
-                      Intent intent = new Intent(v.getContext(), DoctorList.class);
-                      intent.putExtra("district", district);
-                      intent.putExtra("hospital", hospital);
-                      intent.putExtra("expertise", expertise);
-                      intent.putExtra("doctorlist", "3");
+                if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()) {
+                    Intent intent = new Intent(v.getContext(), DoctorList.class);
+                    intent.putExtra("district", district);
+                    intent.putExtra("hospital", hospital);
+                    intent.putExtra("expertise", expertise);
+                    intent.putExtra("doctorlist", "3");
 
-                      intent.putExtra("District",0);
-                      intent.putExtra("DistrictAndHos",0);
-                      intent.putExtra("DistrictHosSpeciality",1);
+                    intent.putExtra("District",0);
+                    intent.putExtra("DistrictAndHos",0);
+                    intent.putExtra("DistrictHosSpeciality",1);
 
-                      v.getContext().startActivity(intent);
-                  }
+                    v.getContext().startActivity(intent);
+                }
 
-                  else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
-                      Intent intent = new Intent(v.getContext(), DoctorList.class);
-                      intent.putExtra("district", district);
-                      intent.putExtra("hospital", hospital);
-                      intent.putExtra("expertise", expertise);
-                      intent.putExtra("doctorlist", "3");
+                else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
+                    Intent intent = new Intent(v.getContext(), DoctorList.class);
+                    intent.putExtra("district", district);
+                    intent.putExtra("hospital", hospital);
+                    intent.putExtra("expertise", expertise);
+                    intent.putExtra("doctorlist", "3");
 
-                      intent.putExtra("District",0);
-                      intent.putExtra("DistrictAndHos",0);
-                      intent.putExtra("DistrictHosSpeciality",1);
+                    intent.putExtra("District",0);
+                    intent.putExtra("DistrictAndHos",0);
+                    intent.putExtra("DistrictHosSpeciality",1);
 
-                      v.getContext().startActivity(intent);
-                  }
+                    v.getContext().startActivity(intent);
+                }
 
-                  else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
-                      Intent intent = new Intent(v.getContext(), HospitalActivity.class);
-                      intent.putExtra("fromonlydistrict", "1");
-                      intent.putExtra("district", district);
+                else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
+                    Intent intent = new Intent(v.getContext(), HospitalActivity.class);
+                    intent.putExtra("fromonlydistrict", "1");
+                    intent.putExtra("district", district);
 
-                      intent.putExtra("District",1);
-                      intent.putExtra("DistrictAndHos",0);
-                      intent.putExtra("DistrictHosSpeciality",0);
-                      v.getContext().startActivity(intent);
-                  }
+                    intent.putExtra("District",1);
+                    intent.putExtra("DistrictAndHos",0);
+                    intent.putExtra("DistrictHosSpeciality",0);
+                    v.getContext().startActivity(intent);
+                }
 
-                  else{
-                      Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
-                      intent.putExtra("district", district);
-                      intent.putExtra("hospital", hospital);
-                      intent.putExtra("expertise", expertise);
-                      intent.putExtra("fromonlydistrict", "null");
-                      intent.putExtra("fromonlydistrictandhosptial", "2");
+                else{
+                    Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
+                    intent.putExtra("district", district);
+                    intent.putExtra("hospital", hospital);
+                    intent.putExtra("expertise", expertise);
+                    intent.putExtra("fromonlydistrict", "null");
+                    intent.putExtra("fromonlydistrictandhosptial", "2");
 
-                      intent.putExtra("District",0);
-                      intent.putExtra("DistrictAndHos",1);
-                      intent.putExtra("DistrictHosSpeciality",0);
+                    intent.putExtra("District",0);
+                    intent.putExtra("DistrictAndHos",1);
+                    intent.putExtra("DistrictHosSpeciality",0);
 
-                      v.getContext().startActivity(intent);
+                    v.getContext().startActivity(intent);
 
 
                       /*
@@ -317,10 +340,10 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("expertise", expertise);
                       v.getContext().startActivity(intent);
                       */
-                  }
-              }
-          });
-       }
+                }
+            }
+        });
+    }
 
 
     private void getValue(CharSequence title) {
@@ -328,8 +351,8 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                       String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
-                       //value(id);
+                    String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
+                    //value(id);
                 }
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
             }
@@ -354,18 +377,14 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                     items.add(hospitalName);
                     //value(id);
                 }
-
                 adapter = new ArrayAdapter<String>
                         (context,R.layout.hint_completion_text,R.id.tvHintCompletion, items);
-
                 hospitalEditView.setThreshold(1);
                 hospitalEditView.setAdapter(adapter);
                 //Toast.makeText(context, ""+dataSnapshot, Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
     }

@@ -322,7 +322,7 @@ public class DashboardActivity extends AppCompatActivity
         data.add(new Item( R.mipmap.hospital, "Hospital"));
         data.add(new Item( R.mipmap.blood, "Blood"));
         data.add(new Item( R.mipmap.healthnews, "HealthNews"));
-        data.add(new Item( R.mipmap.healthtips, "HealthTipsActivity"));
+        data.add(new Item( R.mipmap.healthtips, "HealthTips"));
         return data;
     }
 

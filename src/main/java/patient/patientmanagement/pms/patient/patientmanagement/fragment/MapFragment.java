@@ -41,13 +41,13 @@ import java.util.List;
 public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback {
 
 
-    LocationManager locationManager ;
+    LocationManager locationManager;
     String provider;
     GoogleMap gMap;
-    double latitude,longitude;
+    double latitude, longitude;
     LatLng p1 = null;
     String locations;
-    String education,speciality,specialityId,district,hospital,expertise,fromonlydistrict,fromonlydistrictandhos,doctorlist;
+    String education, speciality, specialityId, district, hospital, expertise, fromonlydistrict, fromonlydistrictandhos, doctorlist;
 
     public static Fragment newInstance() {
         MapFragment fragment = new MapFragment();
@@ -104,7 +104,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         fragment.getMapAsync(this);
         //gMap.setMyLocationEnabled(true);
 
-        locationManager = (LocationManager)getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         // Creating an empty criteria object
         Criteria criteria = new Criteria();
@@ -112,19 +112,29 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         // Getting the name of the provider that meets the criteria
         provider = locationManager.getBestProvider(criteria, false);
 
-        if(provider!=null && !provider.equals("")){
+        if (provider != null && !provider.equals("")) {
 
             // Get the location from the given provider
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return view;
+            }
             Location location = locationManager.getLastKnownLocation(provider);
 
             locationManager.requestLocationUpdates(provider, 20000, 1, this);
 
-            if(location!=null)
+            if (location != null)
                 onLocationChanged(location);
             else
                 Toast.makeText(getActivity(), "Location can't be retrieved", Toast.LENGTH_SHORT).show();
 
-        }else{
+        } else {
             Toast.makeText(getActivity(), "No Provider Found", Toast.LENGTH_SHORT).show();
         }
 
@@ -164,6 +174,16 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 MarkerOptions().position(p1).title("Location"));
         gMap.moveCamera(CameraUpdateFactory.newLatLng(p1));
         gMap.animateCamera(CameraUpdateFactory.zoomTo(18));
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         gMap.setMyLocationEnabled(true);
         // Enabling MyLocation Layer of Google Map
         googleMap.setMyLocationEnabled(true);
