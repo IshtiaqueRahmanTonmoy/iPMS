@@ -6,11 +6,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.drm.DrmStore;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -75,7 +78,7 @@ public class DashboardActivity extends AppCompatActivity
     private CardPagerAdapter mCardAdapter;
     private CardPagerAdapterBlood mCardAdapterBlood;
     private ShadowTransformer mCardShadowTransformer;
-
+    private DrawerLayout drawerlayout;
     List<CardItem> dataModels;
 
     @Override
@@ -83,6 +86,7 @@ public class DashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        drawerlayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("i-PMS");
@@ -120,7 +124,7 @@ public class DashboardActivity extends AppCompatActivity
                             mViewPager.setAdapter(mCardAdapter);
                             mViewPager.setPageTransformer(false, mCardShadowTransformer);
                             mViewPager.setOffscreenPageLimit(3);
-                            progressDialog.dismiss();
+                            //progressDialog.dismiss();
 
                             //dataModels.add(new CardItem(districtName));
                             //adapter = new CustomAdapter(DashboardActivity.this,dataModels);
@@ -272,7 +276,39 @@ public class DashboardActivity extends AppCompatActivity
     private void checkConnection() {
         if(isOnline()){
             showProcessDialog();
+            progressDialog.dismiss();
         }else{
+
+            Snackbar snackbar = Snackbar
+                    .make(drawerlayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                    .setAction("RETRY", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            showProcessDialog();
+                            WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                            wifi.setWifiEnabled(true);
+
+                            mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
+                            mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+                            mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+                            mViewPager.setAdapter(mCardAdapter);
+                            mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                            mViewPager.setOffscreenPageLimit(3);
+                            progressDialog.dismiss();
+                        }
+                    });
+
+            // Changing message text color
+            snackbar.setActionTextColor(Color.RED);
+
+            // Changing action button text color
+            View sbView = snackbar.getView();
+            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            textView.setTextColor(Color.YELLOW);
+
+            snackbar.show();
+            /*
             AlertDialog.Builder builder = new AlertDialog.Builder(
                     DashboardActivity.this);
             builder.setMessage("Internet Connection Required")
@@ -283,18 +319,25 @@ public class DashboardActivity extends AppCompatActivity
                                         DialogInterface dialog,
                                         int id) {
 
-                                    // Restart the activity
-                                    Intent intent = new Intent(
-                                            DashboardActivity.this,
-                                            DashboardActivity.class);
-                                    finish();
-                                    startActivity(intent);
+                                    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                                    wifi.setWifiEnabled(true);
 
+                                    showProcessDialog();
+                                    // Restart the activity
+                                    mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
+                                    mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+                                    mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+                                    mViewPager.setAdapter(mCardAdapter);
+                                    mViewPager.setPageTransformer(false, mCardShadowTransformer);
+                                    mViewPager.setOffscreenPageLimit(3);
+                                    progressDialog.dismiss();
                                 }
 
                             });
             AlertDialog alert = builder.create();
             alert.show();
+            */
         }
     }
 
