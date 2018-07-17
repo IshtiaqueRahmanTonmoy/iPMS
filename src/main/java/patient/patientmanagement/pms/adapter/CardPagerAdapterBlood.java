@@ -50,7 +50,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
     DatabaseReference myRefThana = database.getReference("thana");
     Context context = null;
     EditText districtEditView;
-    Button btnSearch;
+    Button btnSearch,btnBloodDonor;
     AutoCompleteTextView thanaEditView;
     ArrayAdapter<String> adapterThana;
     Button btnBlood1;
@@ -127,6 +127,14 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         thanaEditView = (AutoCompleteTextView) view.findViewById(R.id.et_thana);
         btnSearch = (Button) view.findViewById(R.id.btn_search);
 
+        btnBloodDonor = (Button) view.findViewById(R.id.bloodonor);
+        btnBloodDonor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(),BloodDonorActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
         districtEditView.setText("Dhaka");
 
         btnBlood1 = (Button) view.findViewById(R.id.bloodButton1);
@@ -137,6 +145,8 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         btnBlood6 = (Button) view.findViewById(R.id.bloodButton6);
         btnBlood7 = (Button) view.findViewById(R.id.bloodButton7);
         btnBlood8 = (Button) view.findViewById(R.id.bloodButton8);
+
+
 
 
 

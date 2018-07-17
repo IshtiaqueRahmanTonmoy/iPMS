@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +22,7 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import patient.patientmanagement.pms.adapter.ConfirmAdapter;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
@@ -30,7 +32,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
     ConfirmAdapter pagerAdapter;
     ShadowTransformer fragmentCardShadowTransformer;
-    TextView location,datetxt,time,name,shortdescription;
+    TextView location,datetxt,time,name,shortdescription,bookappoint;
     String currentime,newtime;
     String format,id,dateTime;
     String dates,month,year,monthformat,dayformat,serialNo,hosptialid,appoinmentTime,timeappoinment;
@@ -46,6 +48,7 @@ public class AppoinmentBooking extends AppCompatActivity {
     String fromonlydistrict,idvalrecondoctor,strDateFormat,strfullFormat,strDateFormats,names,description,speciality,education,idvalrecong,idvalrecongd;
     private String fromonlydistrictandhos;
     private String doctorlist;
+    private Button rightarrow,leftarrow;
 
     int District,DistrictAndHos,DistrictHosSpeciality;
 
@@ -101,6 +104,15 @@ public class AppoinmentBooking extends AppCompatActivity {
         time = (TextView) findViewById(R.id.time);
         name = (TextView) findViewById(R.id.name);
         shortdescription = (TextView) findViewById(R.id.short_description);
+        bookappoint = (TextView) findViewById(R.id.bookappoinment);
+
+        leftarrow = (Button) findViewById(R.id.leftArrow);
+        rightarrow = (Button) findViewById(R.id.rightArrow);
+
+        SimpleDateFormat parseFormat = new SimpleDateFormat("E MMMM dd,yyyy");
+        Date datev =new Date();
+        String s = parseFormat.format(datev);
+        bookappoint.setText(s);
 
         Bundle extras = getIntent().getExtras();
 
@@ -143,9 +155,6 @@ public class AppoinmentBooking extends AppCompatActivity {
             Log.d("idhosptial",fromonlydistrictandhos);
 
         }
-
-
-
     }
 
     @Override

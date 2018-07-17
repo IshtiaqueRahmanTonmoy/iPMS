@@ -9,6 +9,10 @@
     tools:context=".DashboardActivity"
     tools:showIn="@layout/app_bar_dashboard">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".DashboardActivity">
    <LinearLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent"
@@ -81,4 +85,5 @@
 
 
    </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

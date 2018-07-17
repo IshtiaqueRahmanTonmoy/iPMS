@@ -12,6 +12,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -285,8 +286,11 @@ public class DashboardActivity extends AppCompatActivity
                         @Override
                         public void onClick(View view) {
                             showProcessDialog();
-                            WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                            wifi.setWifiEnabled(true);
+
+                            //WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+                            //wifi.setWifiEnabled(true);
+
+                            startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
 
                             mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
                             mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
@@ -308,36 +312,6 @@ public class DashboardActivity extends AppCompatActivity
             textView.setTextColor(Color.YELLOW);
 
             snackbar.show();
-            /*
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    DashboardActivity.this);
-            builder.setMessage("Internet Connection Required")
-                    .setCancelable(false)
-                    .setPositiveButton("Retry",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(
-                                        DialogInterface dialog,
-                                        int id) {
-
-                                    WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-                                    wifi.setWifiEnabled(true);
-
-                                    showProcessDialog();
-                                    // Restart the activity
-                                    mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
-                                    mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
-                                    mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
-
-                                    mViewPager.setAdapter(mCardAdapter);
-                                    mViewPager.setPageTransformer(false, mCardShadowTransformer);
-                                    mViewPager.setOffscreenPageLimit(3);
-                                    progressDialog.dismiss();
-                                }
-
-                            });
-            AlertDialog alert = builder.create();
-            alert.show();
-            */
         }
     }
 
