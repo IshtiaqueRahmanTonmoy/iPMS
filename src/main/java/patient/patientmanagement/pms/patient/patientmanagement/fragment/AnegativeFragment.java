@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,31 +61,115 @@ public class AnegativeFragment extends Fragment {
             bloodGroup = extras.getString("bloodgroup");
 
             bloodGroup = "A-";
-            myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                        String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
-                        //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
-                        getValue(id,thanaName,bloodGroup);
-                        progressDialog.dismiss();
-                    }
-                }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-
-
-
+            if(!districtName.equals("null") && thanaName.equals("")){
+                //Toast.makeText(getContext(), "with district", Toast.LENGTH_SHORT).show();
+                getDistrict();
+                //Toast.makeText(getContext(), ""+districtName, Toast.LENGTH_SHORT).show();
+            }
+            else{
+                //Toast.makeText(getContext(), "with district and thana", Toast.LENGTH_SHORT).show();
+                getdistrictAndThana();
+                //Toast.makeText(getContext(), ""+districtName, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), ""+thanaName, Toast.LENGTH_SHORT).show();
+            }
         }
 
-
-
-
         return view;
+    }
+
+    private void getDistrict() {
+        myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
+                    //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
+                    getValuesget(id,bloodGroup);
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getValuesget(String id, String bloodGroup) {
+        Log.d("value",id);
+        //Log.d("values",idthana);
+        Log.d("valuess",bloodGroup);
+
+        final int ids = Integer.parseInt(id);
+        //final int idsthana = Integer.parseInt(idthana);
+
+        myRef.orderByChild("bloodgroup").equalTo(bloodGroup).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+
+
+                    districtId = String.valueOf(childDataSnapshot.child("districtId").getValue());
+                    thanaId = String.valueOf(childDataSnapshot.child("thanaId").getValue());
+                    name = String.valueOf(childDataSnapshot.child("name").getValue());
+                    address = String.valueOf(childDataSnapshot.child("address").getValue());
+                    phone = String.valueOf(childDataSnapshot.child("phone").getValue());
+
+
+                    //Toast.makeText(getActivity(), ""+name+""+address, Toast.LENGTH_SHORT).show();
+                    int districtmatch = Integer.parseInt(districtId);
+                    int thanamatch = Integer.parseInt(thanaId);
+
+                    if(ids == districtmatch){
+                        bloodList.add(new Blood(name,address,phone));
+                        bloodAdapter = new BloodListAdapter(getActivity(),bloodList);
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                        //recyclerView.addItemDecoration(
+                        //        new DividerItemDecoration(getActivity(), R.drawable.divider));
+
+                        recyclerView.setLayoutManager(mLayoutManager);
+                        recyclerView.setItemAnimator(new DefaultItemAnimator());
+                        recyclerView.setAdapter(bloodAdapter);
+                        progressDialog.dismiss();
+                        //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
+                    }
+                    else{
+                        //Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }
+                    //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void getdistrictAndThana() {
+        myRefDistrict.orderByChild("districtName").equalTo(String.valueOf(districtName)).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                    String id = String.valueOf(childDataSnapshot.child("districtId").getValue());
+                    //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
+                    getValue(id,thanaName,bloodGroup);
+                    progressDialog.dismiss();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void showProcessDialog() {

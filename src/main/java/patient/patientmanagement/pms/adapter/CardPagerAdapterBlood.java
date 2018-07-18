@@ -152,6 +152,24 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
 
         final int color = ((ColorDrawable)btnBlood1.getBackground()).getColor();
 
+        btnBlood1.setBackgroundColor(view.getResources().getColor(R.color.wallet_holo_blue_light));
+        btnBlood1.setTextColor(view.getResources().getColor(R.color.white));
+
+        btnBlood2.setBackgroundColor(color);
+        btnBlood2.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood3.setBackgroundColor(color);
+        btnBlood3.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood4.setBackgroundColor(color);
+        btnBlood4.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood5.setBackgroundColor(color);
+        btnBlood5.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood6.setBackgroundColor(color);
+        btnBlood6.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood7.setBackgroundColor(color);
+        btnBlood7.setTextColor(Color.parseColor("#447a8f"));
+        btnBlood8.setBackgroundColor(color);
+        btnBlood8.setTextColor(Color.parseColor("#447a8f"));
+
         btnBlood1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
