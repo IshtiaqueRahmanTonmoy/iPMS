@@ -138,7 +138,7 @@ public class OnegativeFragment extends Fragment {
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        //Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Blood donor not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
@@ -238,7 +238,7 @@ public class OnegativeFragment extends Fragment {
                         //getvalue(idval,ImageDoctor,doctorName,education,specialistId,designation,hospitalsId);
                     }
                     else{
-                        //Toast.makeText(getActivity(), "Value not found..", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Blood donor not found..", Toast.LENGTH_SHORT).show();
                         progressDialog.dismiss();
                     }
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
