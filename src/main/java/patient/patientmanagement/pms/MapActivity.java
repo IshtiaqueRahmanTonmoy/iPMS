@@ -59,6 +59,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("i-PMS");
 
         Bundle extras = getIntent().getExtras();
 

@@ -1,133 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
-        app:cardUseCompatPadding="true"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        card_view:cardCornerRadius="4dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/retangle"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:paddingTop="11dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="11dp">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/full_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@mipmap/healthnewsforlist"
+                android:gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/headline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/image"
-                    android:layout_width="100dp"
-                    android:layout_height="80dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="15dp"
-                    android:background="@mipmap/download" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/headline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="Diabetes"
-                        android:textColor="#4285ca"
-                        android:textSize="14dp"
-                        android:textStyle="bold" />
-
-
-                    <TextView
-                        android:id="@+id/detailssome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:minLines="3"
-                        android:maxLines="3"
-                        android:text="Diabetes: Symptoms causes,and treatments"
-                        android:textColor="#2d2d2d"
-                        android:textSize="14dp" />
-
-                    <TextView
-                        android:id="@+id/uploadedon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:text="08 Junly,2018"
-                        android:textColor="#398ebf"
-                        android:textSize="14dp" />
-
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imagearrow"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_transport" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginBottom="10dp"
+                android:layout_below="@id/full_image"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:minLines="1"
+                android:maxLines="1"
+                android:textColor="#4285ca"
                 android:layout_marginTop="5dp"
-                android:background="#E3E3E3"></LinearLayout>
+                android:text="A Guide To Rocky Mountain Vacations"/>
 
 
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/detailssomes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_below="@id/headline"
+                android:textSize="17sp"
+                android:minLines="2"
+                android:maxLines="2"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/textColor"
+                android:text="A Guide To Rocky Mountain Vacations"/>
 
-                <TextView
-                    android:id="@+id/idvalue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="#3c819f"
-                    android:textSize="13sp"
-                    android:visibility="invisible"
-                    android:textStyle="bold"
-                    android:text="BOOK NOW"/>
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="22dp"
+                android:layout_height="23dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_below="@+id/detailssomes"
+                android:src="@mipmap/share"/>
 
+            <TextView
+                android:id="@+id/sharenow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_below="@id/detailssomes"
+                android:layout_toRightOf="@id/profile_image"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="7dp"
+                android:textColor="@color/textColor"
+                android:text="Share Now"/>
 
-                <TextView
-                    android:id="@+id/sharenow"
-                    android:layout_width="85dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="200dp"
-                    android:layout_marginRight="20dp"
-                    android:drawableLeft="@mipmap/share"
-                    android:gravity="center"
-                    android:text="SHARE"
-                    android:textColor="#207ba3"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/idvalue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="id"
+                android:textColor="#3c819f"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/sharenow"
+                android:visibility="invisible" />
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/time_stamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:textSize="14sp"
+                android:layout_below="@id/detailssomes"
+                android:layout_toRightOf="@id/sharenow"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:text="2 hours ago"/>
 
+        </RelativeLayout>
 
-
-
-        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 </LinearLayout>

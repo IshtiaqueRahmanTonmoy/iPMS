@@ -28,12 +28,12 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
 
         public MyViewHolder(View view) {
             super(view);
-            image = (ImageView) view.findViewById(R.id.imagearrows);
+            //image = (ImageView) view.findViewById(R.id.imagearrows);
             id = (TextView) view.findViewById(R.id.idvalues);
             headline = (TextView) view.findViewById(R.id.headlines);
             details = (TextView) view.findViewById(R.id.detailssomes);
             date = (TextView) view.findViewById(R.id.uploadedons);
-            sharenow = (TextView) view.findViewById(R.id.sharenows);
+            //sharenow = (TextView) view.findViewById(R.id.sharenows);
         }
     }
 
@@ -100,6 +100,8 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
 
             }
         });
+
+        /*
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +128,7 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
                 intent.putExtra(Intent.EXTRA_TEXT,body);
                 view.getContext().startActivity(Intent.createChooser(intent,"Share using"));            }
         });
+        */
 
 
         //holder.image.setText(doctor.getDesignation()+","+doctor.getHospitalName());

@@ -28,11 +28,11 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
 
         public MyViewHolder(View view) {
             super(view);
-            image = (ImageView) view.findViewById(R.id.imagearrow);
+            image = (ImageView) view.findViewById(R.id.full_image);
             id = (TextView) view.findViewById(R.id.idvalue);
             headline = (TextView) view.findViewById(R.id.headline);
-            details = (TextView) view.findViewById(R.id.detailssome);
-            date = (TextView) view.findViewById(R.id.uploadedon);
+            details = (TextView) view.findViewById(R.id.detailssomes);
+            date = (TextView) view.findViewById(R.id.time_stamp);
             sharenow = (TextView) view.findViewById(R.id.sharenow);
         }
     }
@@ -63,6 +63,8 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
         holder.date.setText(healthnews.getDate());
 
         final String idvalues = holder.id.getText().toString();
+
+        //holder.image.setImageDrawable(R.mipmap.image2);
         holder.headline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +102,8 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
 
             }
         });
+
+        /*
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +113,7 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
 
             }
         });
+        */
         holder.sharenow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
