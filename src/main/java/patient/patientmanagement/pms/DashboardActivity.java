@@ -108,6 +108,15 @@ public class DashboardActivity extends AppCompatActivity
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mViewPager = (ViewPager) findViewById(R.id.viewpagerDashboard);
 
+        //adapter = new CustomAdapter(dataModels);
+        mCardAdapter = new CardPagerAdapter();
+        mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
+        mCardShadowTransformer = new ShadowTransformer(mViewPager, mCardAdapter);
+
+        mViewPager.setAdapter(mCardAdapter);
+        mViewPager.setPageTransformer(false, mCardShadowTransformer);
+        mViewPager.setOffscreenPageLimit(3);
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("district");
         ref.addListenerForSingleValueEvent(
                 new ValueEventListener() {

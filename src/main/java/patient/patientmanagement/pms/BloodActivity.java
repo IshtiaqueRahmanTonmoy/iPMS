@@ -12,9 +12,11 @@ import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import patient.patientmanagement.pms.adapter.Pager;
 import patient.patientmanagement.pms.adapter.PagerBlood;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.OpositiveFragment;
 
 public class BloodActivity extends AppCompatActivity {
 
@@ -51,6 +53,7 @@ public class BloodActivity extends AppCompatActivity {
         mTabLayout.addTab(mTabLayout.newTab().setText("O-"));
         mTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+        //Toast.makeText(BloodActivity.this, ""+mTabLayout.getSelectedTabPosition(), Toast.LENGTH_SHORT).show();
 
 
         // Set up the ViewPager with the sections adapter.
@@ -65,36 +68,47 @@ public class BloodActivity extends AppCompatActivity {
         if (extras != null) {
             bloodgroup = extras.getString("bloodgroup");
 
+            //Toast.makeText(this, ""+bloodgroup, Toast.LENGTH_SHORT).show();
+
             if(bloodgroup.equals("A+")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(0);
+                switchtotab(0);
                 tab.select();
+
             }
-            else if(bloodgroup.equals("A-")){
+            if(bloodgroup.equals("A-")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(1);
+                switchtotab(1);
                 tab.select();
             }
-            else if(bloodgroup.equals("B+")){
+            if(bloodgroup.equals("B+")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(2);
+                switchtotab(2);
                 tab.select();
             }
-            else if(bloodgroup.equals("B-")){
+            if(bloodgroup.equals("B-")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(3);
+                switchtotab(3);
                 tab.select();
             }
-            else if(bloodgroup.equals("AB+")){
+            if(bloodgroup.equals("AB+")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(4);
+                switchtotab(4);
                 tab.select();
             }
-            else if(bloodgroup.equals("AB-")){
+            if(bloodgroup.equals("AB-")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(5);
+                switchtotab(5);
                 tab.select();
             }
-            else if(bloodgroup.equals("O+")){
+            if(bloodgroup.equals("O+")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(6);
+                switchtotab(6);
                 tab.select();
             }
-            else if(bloodgroup.equals("O-")){
+            if(bloodgroup.equals("O-")){
                 TabLayout.Tab tab = mTabLayout.getTabAt(7);
+                switchtotab(7);
                 tab.select();
             }
 
@@ -108,6 +122,8 @@ public class BloodActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+
+                //Toast.makeText(BloodActivity.this, ""+position, Toast.LENGTH_SHORT).show();
                 mTabLayout.setScrollPosition(position, 0, true);
                 mTabLayout.setSelected(true);
 
@@ -125,6 +141,7 @@ public class BloodActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition());
+                //Toast.makeText(BloodActivity.this, ""+tab.getPosition(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -138,6 +155,10 @@ public class BloodActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void switchtotab(int i) {
+        mViewPager.setCurrentItem(i);
     }
 
     @Override

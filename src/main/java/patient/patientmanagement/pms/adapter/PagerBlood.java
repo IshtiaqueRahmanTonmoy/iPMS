@@ -1,5 +1,6 @@
 package patient.patientmanagement.pms.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -58,6 +59,7 @@ public class PagerBlood extends FragmentPagerAdapter {
             case 6 :
                 OpositiveFragment tab7Fragment=new OpositiveFragment();
                 return tab7Fragment;
+
             case 7 :
                 OnegativeFragment tab8Fragment=new OnegativeFragment();
                 return tab8Fragment;
