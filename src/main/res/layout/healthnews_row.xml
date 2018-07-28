@@ -27,7 +27,7 @@
                 android:id="@+id/full_image"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:src="@mipmap/healthnewsforlist"
+                android:src="@drawable/shadow_overlay"
                 android:gravity="bottom"/>
 
             <TextView
@@ -100,6 +100,7 @@
                 android:layout_toRightOf="@id/sharenow"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="8dp"
+                android:textColor="#4285ca"
                 android:text="2 hours ago"/>
 
         </RelativeLayout>

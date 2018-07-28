@@ -55,6 +55,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/imageView"
                 android:text="2018-09-08"
+                android:textColor="#4285ca"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
             <TextView

@@ -292,6 +292,24 @@ public class DashboardActivity extends AppCompatActivity
             progressDialog.dismiss();
         }else{
 
+            try {
+                AlertDialog alertDialog = new AlertDialog.Builder(DashboardActivity.this).create();
+
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+                //Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+
             Snackbar snackbar = Snackbar
                     .make(drawerlayout, "No internet connection!", Snackbar.LENGTH_LONG)
                     .setAction("RETRY", new View.OnClickListener() {
@@ -302,7 +320,7 @@ public class DashboardActivity extends AppCompatActivity
                             //WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
                             //wifi.setWifiEnabled(true);
 
-                            startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                            //startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
 
                             mCardAdapter = new CardPagerAdapter(DashboardActivity.this);
                             mCardAdapter.addCardItem(new CardItem(R.string.title_1, R.string.text_1));
