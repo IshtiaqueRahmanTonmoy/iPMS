@@ -369,6 +369,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         districtEditView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                districtItem.clear();
                 popup = new PopupMenu(v.getContext(), districtEditView);
 
                 myRef.addValueEventListener(new ValueEventListener() {

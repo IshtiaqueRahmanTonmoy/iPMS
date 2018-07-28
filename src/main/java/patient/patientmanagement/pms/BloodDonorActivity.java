@@ -32,6 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import patient.patientmanagement.pms.entity.Utils;
 import patient.patientmanagement.pms.entity.Validation;
@@ -188,15 +190,24 @@ public class BloodDonorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (nameEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     nameEdt.setError("This field can not be blank");
-                } else if (emailEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                }
+                /*
+                else if (emailEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     emailEdt.setError("This field can not be blank");
-                }else if (addressEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                }
+                */
+                else if (addressEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     addressEdt.setError("This field can not be blank");
                 }else if (ageEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     ageEdt.setError("This field can not be blank");
                 }else if (phoneEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     phoneEdt.setError("This field can not be blank");
+                }else if (districtEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    districtEdt.setError("This field can not be blank");
+                }else if (thanaEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                    thanaEdt.setError("This field can not be blank");
                 }
+
                   else if (passwordEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     passwordEdt.setError("This field can not be blank");
 
@@ -270,6 +281,7 @@ public class BloodDonorActivity extends AppCompatActivity {
 
                         String districtname = namesdistrict[item];
                         districtEdt.setText(districtname);
+                        districtEdt.setError(null);
                         getThana(districtEdt.getText().toString());
                         /*
                         Toast.makeText(
@@ -320,6 +332,7 @@ public class BloodDonorActivity extends AppCompatActivity {
     }
 
     private void value(String id) {
+        itemsThana.clear();
         int idsvalue = Integer.parseInt(id);
         myRefThana.orderByChild("districtId").equalTo(idsvalue).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -342,6 +355,7 @@ public class BloodDonorActivity extends AppCompatActivity {
 
                         String thananame = namesthana[item];
                         thanaEdt.setText(thananame);
+                        thanaEdt.setError(null);
                         getThanaid(thananame);
 
                         /*
@@ -385,9 +399,11 @@ public class BloodDonorActivity extends AppCompatActivity {
 
     private void confirmSignin(int value) {
 
-        value = value + 1;
+        Random random = new Random();
+        int rand = random.nextInt(1000000000);
+        //value = value + 1;
 
-        emailval = "noemail"+value+"@gmail.com";
+        emailval = "noemail"+rand+"@gmail.com";
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
         editor.putInt(VALUE,value);
