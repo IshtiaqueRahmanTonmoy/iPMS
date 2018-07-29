@@ -135,6 +135,7 @@ public class DoctorList extends AppCompatActivity {
 
         final MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
         searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setQueryHint("Search by doctorname/speciality/designation");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

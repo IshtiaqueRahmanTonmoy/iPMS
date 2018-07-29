@@ -1,7 +1,10 @@
 package patient.patientmanagement.pms;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -16,6 +19,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import patient.patientmanagement.pms.adapter.Pager;
 import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Fragment;
 
@@ -27,6 +36,9 @@ public class HospitalSearchActivity extends AppCompatActivity {
     Intent intent;
     String hosptial,idvalrecong,idvalrecongd,hospitalactivity,fromonlydistrictandhos;
     int District,DistrictAndHos,DistrictHosSpeciality;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
+    private String hospitalPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +65,21 @@ public class HospitalSearchActivity extends AppCompatActivity {
             District = extras.getInt("District");
             DistrictAndHos = extras.getInt("DistrictAndHos");
             DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+
+
+            myRefHospital.orderByChild("hospitalName").equalTo(String.valueOf(hospitalName)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                        hospitalPhone = String.valueOf(childDataSnapshot.child("phone").getValue());
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             getSupportActionBar().setTitle(district);
             getSupportActionBar().setSubtitle(hospitalName);
@@ -123,8 +150,41 @@ public class HospitalSearchActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(view.getContext());
+                builder1.setMessage("Want to call this hospital ??.");
+                builder1.setCancelable(true);
+
+                builder1.setPositiveButton(
+                        "Yes",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String phoneNumber = String.format("tel: %s", hospitalPhone);
+                                // Create the intent.
+                                Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                                // Set the data for the intent as the phone number.
+                                dialIntent.setData(Uri.parse(phoneNumber));
+                                // If package resolves to an app, send intent.
+                                if (dialIntent.resolveActivity(HospitalSearchActivity.this.getPackageManager()) != null) {
+                                    HospitalSearchActivity.this.startActivity(dialIntent);
+                                    dialog.cancel();
+                                } else {
+                                    Log.e("intent", "Can't resolve app for ACTION_DIAL Intent.");
+                                }
+                            }
+
+
+                        });
+
+                builder1.setNegativeButton(
+                        "No",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
             }
         });
     }
