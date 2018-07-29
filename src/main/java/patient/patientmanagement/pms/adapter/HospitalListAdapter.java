@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import patient.patientmanagement.pms.HospitalActivity;
 import patient.patientmanagement.pms.HospitalSearchActivity;
@@ -28,6 +30,7 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
     String districtName,hospitalName;
     Context context;
     public static final String PREFS_NAME = "MyApp_Settings";
+    private ArrayList<Hospital> arraylist;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
@@ -52,6 +55,9 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
         this.districtName = districtName;
         this.hospitalList = hospitalList;
         Log.d("list", districtName);
+        this.arraylist = new ArrayList<Hospital>();
+        this.arraylist.addAll(hospitalList);
+
         //Toast.makeText(context, ""+specialistList.size(), Toast.LENGTH_SHORT).show();
     }
 
@@ -127,5 +133,20 @@ public class HospitalListAdapter extends RecyclerView.Adapter<HospitalListAdapte
     @Override
     public int getItemCount() {
         return hospitalList.size();
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        hospitalList.clear();
+        if (charText.length() == 0) {
+            hospitalList.addAll(arraylist);
+        } else {
+            for (Hospital wp : arraylist) {
+                if (wp.getHospitalLocation().toLowerCase(Locale.getDefault()).contains(charText) || wp.getHospitalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    hospitalList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

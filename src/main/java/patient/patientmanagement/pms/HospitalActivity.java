@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,7 +45,7 @@ public class HospitalActivity extends AppCompatActivity {
     private HospitalListAdapter mAdapter;
     private ProgressDialog progressDialog;
     String hospitalName,hospitalAddress,hospitalPhone,hospitalactivity,fromonlydistrict;
-
+    private SearchView searchView;
     int District,DistrictAndHos,DistrictHosSpeciality;
 
     @Override
@@ -161,7 +162,25 @@ public class HospitalActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.dashboard, menu);
+        getMenuInflater().inflate( R.menu.hospitalsearch, menu);
+
+        final MenuItem myActionMenuItem = menu.findItem( R.id.action_search);
+        searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Toast like print
+                myActionMenuItem.collapseActionView();
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
+                //Toast.makeText(HospitalActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+                mAdapter.filter(s);
+                return false;
+            }
+        });
         return true;
     }
 

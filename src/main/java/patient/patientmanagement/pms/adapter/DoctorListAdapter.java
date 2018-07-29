@@ -11,18 +11,23 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import patient.patientmanagement.pms.AppoinmentBooking;
 import patient.patientmanagement.pms.DoctorDetailsActivity;
 import patient.patientmanagement.pms.DoctorList;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.DoctorInfo;
+import patient.patientmanagement.pms.entity.Hospital;
 import patient.patientmanagement.pms.entity.speciality;
 
 public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.MyViewHolder>{
     private List<DoctorInfo> doctorList;
     Context context;
+    private ArrayList<DoctorInfo> arraylist;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView id,name,education,speciality,designationlocation,booknowTxt,profileTxt;
@@ -46,6 +51,9 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.My
         this.context = context;
         this.doctorList = doctorList;
         Log.d("list", String.valueOf(doctorList.size()));
+
+        this.arraylist = new ArrayList<DoctorInfo>();
+        this.arraylist.addAll(doctorList);
         //Toast.makeText(context, ""+specialistList.size(), Toast.LENGTH_SHORT).show();
     }
 
@@ -100,5 +108,20 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.My
     @Override
     public int getItemCount() {
         return doctorList.size();
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        doctorList.clear();
+        if (charText.length() == 0) {
+            doctorList.addAll(arraylist);
+        } else {
+            for (DoctorInfo wp : arraylist) {
+                if (wp.getDoctorName().toLowerCase(Locale.getDefault()).contains(charText) || wp.getDesignation().toLowerCase(Locale.getDefault()).contains(charText) || wp.getEducation().toLowerCase(Locale.getDefault()).contains(charText) || wp.getHospitalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    doctorList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
