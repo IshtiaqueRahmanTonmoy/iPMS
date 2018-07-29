@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:hint="Searcy by thana"
+                    android:hint="@string/search"
                     android:drawableLeft="@drawable/search"
                     android:drawablePadding="10dp"
                     android:drawableRight="@drawable/maps"

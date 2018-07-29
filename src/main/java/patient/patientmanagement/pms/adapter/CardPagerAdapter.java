@@ -7,7 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
@@ -23,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.QuickContactBadge;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
@@ -279,58 +284,59 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                 String hospital = hospitalEditView.getText().toString();
                 String expertise = expertiseEditView.getText().toString();
 
-                if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()) {
-                    Intent intent = new Intent(v.getContext(), DoctorList.class);
-                    intent.putExtra("district", district);
-                    intent.putExtra("hospital", hospital);
-                    intent.putExtra("expertise", expertise);
-                    intent.putExtra("doctorlist", "3");
+                if(isOnline(v)){
+                    if(!district.isEmpty() && !hospital.isEmpty() && !expertise.isEmpty()) {
+                        Intent intent = new Intent(v.getContext(), DoctorList.class);
+                        intent.putExtra("district", district);
+                        intent.putExtra("hospital", hospital);
+                        intent.putExtra("expertise", expertise);
+                        intent.putExtra("doctorlist", "3");
 
-                    intent.putExtra("District",0);
-                    intent.putExtra("DistrictAndHos",0);
-                    intent.putExtra("DistrictHosSpeciality",1);
+                        intent.putExtra("District",0);
+                        intent.putExtra("DistrictAndHos",0);
+                        intent.putExtra("DistrictHosSpeciality",1);
 
-                    v.getContext().startActivity(intent);
-                }
+                        v.getContext().startActivity(intent);
+                    }
 
-                else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
-                    Intent intent = new Intent(v.getContext(), DoctorList.class);
-                    intent.putExtra("district", district);
-                    intent.putExtra("hospital", hospital);
-                    intent.putExtra("expertise", expertise);
-                    intent.putExtra("doctorlist", "3");
+                    else if(!district.isEmpty() && hospital.isEmpty() && !expertise.isEmpty()){
+                        Intent intent = new Intent(v.getContext(), DoctorList.class);
+                        intent.putExtra("district", district);
+                        intent.putExtra("hospital", hospital);
+                        intent.putExtra("expertise", expertise);
+                        intent.putExtra("doctorlist", "3");
 
-                    intent.putExtra("District",0);
-                    intent.putExtra("DistrictAndHos",0);
-                    intent.putExtra("DistrictHosSpeciality",1);
+                        intent.putExtra("District",0);
+                        intent.putExtra("DistrictAndHos",0);
+                        intent.putExtra("DistrictHosSpeciality",1);
 
-                    v.getContext().startActivity(intent);
-                }
+                        v.getContext().startActivity(intent);
+                    }
 
-                else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
-                    Intent intent = new Intent(v.getContext(), HospitalActivity.class);
-                    intent.putExtra("fromonlydistrict", "1");
-                    intent.putExtra("district", district);
+                    else if(!district.isEmpty() && hospital.isEmpty() && expertise.isEmpty()){
+                        Intent intent = new Intent(v.getContext(), HospitalActivity.class);
+                        intent.putExtra("fromonlydistrict", "1");
+                        intent.putExtra("district", district);
 
-                    intent.putExtra("District",1);
-                    intent.putExtra("DistrictAndHos",0);
-                    intent.putExtra("DistrictHosSpeciality",0);
-                    v.getContext().startActivity(intent);
-                }
+                        intent.putExtra("District",1);
+                        intent.putExtra("DistrictAndHos",0);
+                        intent.putExtra("DistrictHosSpeciality",0);
+                        v.getContext().startActivity(intent);
+                    }
 
-                else{
-                    Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
-                    intent.putExtra("district", district);
-                    intent.putExtra("hospital", hospital);
-                    intent.putExtra("expertise", expertise);
-                    intent.putExtra("fromonlydistrict", "null");
-                    intent.putExtra("fromonlydistrictandhosptial", "2");
+                    else{
+                        Intent intent = new Intent(v.getContext(), HospitalSearchActivity.class);
+                        intent.putExtra("district", district);
+                        intent.putExtra("hospital", hospital);
+                        intent.putExtra("expertise", expertise);
+                        intent.putExtra("fromonlydistrict", "null");
+                        intent.putExtra("fromonlydistrictandhosptial", "2");
 
-                    intent.putExtra("District",0);
-                    intent.putExtra("DistrictAndHos",1);
-                    intent.putExtra("DistrictHosSpeciality",0);
+                        intent.putExtra("District",0);
+                        intent.putExtra("DistrictAndHos",1);
+                        intent.putExtra("DistrictHosSpeciality",0);
 
-                    v.getContext().startActivity(intent);
+                        v.getContext().startActivity(intent);
 
 
                       /*
@@ -340,11 +346,41 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                       intent.putExtra("expertise", expertise);
                       v.getContext().startActivity(intent);
                       */
-                }
+                    }
+                }else{
+
+                    try {
+                        final AlertDialog alertDialog = new AlertDialog.Builder(v.getContext()).create();
+
+                        alertDialog.setTitle("Info");
+                        alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //finish();
+                               alertDialog.dismiss();
+                            }
+                        });
+
+                        alertDialog.show();
+                    } catch (Exception e) {
+                        //Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+                    } }
+
+
             }
         });
     }
 
+    private boolean isOnline(View v) {
+        ConnectivityManager cm = (ConnectivityManager)v.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     private void getValue(CharSequence title) {
         myRef.orderByChild("districtName").equalTo(String.valueOf(title)).addListenerForSingleValueEvent(new ValueEventListener() {

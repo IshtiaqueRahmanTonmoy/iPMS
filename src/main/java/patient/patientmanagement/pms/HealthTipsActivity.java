@@ -1,7 +1,12 @@
 package patient.patientmanagement.pms;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -48,9 +53,51 @@ public class HealthTipsActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Health Tips");
 
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        showProcessDialog();
-        getValue();
+        if(isOnline()){
+            showProcessDialog();
+            getValue();
+        }
+        else{
+            try {
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(HealthTipsActivity.this);
+                builder1.setMessage("Info");
+                builder1.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                builder1.setCancelable(true);
 
+                builder1.setPositiveButton(
+                        "Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                builder1.setNegativeButton(
+                        "Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            } catch (Exception e) {
+                //Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+        }
+
+
+    }
+
+    private boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager)HealthTipsActivity.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

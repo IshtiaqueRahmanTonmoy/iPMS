@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.util.Log;
@@ -72,6 +74,18 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         mData = new ArrayList<>();
         mViews = new ArrayList<>();
         thanaItem = new ArrayList<>();
+
+
+    }
+
+    private boolean isOnline(View v) {
+        ConnectivityManager cm = (ConnectivityManager)v.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void addCardItem(CardItem item) {
@@ -137,6 +151,27 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         });
         districtEditView.setText("Dhaka");
 
+        if(isOnline(view)){ }
+        else{
+            try {
+                final AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
+
+                alertDialog.setTitle("Info");
+                alertDialog.setMessage("Internet not available, Cross check your internet connectivity and try again");
+                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //finish();
+                        alertDialog.dismiss();
+                    }
+                });
+
+                alertDialog.show();
+            } catch (Exception e) {
+                //Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
+            }
+        }
+
         btnBlood1 = (Button) view.findViewById(R.id.bloodButton1);
         btnBlood2 = (Button) view.findViewById(R.id.bloodButton2);
         btnBlood3 = (Button) view.findViewById(R.id.bloodButton3);
@@ -145,10 +180,6 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
         btnBlood6 = (Button) view.findViewById(R.id.bloodButton6);
         btnBlood7 = (Button) view.findViewById(R.id.bloodButton7);
         btnBlood8 = (Button) view.findViewById(R.id.bloodButton8);
-
-
-
-
 
         final int color = ((ColorDrawable)btnBlood1.getBackground()).getColor();
 

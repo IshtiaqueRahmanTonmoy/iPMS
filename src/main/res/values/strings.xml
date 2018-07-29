@@ -15,7 +15,7 @@
     <string name="title_2">Ok card</string>
     <string name="title_3">Bad card</string>
     <string name="title_4">Ugly card</string>
-
+    <string name="search">Search by thana/area</string>
     <!--Titles-->
     <string name="login_title">Login</string>
     <string name="signup_title">Sign up</string>

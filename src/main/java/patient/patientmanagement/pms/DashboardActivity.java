@@ -292,6 +292,7 @@ public class DashboardActivity extends AppCompatActivity
             progressDialog.dismiss();
         }else{
 
+            /*
             try {
                 AlertDialog alertDialog = new AlertDialog.Builder(DashboardActivity.this).create();
 
@@ -309,9 +310,10 @@ public class DashboardActivity extends AppCompatActivity
             } catch (Exception e) {
                 //Log.d(Constants.TAG, "Show Dialog: " + e.getMessage());
             }
+            */
 
             Snackbar snackbar = Snackbar
-                    .make(drawerlayout, "No internet connection!", Snackbar.LENGTH_LONG)
+                    .make(drawerlayout, "No internet connection!", Snackbar.LENGTH_LONG).setDuration(30000)
                     .setAction("RETRY", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -496,7 +498,7 @@ public class DashboardActivity extends AppCompatActivity
                         animatedView.setAnimation(null);
                         animatedView = itemView;
                     }
-                    ScaleAnimation fade_in = new ScaleAnimation(0.7f, 1.0f, 0.7f, 1.0f, Animation.RELATIVE_TO_SELF, 0.2f, Animation.RELATIVE_TO_SELF, 0.2f);
+                    ScaleAnimation fade_in = new ScaleAnimation(0.8f, 1.1f, 0.8f, 1.1f, Animation.RELATIVE_TO_SELF, 0.3f, Animation.RELATIVE_TO_SELF, 0.2f);
                     fade_in.setDuration(100);     // animation duration in milliseconds
                     fade_in.setFillAfter(true);    // If fillAfter is true, the transformation that this animation performed will persist when it is finished.
                     itemView.startAnimation(fade_in);
