@@ -51,7 +51,7 @@ public class ApositiveFragment extends Fragment {
     private List<Blood> bloodList = new ArrayList<Blood>();
     private BloodListAdapter bloodAdapter;
 
-    String districtId,thanaId,name,address,phone;
+    String districtId,thanaId,name,address,phone,value;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +66,8 @@ public class ApositiveFragment extends Fragment {
             districtName = extras.getString("district");
             thanaName = extras.getString("thana");
             bloodGroup = extras.getString("bloodgroup");
+            value = extras.getString("value");
+
             bloodGroup = "A+";
 
             if(!districtName.equals("null") && thanaName.equals("")){

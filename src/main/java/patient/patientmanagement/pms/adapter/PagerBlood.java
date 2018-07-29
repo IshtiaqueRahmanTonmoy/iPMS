@@ -27,12 +27,19 @@ import patient.patientmanagement.pms.patient.patientmanagement.fragment.Tab3Frag
 public class PagerBlood extends FragmentPagerAdapter {
 
     int tabCount;
+    String info;
 
     public PagerBlood(FragmentManager fm, int tabCount){
         super(fm);
         this.tabCount=tabCount;
 
         //Log.d("tab", String.valueOf(tabCount));
+    }
+
+    public PagerBlood(FragmentManager fm,String s) {
+        super(fm);
+        //Log.d("string",s);
+        info = s;
     }
 
     @Override
