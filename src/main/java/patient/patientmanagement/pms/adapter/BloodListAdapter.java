@@ -20,15 +20,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.Blood;
+import patient.patientmanagement.pms.entity.DoctorInfo;
 import patient.patientmanagement.pms.entity.Hospital;
 
 public class BloodListAdapter extends RecyclerView.Adapter<BloodListAdapter.MyViewHolder> {
     private List<Blood> bloodList;
     Context context;
+    private ArrayList<Blood> arraylist;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
@@ -53,6 +57,9 @@ public class BloodListAdapter extends RecyclerView.Adapter<BloodListAdapter.MyVi
         PhoneCallListener phoneListener = new PhoneCallListener();
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+
+        this.arraylist = new ArrayList<Blood>();
+        this.arraylist.addAll(bloodList);
         //Toast.makeText(context, ""+specialistList.size(), Toast.LENGTH_SHORT).show();
     }
 
@@ -141,5 +148,20 @@ public class BloodListAdapter extends RecyclerView.Adapter<BloodListAdapter.MyVi
 
             }
         }
+    }
+
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        bloodList.clear();
+        if (charText.length() == 0) {
+            bloodList.addAll(arraylist);
+        } else {
+            for (Blood wp : arraylist) {
+                if (wp.getLocation().toLowerCase(Locale.getDefault()).contains(charText) || wp.getDonorName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    bloodList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -2,10 +2,14 @@ package patient.patientmanagement.pms;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +26,7 @@ public class HealthNewsDetails extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("healthNews");
     TextView headingTxt,detailsTxt;
     private ProgressDialog progressDialog;
-
+    private String heading,details;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +51,8 @@ public class HealthNewsDetails extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                        String heading = String.valueOf(childDataSnapshot.child("heading").getValue());
-                        String details = String.valueOf(childDataSnapshot.child("details").getValue());
+                        heading = String.valueOf(childDataSnapshot.child("heading").getValue());
+                        details = String.valueOf(childDataSnapshot.child("details").getValue());
 
                         headingTxt.setText(heading);
                         detailsTxt.setText(details);
@@ -66,6 +70,18 @@ public class HealthNewsDetails extends AppCompatActivity {
             });
 
         }
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_SUBJECT,heading);
+                intent.putExtra(Intent.EXTRA_TEXT,details);
+                startActivity(Intent.createChooser(intent,"Share using"));
+            }
+        });
     }
 
     @Override

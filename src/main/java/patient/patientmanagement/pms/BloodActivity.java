@@ -166,6 +166,7 @@ public class BloodActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        /*
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate( R.menu.hospitalsearch, menu);
 
@@ -187,7 +188,9 @@ public class BloodActivity extends AppCompatActivity {
                 return false;
             }
         });
+        */
         return true;
+
     }
 
     @Override

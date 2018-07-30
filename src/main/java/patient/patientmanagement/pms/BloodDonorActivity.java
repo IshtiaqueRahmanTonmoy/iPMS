@@ -7,8 +7,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -54,7 +58,7 @@ public class BloodDonorActivity extends AppCompatActivity {
     int districtId,thanaId,agevalue;
     DatabaseReference myRef = database.getReference("district");
     DatabaseReference myRefThana = database.getReference("thana");
-
+    ArrayList<String> phoneNumbers;
     AlertDialog alertdialogbuilder,alertdialogbuilder1;
 
     String[] AlertDialogItems = new String[]{
@@ -99,6 +103,8 @@ public class BloodDonorActivity extends AppCompatActivity {
             false
     };
     List<String> ItemsIntoList,ItemsIntoList1,DisList;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +119,21 @@ public class BloodDonorActivity extends AppCompatActivity {
         valueid = sharedpreferences.getInt(VALUE, 0);
 
 
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("bloodDonor");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        collectPhoneNumbers((Map<String,Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+        
         itemsDistrict = new ArrayList<>();
         itemsThana = new ArrayList<>();
 
@@ -121,6 +142,27 @@ public class BloodDonorActivity extends AppCompatActivity {
 
         addressEdt = (EditText) findViewById(R.id.addressEdt);
         emailEdt = (EditText) findViewById(R.id.emailEdt);
+
+        emailEdt.addTextChangedListener(new TextWatcher()  {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)  {
+                if(!emailEdt.getText().toString().matches(emailPattern)){
+                    emailEdt.setError("Email not valid");
+                } else {
+                    emailEdt.setError(null);
+                }
+            }
+        });
+
         ageEdt = (EditText) findViewById(R.id.ageEdt);
         bloodgroupEdt = (EditText) findViewById(R.id.bloodgroupEdt);
         districtEdt = (EditText) findViewById(R.id.districtEdt);
@@ -175,7 +217,75 @@ public class BloodDonorActivity extends AppCompatActivity {
             }
         });
 
+        phoneEdt.addTextChangedListener(new TextWatcher()  {
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)  {
+                if (phoneEdt.getText().toString().length() <= 10) {
+                    phoneEdt.setError("Phone number cannot be less than 11");
+                }
+                else if(phoneEdt.getText().toString().length()>0){
+                    for(String str1 : phoneNumbers){
+                        if(str1.trim().contains(phoneEdt.getText().toString())){
+                            phoneEdt.setError("Phone already in use");
+                        }
+                    }
+                }
+                else {
+                    phoneEdt.setError(null);
+                }
+            }
+        });
+
+        passwordEdt.addTextChangedListener(new TextWatcher()  {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s)  {
+                if(passwordEdt.getText().toString().length() < 6){
+                    passwordEdt.setError("Password should be atleast 6 character");
+                }
+                else {
+                    passwordEdt.setError(null);
+                }
+            }
+        });
+
+        confirmpassEdt.addTextChangedListener(new TextWatcher()  {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(confirmpassEdt.getText().toString().length() < 6){
+                    confirmpassEdt.setError("Password should be atleast 6 character");
+                }
+                else {
+                    confirmpassEdt.setError(null);
+                }
+            }
+        });
 
         districtEdt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,7 +326,12 @@ public class BloodDonorActivity extends AppCompatActivity {
                     confirmpassEdt.setError("This field can not be blank");
 
                 }else {
-                    confirmSignin(valueid);
+                    if(passwordEdt.getText().toString().matches(confirmpassEdt.getText().toString())){
+                        confirmSignin(valueid);
+                    }else{
+                        Toast.makeText(BloodDonorActivity.this, "Password and confirm password doesn't match", Toast.LENGTH_SHORT).show();
+                    }
+
                     /*
                     if ( checkValidation () )
                         confirmSignin(valueid);
@@ -227,6 +342,19 @@ public class BloodDonorActivity extends AppCompatActivity {
                 }
 
         });
+    }
+
+    private void collectPhoneNumbers(Map<String, Object> users) {
+        phoneNumbers = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()){
+
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Get phone field and append to list
+            phoneNumbers.add((String) singleUser.get("phone"));
+        }
     }
 
     @Override
