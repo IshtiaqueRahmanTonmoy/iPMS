@@ -89,6 +89,7 @@ public class SignupActivity extends AppCompatActivity {
     int District,DistrictAndHos,DistrictHosSpeciality;
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ArrayList<String> phoneNumbers;
+    ImageButton imageBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,6 +309,41 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        imageBtn = (ImageButton) findViewById(R.id.et_back);
+        imageBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                intent.putExtra("format",date);
+                intent.putExtra("symptom",disease);
+                intent.putExtra("id",doctorId);
+                intent.putExtra("hospitalId",hospitalId);
+                intent.putExtra("date",dates);
+                intent.putExtra("time",time);
+                intent.putExtra("serial",serialNo);
+                intent.putExtra("confirm",confirm);
+                intent.putExtra("appoinmentid",String.valueOf(id));
+
+                intent.putExtra("description",description);
+                intent.putExtra("speciality",speciality);
+                intent.putExtra("education",education);
+                intent.putExtra("district",district);
+                intent.putExtra("hospital",hospital);
+                intent.putExtra("expertise",expertise);
+                intent.putExtra("idvalues",idvalues);
+                intent.putExtra("name",namevalue);
+                intent.putExtra("fromonlydistrict",fromonlydistrict);
+                intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
+                intent.putExtra("doctorlist", doctorlist);
+
+                intent.putExtra("District",District);
+                intent.putExtra("DistrictAndHos",DistrictAndHos);
+                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                startActivity(intent);
+
+            }
+        });
         signupBtn = (Button) findViewById(R.id.btn_signup);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
@@ -523,5 +559,6 @@ public class SignupActivity extends AppCompatActivity {
 
     public void login(View view) {
         startActivity(new Intent(this, LoginActivity.class));
+        finish();
     }
 }

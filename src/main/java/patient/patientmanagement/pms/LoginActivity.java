@@ -227,6 +227,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //startActivity(intent);
         startActivity(intent);
+        finish();
     }
 
     private void showProcessDialog() {

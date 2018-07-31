@@ -133,6 +133,7 @@ public class AppoinmentSuccess extends AppCompatActivity {
             intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
 
             startActivity(intent);
+            finish();
         }
 
 
