@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,21 +31,25 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 
-import patient.patientmanagement.pms.databinding.ActivitySignupBinding;
+import java.util.ArrayList;
+import java.util.Map;
+
 import patient.patientmanagement.pms.entity.Utils;
 import patient.patientmanagement.pms.entity.Validation;
 import patient.patientmanagement.pms.entity.patientInfo;
 
 public class SignupActivity extends AppCompatActivity {
-    ActivitySignupBinding binding;
-    private EditText userEdt,emailEdt,phoneEdt,genderEdt,ageEdt,bloodgroupEdt,passwordEdt;
+    private EditText userEdt,emailEdt,phoneEdt,genderEdt,ageEdt,bloodgroupEdt,passwordEdt,confirmpasswordEdt;
     private Button signupBtn;
     private String value;
     private FirebaseAuth auth;
@@ -82,15 +87,34 @@ public class SignupActivity extends AppCompatActivity {
     ImageButton imgback;
     private String doctorlist;
     int District,DistrictAndHos,DistrictHosSpeciality;
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    ArrayList<String> phoneNumbers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_signup);
+        setContentView(R.layout.activity_signup);
+
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().setHomeButtonEnabled(true);
 
         auth = FirebaseAuth.getInstance();
         databaseUsers = FirebaseDatabase.getInstance().getReference("patientInfo");
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("bloodDonor");
+        ref.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        collectPhoneNumbers((Map<String, Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -126,65 +150,118 @@ public class SignupActivity extends AppCompatActivity {
             DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
 
 
-
-            Log.d("extra",id);
-            Log.d("value",date+"\n"+disease+"\n"+doctorId+"\n"+hospitalId+"\n"+id+"\n"+null+"\n"+serialNo+"\n"+1+"\n"+time);
+            Log.d("extra", id);
+            Log.d("value", date + "\n" + disease + "\n" + doctorId + "\n" + hospitalId + "\n" + id + "\n" + null + "\n" + serialNo + "\n" + 1 + "\n" + time);
 
             //Toast.makeText(this, ""+idvalue, Toast.LENGTH_SHORT).show();
         }
 
+        /*
         back = (ImageButton) findViewById(R.id.et_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
-                intent.putExtra("format",date);
-                intent.putExtra("symptom",disease);
-                intent.putExtra("id",doctorId);
-                intent.putExtra("hospitalId",hospitalId);
-                intent.putExtra("date",dates);
-                intent.putExtra("time",time);
-                intent.putExtra("serial",serialNo);
-                intent.putExtra("confirm",confirm);
-                intent.putExtra("appoinmentid",String.valueOf(id));
-
-                intent.putExtra("description",description);
-                intent.putExtra("speciality",speciality);
-                intent.putExtra("education",education);
-                intent.putExtra("district",district);
-                intent.putExtra("hospital",hospital);
-                intent.putExtra("expertise",expertise);
-                intent.putExtra("idvalues",idvalues);
-                intent.putExtra("name",namevalue);
-                intent.putExtra("fromonlydistrict",fromonlydistrict);
-                intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
-                intent.putExtra("doctorlist", doctorlist);
-
-                intent.putExtra("District",District);
-                intent.putExtra("DistrictAndHos",DistrictAndHos);
-                intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
-
-                startActivity(intent);
 
             }
         });
+        */
 
         userEdt = (EditText) findViewById(R.id.et_full_name);
         emailEdt = (EditText) findViewById(R.id.et_email);
 
+        emailEdt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!emailEdt.getText().toString().matches(emailPattern)) {
+                    emailEdt.setError("Email not valid");
+                } else {
+                    emailEdt.setError(null);
+                }
+            }
+        });
+
         phoneEdt = (EditText) findViewById(R.id.et_phone);
         phoneEdt.addTextChangedListener(new TextWatcher() {
-            public void afterTextChanged(Editable s) {
-                Validation.isPhoneNumber(phoneEdt, false);
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
-            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-            public void onTextChanged(CharSequence s, int start, int before, int count){}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (phoneEdt.getText().toString().length() <= 10) {
+                    phoneEdt.setError("Phone number cannot be less than 11");
+                } else if (phoneEdt.getText().toString().length() > 0) {
+                    for (String str1 : phoneNumbers) {
+                        if (str1.trim().contains(phoneEdt.getText().toString())) {
+                            phoneEdt.setError("Phone already in use");
+                        }
+                    }
+                } else {
+                    phoneEdt.setError(null);
+                }
+            }
         });
+
 
         genderEdt = (EditText) findViewById(R.id.et_gender);
         ageEdt = (EditText) findViewById(R.id.et_age);
         bloodgroupEdt = (EditText) findViewById(R.id.et_email_bloodgroup);
         passwordEdt = (EditText) findViewById(R.id.et_password);
+        confirmpasswordEdt = (EditText) findViewById(R.id.confirm_password);
+
+        passwordEdt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (passwordEdt.getText().toString().length() < 6) {
+                    passwordEdt.setError("Password should be atleast 6 character");
+                } else {
+                    passwordEdt.setError(null);
+                }
+            }
+        });
+
+        confirmpasswordEdt.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (confirmpasswordEdt.getText().toString().length() < 6) {
+                    confirmpasswordEdt.setError("Password should be atleast 6 character");
+                } else {
+                    confirmpasswordEdt.setError(null);
+                }
+            }
+        });
         scrollview = (ScrollView) findViewById(R.id.scrollview);
 
 
@@ -240,16 +317,21 @@ public class SignupActivity extends AppCompatActivity {
                     userEdt.setError("This field can not be blank");
                 } else if (emailEdt.getText().length() < 0) {
                     emailEdt.setError("This field can not be blank");
-                }else if (phoneEdt.getText().length() < 0) {
+                } else if (phoneEdt.getText().length() < 0) {
                     phoneEdt.setError("This field can not be blank");
-                }else if (ageEdt.getText().length() < 0) {
+                } else if (ageEdt.getText().length() < 0) {
                     ageEdt.setError("This field can not be blank");
-                }
-                else if (passwordEdt.getText().length() < 0) {
+                } else if (passwordEdt.getText().length() < 0) {
                     Utils.showToast(SignupActivity.this, "Please input your password");
                 } else {
 
-                    confirmSignin();
+                    if (passwordEdt.getText().toString().matches(confirmpasswordEdt.getText().toString())) {
+                        confirmSignin();
+                    } else {
+                        Toast.makeText(SignupActivity.this, "Password and confirm password doesn't match", Toast.LENGTH_SHORT).show();
+                    }
+
+
                     /*
                     if ( checkValidation () )
                         confirmSignin();
@@ -257,10 +339,78 @@ public class SignupActivity extends AppCompatActivity {
                         Toast.makeText(SignupActivity.this, "Form contains error", Toast.LENGTH_LONG).show();
                    */
                 }
-              }
-            });
+            }
+        });
 
         //Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.dashboard, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+
+        //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
+
+        if(id == android.R.id.home){
+
+            Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+            intent.putExtra("format",date);
+            intent.putExtra("symptom",disease);
+            intent.putExtra("id",doctorId);
+            intent.putExtra("hospitalId",hospitalId);
+            intent.putExtra("date",dates);
+            intent.putExtra("time",time);
+            intent.putExtra("serial",serialNo);
+            intent.putExtra("confirm",confirm);
+            intent.putExtra("appoinmentid",String.valueOf(id));
+
+            intent.putExtra("description",description);
+            intent.putExtra("speciality",speciality);
+            intent.putExtra("education",education);
+            intent.putExtra("district",district);
+            intent.putExtra("hospital",hospital);
+            intent.putExtra("expertise",expertise);
+            intent.putExtra("idvalues",idvalues);
+            intent.putExtra("name",namevalue);
+            intent.putExtra("fromonlydistrict",fromonlydistrict);
+            intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
+            intent.putExtra("doctorlist", doctorlist);
+
+            intent.putExtra("District",District);
+            intent.putExtra("DistrictAndHos",DistrictAndHos);
+            intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+            startActivity(intent);
+
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    private void collectPhoneNumbers(Map<String, Object> users) {
+        phoneNumbers = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()){
+
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Get phone field and append to list
+            phoneNumbers.add((String) singleUser.get("phone"));
+        }
     }
 
     private void hideKeyboard(View v) {
@@ -320,7 +470,36 @@ public class SignupActivity extends AppCompatActivity {
                         //String userEmail = currentFirebaseUser.getEmail();
                     }
 
-                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                    Intent intent = new Intent(SignupActivity.this,LoginActivity.class);
+                    intent.putExtra("format",date);
+                    intent.putExtra("symptom",disease);
+                    intent.putExtra("id",doctorId);
+                    intent.putExtra("hospitalId",hospitalId);
+                    intent.putExtra("date",dates);
+                    intent.putExtra("time",time);
+                    intent.putExtra("serial",serialNo);
+                    intent.putExtra("confirm",confirm);
+                    intent.putExtra("appoinmentid",String.valueOf(id));
+
+                    intent.putExtra("description",description);
+                    intent.putExtra("speciality",speciality);
+                    intent.putExtra("education",education);
+                    intent.putExtra("district",district);
+                    intent.putExtra("hospital",hospital);
+                    intent.putExtra("expertise",expertise);
+                    intent.putExtra("idvalues",idvalues);
+                    intent.putExtra("name",namevalue);
+                    intent.putExtra("fromonlydistrict",fromonlydistrict);
+                    intent.putExtra("fromonlydistrictandhosptial", fromdistandhos);
+                    intent.putExtra("doctorlist", doctorlist);
+
+                    intent.putExtra("District",District);
+                    intent.putExtra("DistrictAndHos",DistrictAndHos);
+                    intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+
+                    startActivity(intent);
+
+                    //startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     //progressDialog.dismiss();
                     finish();
                 }
@@ -344,15 +523,5 @@ public class SignupActivity extends AppCompatActivity {
 
     public void login(View view) {
         startActivity(new Intent(this, LoginActivity.class));
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return true;
     }
 }

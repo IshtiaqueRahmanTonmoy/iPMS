@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void addvalue(String date, String disease, String doctorId, String hosId, String i, String patientId, String srlno, String sts, String time) {
 
+        //Toast.makeText(LoginActivity.this, ""+hosId, Toast.LENGTH_SHORT).show();
         int hospitalId = Integer.parseInt(hosId);
         int serialNo = Integer.parseInt(srlno);
         int status = Integer.parseInt(sts);
@@ -224,7 +225,7 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
 
 
-        startActivity(intent);
+        //startActivity(intent);
         startActivity(intent);
     }
 
