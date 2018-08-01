@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import patient.patientmanagement.pms.BloodActivity;
@@ -410,6 +411,7 @@ public class CardPagerAdapterBlood extends PagerAdapter implements CardAdapter {
                             Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
                             String districtName = zoneSnapshot.child("districtName").getValue(String.class);
                             districtItem.add(districtName);
+                            Collections.sort(districtItem);
                         }
 
                         final String namesdistrict[]=districtItem.toArray(new String[districtItem.size()]);

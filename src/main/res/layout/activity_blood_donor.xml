@@ -63,15 +63,14 @@
                         android:id="@+id/nameEdt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="Enter Name"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:ems="10"
+                        android:hint="Name"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="textPersonName"
+                        android:padding="15dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -85,15 +84,14 @@
                         android:id="@+id/emailEdt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:hint="Enter E-mail"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:padding="8dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"></EditText>
+                        android:ems="10"
+                        android:hint="E-mail"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="textEmailAddress"
+                        android:padding="15dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,15 +105,14 @@
                         android:id="@+id/addressEdt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:hint="Address"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
                         android:inputType="text"
-                        android:hint="Enter Address"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:padding="15dp" />
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -126,33 +123,33 @@
                             android:id="@+id/districtEdt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="none"
-                            android:focusable="false"
-                            android:hint="Select District"
-                            android:layout_margin="3dp"
+                            android:ems="10"
+                            android:hint="District"
+                            android:textSize="14sp"
                             android:layout_weight="1"
-                            android:layout_marginBottom="3dp"
-                            android:layout_marginTop="3dp"
-                            android:letterSpacing="0.025"
-                            android:background="#fff"
-                            android:textSize="16dp"
-                            android:padding="8dp"/>
+                            android:gravity="start"
+                            android:focusable="false"
+                            android:clickable="false"
+                            android:maxLines="1"
+                            android:drawablePadding="10dp"
+                            android:inputType="text"
+                            android:padding="15dp" />
 
                         <EditText
                             android:id="@+id/thanaEdt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="none"
+                            android:ems="10"
                             android:layout_weight="1"
-                            android:hint="Select Thana"
-                            android:layout_margin="3dp"
-                            android:layout_marginBottom="3dp"
-                            android:layout_marginTop="3dp"
-                            android:letterSpacing="0.025"
-                            android:background="#fff"
-                            android:textSize="16dp"
-                            android:padding="8dp"/>
+                            android:focusable="false"
+                            android:clickable="false"
+                            android:hint="Thana"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:maxLines="1"
+                            android:drawablePadding="10dp"
+                            android:inputType="text"
+                            android:padding="15dp" />
 
                     </LinearLayout>
 
@@ -168,17 +165,15 @@
                     <EditText
                         android:id="@+id/bloodgroupEdt"
                         android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:hint="Enter Bloodgroup"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
-
+                        android:ems="10"
+                        android:hint="BloodGroup"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="text"
+                        android:padding="15dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -191,16 +186,15 @@
                     <EditText
                         android:id="@+id/ageEdt"
                         android:layout_width="match_parent"
-                        android:inputType="number"
-                        android:hint="Enter Age"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:ems="10"
+                        android:hint="Age"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="number"
+                        android:padding="15dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -215,17 +209,15 @@
                     <EditText
                         android:id="@+id/genderEdt"
                         android:layout_width="match_parent"
-                        android:inputType="text"
-                        android:hint="Enter Gender"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
-
+                        android:ems="10"
+                        android:hint="Gender"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="text"
+                        android:padding="15dp" />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -239,16 +231,15 @@
                     <EditText
                         android:id="@+id/phoneEdt"
                         android:layout_width="match_parent"
-                        android:inputType="number"
-                        android:hint="Enter Phone"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:ems="10"
+                        android:hint="Phone"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="phone"
+                        android:padding="15dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -263,16 +254,15 @@
                     <EditText
                         android:id="@+id/passwordEdt"
                         android:layout_width="match_parent"
-                        android:inputType="textPassword"
-                        android:hint="Enter Password"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:ems="10"
+                        android:hint="Enter Password"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="textPassword"
+                        android:padding="15dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -287,16 +277,15 @@
                     <EditText
                         android:id="@+id/confirmpasswordEdt"
                         android:layout_width="match_parent"
-                        android:inputType="textPassword"
-                        android:hint="Confirm Password"
                         android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
-                        android:layout_marginBottom="3dp"
-                        android:layout_marginTop="3dp"
-                        android:letterSpacing="0.025"
-                        android:background="#fff"
-                        android:textSize="16dp"
-                        android:padding="8dp"/>
+                        android:ems="10"
+                        android:hint="Confirm Password"
+                        android:textSize="14sp"
+                        android:gravity="start"
+                        android:maxLines="1"
+                        android:drawablePadding="10dp"
+                        android:inputType="textPassword"
+                        android:padding="15dp" />
 
                     <LinearLayout
                         android:layout_width="fill_parent"

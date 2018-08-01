@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         imageBtn = (ImageButton) findViewById(R.id.imageback);
-        emailEdt = (EditText) findViewById(R.id.et_phone);
+        emailEdt = (EditText) findViewById(R.id.et_email);
         passwordEdt = (EditText) findViewById(R.id.et_password);
         loginBtn = (Button) findViewById(R.id.btn_login); 
         auth = FirebaseAuth.getInstance();

@@ -40,6 +40,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import patient.patientmanagement.pms.BloodDonorActivity;
@@ -158,7 +159,6 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
         hospitalEditView = (AutoCompleteTextView) view.findViewById(R.id.et_hospital);
         expertiseEditView = (AutoCompleteTextView) view.findViewById(R.id.et_speciality);
 
-
         districtEditView.setText("Dhaka");
         myRefHospital.addValueEventListener(new ValueEventListener() {
             @Override
@@ -219,7 +219,7 @@ public class CardPagerAdapter extends PagerAdapter implements CardAdapter {
                             Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
                             String districtName = zoneSnapshot.child("districtName").getValue(String.class);
                             districtItem.add(districtName);
-
+                            Collections.sort(districtItem);
                         }
 
                         //for (int i = 0; i < districtItem.size(); i++) {
