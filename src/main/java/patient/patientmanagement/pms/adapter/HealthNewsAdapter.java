@@ -107,7 +107,7 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
             }
         });
 
-        /*
+
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,7 +117,7 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
 
             }
         });
-        */
+
         holder.sharenow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -36,7 +36,9 @@ public class HealthTipsDetails extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        getSupportActionBar().setTitle("Helath Tips Details");
+        getSupportActionBar().setTitle("Written By");
+        getSupportActionBar().setSubtitle("i-PMS");
+        //getSupportActionBar().setTitle("Helath Tips Details");
 
         showProcessDialog();
         headingTxt = (TextView) findViewById(R.id.heading);
