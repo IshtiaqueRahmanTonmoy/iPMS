@@ -154,7 +154,7 @@ public class HealthTipsActivity extends AppCompatActivity {
                     String image = ds.child("image").getValue(String.class);
 
                     healthTipsActivityList.add(new HealthTips(id,image,heading,details,upload));
-                    mAdapter = new HealthTipsAdapter(healthTipsActivityList);
+                    mAdapter = new HealthTipsAdapter(HealthTipsActivity.this,healthTipsActivityList);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HealthTipsActivity.this);
                     recyclerView.addItemDecoration(
                             new DividerItemDecoration(HealthTipsActivity.this, R.drawable.divider));

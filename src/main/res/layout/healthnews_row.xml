@@ -26,8 +26,7 @@
             <ImageView
                 android:id="@+id/full_image"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:src="@drawable/shadow_overlay"
+                android:layout_height="180dp"
                 android:gravity="bottom"/>
 
             <TextView

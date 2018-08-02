@@ -34,6 +34,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -165,6 +166,7 @@ public class BloodDonorActivity extends AppCompatActivity {
         });
 
         ageEdt = (EditText) findViewById(R.id.ageEdt);
+
         bloodgroupEdt = (EditText) findViewById(R.id.bloodgroupEdt);
         districtEdt = (EditText) findViewById(R.id.districtEdt);
         thanaEdt = (EditText) findViewById(R.id.thanaEdt);
@@ -395,6 +397,7 @@ public class BloodDonorActivity extends AppCompatActivity {
                     Log.i("specialityName", zoneSnapshot.child("districtName").getValue(String.class));
                     String districtName = zoneSnapshot.child("districtName").getValue(String.class);
                     itemsDistrict.add(districtName);
+                    Collections.sort(itemsDistrict);
                 }
 
                 final String namesdistrict[]=itemsDistrict.toArray(new String[itemsDistrict.size()]);

@@ -157,7 +157,7 @@ public class HealthNewsActivity extends AppCompatActivity {
                     String image = ds.child("image").getValue(String.class);
 
                     healthNewsList.add(new HealthNews(id,image,heading,details,upload));
-                    mAdapter = new HealthNewsAdapter(healthNewsList);
+                    mAdapter = new HealthNewsAdapter(HealthNewsActivity.this,healthNewsList);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(HealthNewsActivity.this);
                     recyclerView.addItemDecoration(
                             new DividerItemDecoration(HealthNewsActivity.this, R.drawable.divider));

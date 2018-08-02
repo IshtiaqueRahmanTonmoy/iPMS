@@ -10,9 +10,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +28,8 @@ public class HealthNewsDetails extends AppCompatActivity {
     DatabaseReference myRef = database.getReference("healthNews");
     TextView headingTxt,detailsTxt;
     private ProgressDialog progressDialog;
-    private String heading,details;
+    private String heading,details,image;
+    ImageView imageview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +43,7 @@ public class HealthNewsDetails extends AppCompatActivity {
         showProcessDialog();
         headingTxt = (TextView) findViewById(R.id.heading);
         detailsTxt = (TextView) findViewById(R.id.details);
-
+        imageview = (ImageView) findViewById(R.id.header);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             idvalue = extras.getString("idvalue");
@@ -53,6 +56,9 @@ public class HealthNewsDetails extends AppCompatActivity {
                     for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                         heading = String.valueOf(childDataSnapshot.child("heading").getValue());
                         details = String.valueOf(childDataSnapshot.child("details").getValue());
+                        image = String.valueOf(childDataSnapshot.child("image").getValue());
+
+                        Glide.with(HealthNewsDetails.this).load(image).into(imageview);
 
                         headingTxt.setText(heading);
                         detailsTxt.setText(details);

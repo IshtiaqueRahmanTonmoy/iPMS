@@ -11,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
+import patient.patientmanagement.pms.HealthNewsActivity;
 import patient.patientmanagement.pms.HealthNewsDetails;
 import patient.patientmanagement.pms.HealthTipsDetails;
 import patient.patientmanagement.pms.R;
@@ -38,7 +41,8 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
     }
 
 
-    public HealthNewsAdapter(List<HealthNews> healthnewsList) {
+    public HealthNewsAdapter(Context context, List<HealthNews> healthnewsList) {
+        this.context = context;
         this.healthnewsList = healthnewsList;
         Log.d("list", String.valueOf(healthnewsList.size()));
         //Toast.makeText(context, ""+specialistList.size(), Toast.LENGTH_SHORT).show();
@@ -56,7 +60,7 @@ public class HealthNewsAdapter extends RecyclerView.Adapter<HealthNewsAdapter.My
     public void onBindViewHolder(final HealthNewsAdapter.MyViewHolder holder, int position) {
         HealthNews healthnews = healthnewsList.get(position);
         //holder.image.setImageDrawable(R.drawable.ic_user);
-
+        Glide.with(context).load(healthnews.getImage()).into(holder.image);
         holder.id.setText(healthnews.getId());
         holder.headline.setText(healthnews.getHeading());
         holder.details.setText(healthnews.getDetails());

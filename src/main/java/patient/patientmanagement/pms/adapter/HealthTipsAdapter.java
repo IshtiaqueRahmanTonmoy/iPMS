@@ -11,9 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import patient.patientmanagement.pms.HealthNewsDetails;
+import patient.patientmanagement.pms.HealthTipsActivity;
 import patient.patientmanagement.pms.HealthTipsDetails;
 import patient.patientmanagement.pms.R;
 import patient.patientmanagement.pms.entity.HealthNews;
@@ -28,7 +31,7 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
 
         public MyViewHolder(View view) {
             super(view);
-            //image = (ImageView) view.findViewById(R.id.imagearrows);
+            image = (ImageView) view.findViewById(R.id.imageView);
             id = (TextView) view.findViewById(R.id.idvalues);
             headline = (TextView) view.findViewById(R.id.headlines);
             details = (TextView) view.findViewById(R.id.detailssomes);
@@ -38,7 +41,8 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
     }
 
 
-    public HealthTipsAdapter(List<HealthTips> healthtipsList) {
+    public HealthTipsAdapter(Context context, List<HealthTips> healthtipsList) {
+        this.context = context;
         this.healthtipsList = healthtipsList;
         Log.d("list", String.valueOf(healthtipsList.size()));
         //Toast.makeText(context, ""+specialistList.size(), Toast.LENGTH_SHORT).show();
@@ -55,8 +59,8 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
     @Override
     public void onBindViewHolder(final HealthTipsAdapter.MyViewHolder holder, int position) {
         HealthTips healthtips = healthtipsList.get(position);
-        //holder.image.setImageDrawable(R.drawable.ic_user);
 
+        Glide.with(context).load(healthtips.getImage()).into(holder.image);
         holder.id.setText(healthtips.getId());
         holder.headline.setText(healthtips.getHeading());
         holder.details.setText(healthtips.getDetails());
@@ -101,7 +105,7 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
             }
         });
 
-        /*
+
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +115,8 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
 
             }
         });
+
+        /*
         holder.sharenow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,6 +135,7 @@ public class HealthTipsAdapter extends RecyclerView.Adapter<HealthTipsAdapter.My
                 view.getContext().startActivity(Intent.createChooser(intent,"Share using"));            }
         });
         */
+
 
 
         //holder.image.setText(doctor.getDesignation()+","+doctor.getHospitalName());
