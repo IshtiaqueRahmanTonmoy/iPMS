@@ -113,6 +113,7 @@ public class BloodDonorActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("i-PMS");
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
@@ -306,11 +307,7 @@ public class BloodDonorActivity extends AppCompatActivity {
                     emailEdt.setError("This field can not be blank");
                 }
                 */
-                else if (addressEdt.getText().toString().trim().equalsIgnoreCase("")) {
-                    addressEdt.setError("This field can not be blank");
-                }else if (ageEdt.getText().toString().trim().equalsIgnoreCase("")) {
-                    ageEdt.setError("This field can not be blank");
-                }else if (phoneEdt.getText().toString().trim().equalsIgnoreCase("")) {
+               else if (phoneEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     phoneEdt.setError("This field can not be blank");
                 }else if (districtEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     districtEdt.setError("This field can not be blank");
@@ -357,12 +354,14 @@ public class BloodDonorActivity extends AppCompatActivity {
         }
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.dashboard, menu);
         return true;
     }
+    */
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -538,8 +537,21 @@ public class BloodDonorActivity extends AppCompatActivity {
         editor.apply();
 
         //Toast.makeText(this, ""+thanaid, Toast.LENGTH_SHORT).show();
+        if(addressEdt.getText().length() == 0){
+            address = "N/A";
+        }
+        else {
+            address = addressEdt.getText().toString();
+        }
         address = addressEdt.getText().toString();
         email = emailEdt.getText().toString();
+        if(ageEdt.getText().length() == 0){
+            age = "0";
+        }
+        else {
+            age = ageEdt.getText().toString();
+            agevalue = Integer.parseInt(age);
+        }
         age = ageEdt.getText().toString();
         bloodgroup = bloodgroupEdt.getText().toString();
         district = districtEdt.getText().toString();
@@ -549,7 +561,7 @@ public class BloodDonorActivity extends AppCompatActivity {
         phone = phoneEdt.getText().toString();
         password = passwordEdt.getText().toString();
 
-        agevalue = Integer.parseInt(age);
+
         districtId = Integer.parseInt(districtid);
         thanaId = Integer.parseInt(thanaid);
 

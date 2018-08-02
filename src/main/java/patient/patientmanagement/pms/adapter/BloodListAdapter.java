@@ -78,9 +78,13 @@ public class BloodListAdapter extends RecyclerView.Adapter<BloodListAdapter.MyVi
 
         //holder.id.setText();
         holder.name.setText(blood.getDonorName());
-        holder.address.setText(blood.getLocation());
-        holder.phone.setText(blood.getPhoneNumber());
+        if(blood.getLocation().equals("")){
+            holder.address.setText("N/A");
+        }else{
+           holder.address.setText(blood.getLocation());
+        }
 
+        holder.phone.setText(blood.getPhoneNumber());
         holder.callnow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

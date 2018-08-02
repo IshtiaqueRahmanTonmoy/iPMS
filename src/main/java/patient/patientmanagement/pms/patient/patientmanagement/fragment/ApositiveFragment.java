@@ -51,7 +51,7 @@ public class ApositiveFragment extends Fragment {
     private List<Blood> bloodList = new ArrayList<Blood>();
     private BloodListAdapter bloodAdapter;
 
-    String districtId,thanaId,name,address,phone,value;
+    String uid,districtId,thanaId,name,address,phone,value;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,11 +71,11 @@ public class ApositiveFragment extends Fragment {
             bloodGroup = "A+";
 
             if(!districtName.equals("null") && thanaName.equals("")){
-                //Toast.makeText(getContext(), "with district", Toast.LENGTH_SHORT).show();
+                  //Toast.makeText(getContext(), "with district", Toast.LENGTH_SHORT).show();
                   getDistrict();
                 //Toast.makeText(getContext(), ""+districtName, Toast.LENGTH_SHORT).show();
             }
-            else{
+            else if(!districtName.equals("null") && !thanaName.equals("null")){
                 //Toast.makeText(getContext(), "with district and thana", Toast.LENGTH_SHORT).show();
                 getdistrictAndThana();
                 //Toast.makeText(getContext(), ""+districtName, Toast.LENGTH_SHORT).show();
@@ -114,6 +114,8 @@ public class ApositiveFragment extends Fragment {
         Log.d("valuess",bloodGroup);
 
         final int ids = Integer.parseInt(id);
+
+        //Toast.makeText(getActivity(), ""+id, Toast.LENGTH_SHORT).show();
         //final int idsthana = Integer.parseInt(idthana);
 
         myRef.orderByChild("bloodgroup").equalTo(bloodGroup).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -122,13 +124,12 @@ public class ApositiveFragment extends Fragment {
 
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
 
-
                     districtId = String.valueOf(childDataSnapshot.child("districtId").getValue());
                     thanaId = String.valueOf(childDataSnapshot.child("thanaId").getValue());
                     name = String.valueOf(childDataSnapshot.child("name").getValue());
                     address = String.valueOf(childDataSnapshot.child("address").getValue());
                     phone = String.valueOf(childDataSnapshot.child("phone").getValue());
-
+                    uid = String.valueOf(childDataSnapshot.child("uid").getValue());
 
                     //Toast.makeText(getActivity(), ""+name+""+address, Toast.LENGTH_SHORT).show();
                     int districtmatch = Integer.parseInt(districtId);
@@ -152,6 +153,7 @@ public class ApositiveFragment extends Fragment {
                         //Toast.makeText(getActivity(), "Blood donor not found..", Toast.LENGTH_SHORT).show();
 
                     }
+
                     //Toast.makeText(DoctorList.this, ""+doctorName+education+designation, Toast.LENGTH_SHORT).show();
                 }
 
