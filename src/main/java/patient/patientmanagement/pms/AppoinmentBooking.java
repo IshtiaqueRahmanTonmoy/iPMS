@@ -7,7 +7,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,7 +21,6 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 import patient.patientmanagement.pms.adapter.ConfirmAdapter;
 import patient.patientmanagement.pms.adapter.ShadowTransformer;
@@ -49,6 +47,7 @@ public class AppoinmentBooking extends AppCompatActivity {
     private String fromonlydistrictandhos;
     private String doctorlist;
     private Button rightarrow,leftarrow;
+    long nodecount;
 
     int District,DistrictAndHos,DistrictHosSpeciality;
 
@@ -59,6 +58,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("i-PMS");
 
         Date date = new Date();
         Calendar clndr = Calendar.getInstance();
@@ -309,6 +309,7 @@ public class AppoinmentBooking extends AppCompatActivity {
 
         int hosid = Integer.parseInt(hospitalId);
 
+
         //Toast.makeText(AppoinmentBooking.this, "format"+format, Toast.LENGTH_SHORT).show();
         DatabaseReference ref=FirebaseDatabase.getInstance().getReference().child("appoinmentSchedule");
 
@@ -316,6 +317,10 @@ public class AppoinmentBooking extends AppCompatActivity {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+                nodecount = dataSnapshot.getChildrenCount();
+                Log.d("nodecount", String.valueOf(nodecount));
+
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
 
                     dateTime = String.valueOf(childDataSnapshot.child("date").getValue());
@@ -351,26 +356,12 @@ public class AppoinmentBooking extends AppCompatActivity {
                         long aid = appid + 1;
                         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-                        /*
-                        Log.d("descriptions",description);
-                        Log.d("speciality",speciality);
-                        Log.d("education",education);
-                        Log.d("district",district);
-                        Log.d("hospital",hospital);
-                        Log.d("expertise",expertise);
-                        Log.d("id",id);
-                        Log.d("namevalue",namevalue);
-                        Log.d("aid", String.valueOf(aid));
+                        Log.d("valuetotest",sno);
+                        Log.d("valuetotestval", String.valueOf(aid));
 
-                        Log.d("hospitalid", hospitalId);
-                        Log.d("serialno", String.valueOf(slno));
-                        Log.d("newtime", newtime);
-                        */
-                        //String ids = String.valueOf(aid);
 
-                        //Log.d("sno",sno);
                         pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this,description,speciality,education,district,hospital,expertise,id,namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist,District,DistrictAndHos,DistrictHosSpeciality);
-                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book"));
+                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",newtime,"Confirm Book",nodecount));
                         //pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,4,null,"10","1",newtime,"Confirm Book"));
 
 
@@ -408,10 +399,11 @@ public class AppoinmentBooking extends AppCompatActivity {
 
                         //String ids = String.valueOf(aid);
 
-                        //Log.d("sno",sno);
+                        Log.d("valuetotest",sno);
+                        Log.d("valuetotestval", String.valueOf(aid));
 
                         pagerAdapter = new ConfirmAdapter(AppoinmentBooking.this, description, speciality, education, district, hospital, expertise, id, namevalue,fromonlydistrict,fromonlydistrictandhos,doctorlist, District, DistrictAndHos, DistrictHosSpeciality);
-                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",currtime,"Confirm Book"));
+                        pagerAdapter.addCardItem(new AvailableTIme(format,"fever",id,hospitalId,aid,null,sno,"1",currtime,"Confirm Book", nodecount));
 
                         fragmentCardShadowTransformer = new ShadowTransformer(viewPager, pagerAdapter);
                         fragmentCardShadowTransformer.enableScaling(true);

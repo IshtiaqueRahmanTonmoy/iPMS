@@ -19,13 +19,12 @@ public class SpecialistAdapter extends RecyclerView.Adapter<SpecialistAdapter.My
     private List<speciality> specialistList;
     Context context;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
+        public TextView title,titles;
 
         public MyViewHolder(View view) {
             super(view);
             title = (TextView) view.findViewById(R.id.title);
-
-        }
+            }
     }
 
 

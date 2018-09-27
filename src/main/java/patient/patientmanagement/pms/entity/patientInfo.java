@@ -10,13 +10,25 @@ public class patientInfo {
     String disease;
     String bloodgroup;
     String uid;
+    String email;
+    String password;
 
-    public patientInfo(String age, String bloodgroup, String created, String disease, String gender, String image, String name, String phone, String uid){
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public patientInfo(String age, String bloodgroup,String password, String created, String disease, String email, String gender, String image, String name, String phone, String uid){
 
         this.age = age;
         this.bloodgroup = bloodgroup;
+        this.password = password;
         this.created = created;
         this.disease = disease;
+        this.email = email;
         this.gender = gender;
         this.image = image;
         this.name = name;
@@ -105,5 +117,5 @@ public class patientInfo {
         this.password = password;
     }
 
-    String password;
+
 }

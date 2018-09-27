@@ -22,7 +22,7 @@ public class AppoinmentSuccess extends AppCompatActivity {
 
     Button gotohome;
     private String photo,email,name,phone,gender,age,bloodgroup,password,created,uid,fromonlydistrict,fromdistandhos;
-
+    long nodecount;
     ScrollView scrollview;
     String date,disease,doctorId,hospitalId,dates,time,serialNo,confirm,id,doctorlist;
     String description,speciality,education,district,hospital,expertise,ids,namevalue,idvalues;
@@ -105,7 +105,7 @@ public class AppoinmentSuccess extends AppCompatActivity {
         //Toast.makeText(this, ""+idvalrecong, Toast.LENGTH_SHORT).show();
 
         if(id == android.R.id.home){
-            Intent intent = new Intent(AppoinmentSuccess.this,LoginActivity.class);
+            Intent intent = new Intent(AppoinmentSuccess.this,DashboardActivity.class);
             intent.putExtra("format",date);
             intent.putExtra("symptom",disease);
             intent.putExtra("id",doctorId);

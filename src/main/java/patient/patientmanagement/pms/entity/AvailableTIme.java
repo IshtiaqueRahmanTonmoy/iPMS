@@ -1,7 +1,5 @@
 package patient.patientmanagement.pms.entity;
 
-import android.widget.Toast;
-
 public class AvailableTIme {
     String date;
     String time;
@@ -11,8 +9,17 @@ public class AvailableTIme {
     String symptoms;
     String id;
     String hospitalId;
+    long nodecount;
 
-    public AvailableTIme(String format, String symptoms, String id, String hospitalId, long aid, String aNull,String serial,String status,String time,String confirm) {
+    public long getNodecount() {
+        return nodecount;
+    }
+
+    public void setNodecount(long nodecount) {
+        this.nodecount = nodecount;
+    }
+
+    public AvailableTIme(String format, String symptoms, String id, String hospitalId, long aid, String aNull, String serial, String status, String time, String confirm, long nodecount) {
 
         this.format = format;
         this.symptoms = symptoms;
@@ -26,6 +33,7 @@ public class AvailableTIme {
         this.status = status;
         this.time = time;
         this.confirm = confirm;
+        this.nodecount = nodecount;
 
         //Toast.makeText(, "", Toast.LENGTH_SHORT).show();
     }

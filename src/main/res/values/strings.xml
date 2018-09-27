@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PMS</string>
+    <string name="app_name">i-PMS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">i-PMS</string>
@@ -49,7 +49,7 @@
     <string name="gender_hint">Gender</string>
     <string name="age_hint">Age</string>
     <string name="bloodgroup_hint">Blood Group</string>
-    <string name="email_hint">E-mail</string>
+    <string name="email_hint">E-mail/Phone</string>
     <string name="password_hint">Password</string>
     <string name="confirmpassword_hint">Confirm Password</string>
 

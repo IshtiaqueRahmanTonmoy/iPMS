@@ -313,11 +313,13 @@ public class BloodDonorActivity extends AppCompatActivity {
                     phoneEdt.setError("This field can not be blank");
                 }else if (districtEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     districtEdt.setError("This field can not be blank");
-                }else if (thanaEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                }
+
+                else if (thanaEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     thanaEdt.setError("This field can not be blank");
                 }
 
-                  else if (passwordEdt.getText().toString().trim().equalsIgnoreCase("")) {
+                else if (passwordEdt.getText().toString().trim().equalsIgnoreCase("")) {
                     passwordEdt.setError("This field can not be blank");
 
                 }
@@ -589,7 +591,7 @@ public class BloodDonorActivity extends AppCompatActivity {
                     if (currentFirebaseUser != null) {
                         uid = currentFirebaseUser.getUid();
 
-                        addValue(address,agevalue,bloodgroup,districtId,gender,name,phone,thanaId,uid);
+                        addValue(address,agevalue,bloodgroup,districtId,email,gender,name,password,phone,thanaId,uid);
                                   /*
                                    storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
@@ -614,8 +616,8 @@ public class BloodDonorActivity extends AppCompatActivity {
         });
     }
 
-    private void addValue(String address, int age, String bloodgroup, int districtId, String gender, String name, String phone, int thanaId, String uid) {
-       bloodDonor blooddonor = new bloodDonor(address,age,bloodgroup,districtId,gender,name,phone,thanaId,uid);
+    private void addValue(String address, int age, String bloodgroup, int districtId, String email,String gender, String name,String password, String phone, int thanaId, String uid) {
+       bloodDonor blooddonor = new bloodDonor(address,age,bloodgroup,districtId,email,gender,name,password,phone,thanaId,uid);
         databaseUsers.child(uid).setValue(blooddonor);
     }
 

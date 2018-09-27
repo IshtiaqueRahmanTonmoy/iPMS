@@ -74,7 +74,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".BloodDonorActivity" />
         <activity android:name=".patient.patientmanagement.fragment.AppoinmentSuccess" />
-        <activity android:name=".SplashScreen"></activity>
+        <activity android:name=".SplashScreen" />
+        <activity android:name=".patient.patientmanagement.fragment.AboutActivity"></activity>
     </application>
 
 </manifest>

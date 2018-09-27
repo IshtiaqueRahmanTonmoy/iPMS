@@ -144,7 +144,7 @@ public class AboutFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("datasnpahsopt", String.valueOf(dataSnapshot.getChildrenCount()));
 
-                noofchamberTxt.setText(""+dataSnapshot.getChildrenCount());
+                noofchamberTxt.setText("("+dataSnapshot.getChildrenCount()+")");
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
                     String name = ds.child("chambername").getValue(String.class);
                     //names.add(name);

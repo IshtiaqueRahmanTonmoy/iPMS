@@ -49,14 +49,16 @@ public class Tab1Fragment extends Fragment {
     private DatabaseReference myRef = database.getReference("district");
     private DatabaseReference myRefHospital = database.getReference("hospitalInfo");
     private DatabaseReference myRefSpecialites = database.getReference("speciality");
+    private DatabaseReference myDoctors = database.getReference("doctorInfo");
 
     private ProgressDialog progressDialog;
     private RecyclerView recyclerView;
     private String fromonlydistrict,fromdistandhos,district,districtId,specialitstId,hospitalName,hospitalAddress,hospitalPhone,hospitalId;
     private int specialityId;
     private List<speciality> specialistList = new ArrayList<>();
+    private List<String> doctorlist = new ArrayList<>();
     private SpecialistAdapter mAdapter;
-    private TextView hospitalTxt,addressTxt,phoneTxt;
+    private TextView hospitalTxt,addressTxt,phoneTxt,titleTxt;
 
     @Nullable
     @Override
@@ -71,6 +73,7 @@ public class Tab1Fragment extends Fragment {
         hospitalTxt = (TextView) view.findViewById(R.id.hospital);
         addressTxt = (TextView) view.findViewById(R.id.address);
         phoneTxt = (TextView) view.findViewById(R.id.phone);
+        titleTxt = (TextView) view.findViewById(R.id.title);
 
         Bundle extras = getActivity().getIntent().getExtras();
         if (extras != null) {
@@ -163,13 +166,17 @@ public class Tab1Fragment extends Fragment {
     }
 
     private void getid(String specialityidvalue) {
-        int specialityid = Integer.parseInt(specialityidvalue);
+        final int specialityid = Integer.parseInt(specialityidvalue);
         myRefSpecialites.orderByChild("specialityId").equalTo(specialityid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
                     String name = String.valueOf(childDataSnapshot.child("specialityName").getValue());
+                    //String doctorname = String.valueOf(childDataSnapshot.child("name").getValue());
+                    //Log.d("doctorname",doctorname);
+                    //gettotaldoctor(specialityid);
                     specialistList.add(new speciality(name));
+                    titleTxt.setText("("+specialistList.size()+")");
                     //Toast.makeText(getContext(), ""+name, Toast.LENGTH_SHORT).show();
 
                     //value(id);
@@ -229,6 +236,35 @@ public class Tab1Fragment extends Fragment {
 
             }
         });
+    }
+
+    private void gettotaldoctor(int specialityid) {
+        //Toast.makeText(getActivity(), "hospitalid"+hospitalId, Toast.LENGTH_SHORT).show();
+
+        myDoctors.orderByChild("specialityId").equalTo(specialityid).addListenerForSingleValueEvent(new ValueEventListener() {
+           @Override
+           public void onDataChange(DataSnapshot dataSnapshot) {
+               for (DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
+                   String hospitalid = String.valueOf(childDataSnapshot.child("hospitalId").getValue());
+                   Toast.makeText(getActivity(), "jps"+hospitalid, Toast.LENGTH_SHORT).show();
+
+                   if(hospitalid.equals(hospitalId)){
+                       String doctorname = String.valueOf(childDataSnapshot.child("name").getValue());
+                       doctorlist.add(doctorname);
+                       //Toast.makeText(getActivity(), "SpecialityName"+doctorname, Toast.LENGTH_SHORT).show();
+
+                   } else{
+
+                   }
+                   //getFinalCriteria(districtId,specialityId);
+               }
+           }
+
+           @Override
+           public void onCancelled(DatabaseError databaseError) {
+
+           }
+       });
     }
 
 

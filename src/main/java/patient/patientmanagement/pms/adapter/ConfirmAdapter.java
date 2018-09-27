@@ -28,6 +28,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
     private List<AvailableTIme> mData;
     private float mBaseElevation;
     Context context;
+    long nodecount;
     String format,symptom,id,hospitalId,date,time,serial,confirm;
     String description,speciality,education,district,hospital,expertise,ids,namevalue,fromonlydistrict,fromdistrictandhos,doctorlist;
     long appoinmentid = 0;
@@ -130,6 +131,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
         serial = item.getSerial();
         confirm = item.getConfirm();
         appoinmentid = item.getAid();
+        nodecount = item.getNodecount();
 
         Log.d("val", String.valueOf(appoinmentid));
 
@@ -163,7 +165,7 @@ public class ConfirmAdapter extends PagerAdapter implements CardAdapter {
                 intent.putExtra("District",District);
                 intent.putExtra("DistrictAndHos",DistrictAndHos);
                 intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
-
+                intent.putExtra("nodecount",nodecount);
 
                 v.getContext().startActivity(intent);
 

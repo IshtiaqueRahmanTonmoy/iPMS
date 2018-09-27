@@ -61,6 +61,7 @@ import patient.patientmanagement.pms.adapter.ShadowTransformer;
 import patient.patientmanagement.pms.adapter.ViewPagerAdapter;
 import patient.patientmanagement.pms.entity.CardItem;
 import patient.patientmanagement.pms.entity.Item;
+import patient.patientmanagement.pms.patient.patientmanagement.fragment.AboutActivity;
 
 public class DashboardActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,7 +85,7 @@ public class DashboardActivity extends AppCompatActivity
     private ShadowTransformer mCardShadowTransformer;
     private DrawerLayout drawerlayout;
     List<CardItem> dataModels;
-
+    DrawerLayout coordinatorLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +105,7 @@ public class DashboardActivity extends AppCompatActivity
 
 
         dataModels= new ArrayList<CardItem>();
+
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mViewPager = (ViewPager) findViewById(R.id.viewpagerDashboard);
@@ -161,6 +163,12 @@ public class DashboardActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Snackbar snackbar = Snackbar
+                        .make(drawerlayout, "Feature coming soon..", Snackbar.LENGTH_LONG);
+
+                snackbar.show();
+                /*
                 //String phone = blood.getPhoneNumber().toString();
                 //Toast.makeText(context, "" + phone, Toast.LENGTH_SHORT).show();
                 String phoneNumber = String.format("tel: %s", "1212");
@@ -174,7 +182,9 @@ public class DashboardActivity extends AppCompatActivity
                 } else {
                     Log.e("intent", "Can't resolve app for ACTION_DIAL Intent.");
                 }
+                */
             }
+
         });
 
 
@@ -435,7 +445,8 @@ public class DashboardActivity extends AppCompatActivity
         } else if (id == R.id.nav_blog) {
 
         } else if (id == R.id.nav_about) {
-
+            Intent intent = new Intent(DashboardActivity.this,AboutActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_privacypolicy) {
 
         }else if (id == R.id.nav_share) {

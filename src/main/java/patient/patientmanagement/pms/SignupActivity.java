@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,6 +44,7 @@ import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
 import patient.patientmanagement.pms.entity.Utils;
 import patient.patientmanagement.pms.entity.Validation;
@@ -90,6 +92,10 @@ public class SignupActivity extends AppCompatActivity {
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     ArrayList<String> phoneNumbers;
     ImageButton imageBtn;
+    long nodecount;
+
+    private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +155,7 @@ public class SignupActivity extends AppCompatActivity {
             District = extras.getInt("District");
             DistrictAndHos = extras.getInt("DistrictAndHos");
             DistrictHosSpeciality = extras.getInt("DistrictHosSpeciality");
+            nodecount = extras.getLong("nodecount");
 
 
             Log.d("extra", id);
@@ -339,7 +346,7 @@ public class SignupActivity extends AppCompatActivity {
                 intent.putExtra("District",District);
                 intent.putExtra("DistrictAndHos",DistrictAndHos);
                 intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
-
+                intent.putExtra("nodecount",nodecount);
                 startActivity(intent);
 
             }
@@ -362,7 +369,7 @@ public class SignupActivity extends AppCompatActivity {
                 } else {
 
                     if (passwordEdt.getText().toString().matches(confirmpasswordEdt.getText().toString())) {
-                        confirmSignin();
+                       confirmSignin();
                     } else {
                         Toast.makeText(SignupActivity.this, "Password and confirm password doesn't match", Toast.LENGTH_SHORT).show();
                     }
@@ -380,6 +387,8 @@ public class SignupActivity extends AppCompatActivity {
 
         //Toast.makeText(this, ""+value, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -426,6 +435,7 @@ public class SignupActivity extends AppCompatActivity {
             intent.putExtra("District",District);
             intent.putExtra("DistrictAndHos",DistrictAndHos);
             intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
+            intent.putExtra("nodecount",nodecount);
 
             startActivity(intent);
 
@@ -465,7 +475,16 @@ public class SignupActivity extends AppCompatActivity {
 
     private void confirmSignin() {
         name = userEdt.getText().toString();
-        email = emailEdt.getText().toString();
+        if(emailEdt.getText().toString().equals("")){
+            Random random = new Random();
+            int rand = random.nextInt(1000000000);
+            //value = value + 1;
+            String emailval = "noemail"+rand+"@gmail.com";
+            email = emailval;
+        }else{
+            email = emailEdt.getText().toString();
+        }
+
         phone = phoneEdt.getText().toString();
         gender = genderEdt.getText().toString();
         age = ageEdt.getText().toString();
@@ -475,6 +494,7 @@ public class SignupActivity extends AppCompatActivity {
         password = passwordEdt.getText().toString();
 
         showProcessDialog();
+
 
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -489,7 +509,12 @@ public class SignupActivity extends AppCompatActivity {
                     if (currentFirebaseUser != null) {
                         uid = currentFirebaseUser.getUid();
 
-                        addValue(age,bloodgroup,created,"null",gender,"image",name,phone,uid);
+                        if(emailEdt.getText().length() == 0){
+                            addValue(age,bloodgroup,password,created,"null","null",gender,"image",name,phone,uid);
+                        }else{
+                            addValue(age,bloodgroup,password,created,"null",email,gender,"image",name,phone,uid);
+                        }
+                        //addValue(age,bloodgroup,created,"null",email,gender,"image",name,phone,uid);
                                   /*
                                    storageReference2nd.putFile(FilePathUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                         @Override
@@ -532,7 +557,7 @@ public class SignupActivity extends AppCompatActivity {
                     intent.putExtra("District",District);
                     intent.putExtra("DistrictAndHos",DistrictAndHos);
                     intent.putExtra("DistrictHosSpeciality",DistrictHosSpeciality);
-
+                    intent.putExtra("nodecount",nodecount);
                     startActivity(intent);
 
                     //startActivity(new Intent(SignupActivity.this, LoginActivity.class));
@@ -541,6 +566,7 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void showProcessDialog() {
@@ -550,9 +576,9 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.show();
     }
 
-    private void addValue(String age, String bloodgroup, String created, String disease,String gender,String image, String name, String phone, String uid) {
+    private void addValue(String age, String bloodgroup, String password,String created, String disease,String email,String gender,String image, String name, String phone, String uid) {
 
-        patientInfo patient = new patientInfo(age,bloodgroup,created,disease,gender,image,name,phone,uid);
+        patientInfo patient = new patientInfo(age,bloodgroup,password,created,disease,email,gender,image,name,phone,uid);
         databaseUsers.child(uid).setValue(patient);
     }
 
